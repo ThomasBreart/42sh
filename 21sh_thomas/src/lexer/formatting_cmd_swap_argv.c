@@ -1,0 +1,106 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   formatting_cmd_swap_argv.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/19 06:18:52 by tbreart           #+#    #+#             */
+/*   Updated: 2016/06/23 22:52:23 by tbreart          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_21sh.h"
+
+static int	good_type_to_swap(int type)
+{
+	if (type == LEX_AND)
+		return (1);
+	if (type == LEX_OR)
+		return (1);
+	if (type == LEX_COMA)
+		return (1);
+	return (0);
+}
+
+static void	add_token_prev(t_list **first, t_list *elem, t_list *next)
+{
+	t_list *new;
+
+	new = s_lstnew(NULL, __FILE__);
+	new->type = LEX_WORD;
+	new->aggr_fd = 0;
+	new->argv = NULL;
+	new->content = s_strdup(next->argv[1], __FILE__);
+	new->prev = NULL;
+	new->next = elem;
+	new->parent = NULL;
+	new->left = NULL;
+	new->right = NULL;
+	if (*first == elem)
+	{
+		(*first)->prev = new;
+		*first = new;
+	}
+	else
+	{
+		new->prev = elem->prev;
+		elem->prev->next = new;
+		elem->prev = new;
+	}
+}
+
+static void	swap_argv(t_list *prev, t_list *next)
+{
+	int		len_tab;
+	char	**tmp;
+	char	*new;
+
+	tmp = next->argv;
+	tmp++;
+	if (prev->argv == NULL)
+		len_tab = 0;
+	else
+		len_tab = ft_tablen(prev->argv);
+	while (*tmp != NULL)
+	{
+		len_tab++;
+		new = s_strdup(*tmp, __FILE__);
+		prev->argv = s_realloc_tab_end(prev->argv, new, __FILE__);
+		tmp++;
+	}
+	free_double_tab(next->argv);
+	next->argv = s_realloc_tab_end(NULL, next->content, __FILE__);
+}
+
+/*
+** SI format de type [cmd][redir][file], transfert argv de file a cmd
+**	ex: pwd >> toto -u -l === pwd -u -l >> toto
+*/
+
+int			swap_argv_with_redir(t_list **first)
+{
+	t_list *elem;
+
+	elem = *first;
+	while (elem != NULL)
+	{
+		if (is_a_redir(elem->type))
+		{
+			if (elem->next != NULL && elem->next->type == LEX_WORD &&
+												elem->next->argv[1] != NULL)
+			{
+				if (elem->prev != NULL && elem->prev->type == LEX_WORD)
+					swap_argv(elem->prev, elem->next);
+				else if (elem->prev == NULL ||
+										good_type_to_swap(elem->prev->type))
+				{
+					add_token_prev(first, elem, elem->next);
+					swap_argv(elem->prev, elem->next);
+				}
+			}
+		}
+		elem = elem->next;
+	}
+	return (1);
+}
