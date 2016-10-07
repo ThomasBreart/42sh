@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 10:06:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 20:11:54 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/07 20:13:36 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	edit_lexeme(t_list *current, char **s, int len_lexeme, int type)
 	current->content = s_strsub(*s, 0, len_lexeme, __FILE__);
 	if (type == LEX_WORD)
 	{
+		current->fullcontent = s_strdup(current->content, __FILE__);
 		current->argv = s_strsplit_with_quote(current->content, ' ', __FILE__);
 		free(current->content);
 		current->content = s_strdup(current->argv[0], __FILE__);
@@ -48,6 +49,11 @@ static int	check_lexeme(int *len_lexeme, char *currentchar)
 		return (LEX_RR_R);
 	else if ((*len_lexeme = is_ope_right_redir(currentchar)) > 0)
 		return (LEX_R_R);
+	else if ((*len_lexeme = is_ope_backquote(currentchar)) > 0) // voir si ya moyen de faire le sousshell en mm temps
+	{
+		printf("LEX_BQ good\n");
+		return (LEX_BQ); // LEX_SS
+	}
 	else if ((*len_lexeme = is_a_word(currentchar)) > 0)
 		return (LEX_WORD);
 	return (-1);

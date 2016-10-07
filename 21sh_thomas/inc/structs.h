@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:24:18 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 15:40:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/07 20:04:11 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef struct		s_list
 {
 	char			*content;
+	char			*fullcontent;
 	char			**argv;
 	int				type;
 	int				aggr_fd;

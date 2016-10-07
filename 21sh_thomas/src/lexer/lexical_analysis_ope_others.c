@@ -6,11 +6,28 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 10:39:20 by tbreart           #+#    #+#             */
-/*   Updated: 2016/03/25 13:29:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/07 19:56:25 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+int		is_ope_backquote(char *s)
+{
+	int		i;
+
+	i = 0;
+	printf("s[0]: %c\n", s[0]);
+	if (s[i] != '`')
+		return (0);
+	++i;///
+	while (s[i] != '`') // penser aux multiples bacquotes
+	{
+		++i;
+	}
+	++i;///
+	return (i);
+}
 
 int		is_ope_and(char *s)
 {

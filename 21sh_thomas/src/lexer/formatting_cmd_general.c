@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/03 22:46:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 22:55:01 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/07 19:50:12 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_missing_word(t_list *elem)
 	int			ret;
 
 	ret = 1;
-	if (elem == NULL || elem->type != LEX_WORD)
+	if (elem == NULL || (elem->type != LEX_WORD && elem->type != LEX_BQ))
 	{
 		ft_putendl_fd("Invalid command.", STDERR_FILENO);
 		return (-1);

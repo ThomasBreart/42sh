@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 19:29:08 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/07 19:37:34 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
+
+#include <stdio.h>
 
 # define ERR_ARGV		0
 # define ERR_SETTERM	1
@@ -47,6 +49,7 @@
 # define LEX_RR_R 8
 # define LEX_COMA 9
 # define LEX_SPACES 10
+# define LEX_BQ 11
 
 # include "structs.h"
 # include "lexer.h"
