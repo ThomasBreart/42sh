@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 10:06:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/07 20:13:36 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/08 18:11:59 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ static int	check_lexeme(int *len_lexeme, char *currentchar)
 	else if ((*len_lexeme = is_ope_right_redir(currentchar)) > 0)
 		return (LEX_R_R);
 	else if ((*len_lexeme = is_ope_backquote(currentchar)) > 0) // voir si ya moyen de faire le sousshell en mm temps
-	{
-		printf("LEX_BQ good\n");
 		return (LEX_BQ); // LEX_SS
-	}
 	else if ((*len_lexeme = is_a_word(currentchar)) > 0)
 		return (LEX_WORD);
 	return (-1);

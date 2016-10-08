@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/07 19:37:34 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/08 17:49:04 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <fcntl.h>
 
 #include <stdio.h>
+
 
 # define ERR_ARGV		0
 # define ERR_SETTERM	1
@@ -67,7 +68,7 @@ void				free_tree(t_list *root);
 /*
 **	cmd_analysis.c
 */
-int					cmd_analysis(t_list **root, char **entry);
+t_list				*cmd_analysis(/*t_list **root, */char **entry);
 
 /*
 **	cmd_simple.c

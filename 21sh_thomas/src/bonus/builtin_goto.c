@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 18:40:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 19:45:02 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/08 17:48:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			builtin_goto(t_list *elem, char ***env)
 		return (-1);
 	if ((entry = goto_index_tab(index)) == NULL)
 		return (-1);
-	if (cmd_analysis(&root, &entry) == 1)
+	if ((root = cmd_analysis(&entry)) != NULL)
 		ret = exec_cmd(root->left, env);
 	free_memory(&entry, termcaps, &root, 0);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 09:58:48 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 20:14:01 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/08 21:27:28 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int			is_a_word(char *s)
 		else if (is_ope_and(s + i) > 0)
 			break ;
 		else if (s[i] == '<' || s[i] == ';' || s[i] == '|' || s[i] == '>')
+			break ;
+		else if (s[i] == '`')
 			break ;
 		i++;
 	}
