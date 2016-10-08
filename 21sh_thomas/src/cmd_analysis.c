@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/08 22:03:12 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 01:01:47 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,34 @@ char	*format_cmd(int fd_pipe_exit)
 	char	*buf;
 	char	*tmp;
 	char	*new_entry;
+	int		ret = -1;
 
 	new_entry = NULL;
-	while (get_next_line(fd_pipe_exit, &buf) > 0)
+	tmp = NULL;
+	while ((ret = get_next_line(fd_pipe_exit, &buf)) > 0)/// remplacer par un bon read ?
 	{
 		tmp = new_entry;
 		if (new_entry == NULL)
 			new_entry = s_strdup(buf, __FILE__);
 		else
 		{
+			new_entry = s_strjoin(new_entry, " ", __FILE__);
+			ft_strdel(&tmp);
+			tmp = new_entry;
+			new_entry = s_strjoin(new_entry, buf, __FILE__);
+		}
+		ft_strdel(&tmp);
+		ft_strdel(&buf);
+	}
+	if (ret == 0)
+	{
+	//	fprintf(stderr, "ret 0\n");
+	//	fprintf(stderr, "buf: -%s-\n", buf);
+		if (new_entry == NULL)
+			new_entry = s_strdup(buf, __FILE__);
+		else
+		{
+			tmp = new_entry;
 			new_entry = s_strjoin(new_entry, " ", __FILE__);
 			ft_strdel(&tmp);
 			tmp = new_entry;
@@ -136,7 +155,7 @@ t_list	*merge_elems(t_list *elem_prev, t_list *elem)
 	new_elem = s_lstnew(NULL, __FILE__);
 	new_elem->type = LEX_WORD;
 	new_elem->content = s_strdup(elem_prev->content, __FILE__);
-	tmp = s_strjoin(elem_prev->content, " ", __FILE__);
+	tmp = s_strjoin(elem_prev->fullcontent, " ", __FILE__);
 	new_elem->fullcontent = s_strjoin(tmp, elem->fullcontent, __FILE__);
 	free(tmp);
 	new_elem->argv = s_tabjoin(elem_prev->argv, elem->argv, __FILE__);
@@ -153,18 +172,18 @@ t_list	*merge_elems(t_list *elem_prev, t_list *elem)
 
 void	show_elem(t_list *elem)
 {
-	printf("------ func show_elem -------\n");
-	printf("elem->content: %s\n", elem->content);
-	printf("elem->fulllcontent: %s\n", elem->fullcontent);
-	ft_print_tab(elem->argv);
-	printf("elem->type: %d\n", elem->type);
-	printf("elem->aggr_fd: %d\n", elem->aggr_fd);
-	printf("elem->parent (pointeur): %p\n", elem->parent);
-	printf("elem->prev (pointeur): %p\n", elem->prev);
-	printf("elem->next (pointeur): %p\n", elem->next);
-	printf("elem->left (pointeur): %p\n", elem->left);
-	printf("elem->right (pointeur): %p\n", elem->right);
-	printf("-----------------------------\n");
+	fprintf(stderr, "------ func show_elem -------\n");
+	fprintf(stderr, "elem->content: %s\n", elem->content);
+	fprintf(stderr, "elem->fulllcontent: %s\n", elem->fullcontent);
+	ft_print_tab(elem->argv); ///
+	fprintf(stderr, "elem->type: %d\n", elem->type);
+	fprintf(stderr, "elem->aggr_fd: %d\n", elem->aggr_fd);
+	fprintf(stderr, "elem->parent (pointeur): %p\n", elem->parent);
+	fprintf(stderr, "elem->prev (pointeur): %p\n", elem->prev);
+	fprintf(stderr, "elem->next (pointeur): %p\n", elem->next);
+	fprintf(stderr, "elem->left (pointeur): %p\n", elem->left);
+	fprintf(stderr, "elem->right (pointeur): %p\n", elem->right);
+	fprintf(stderr, "-----------------------------\n");
 }
 
 int		exec_bacquotes(t_list **elem, t_list **first)
@@ -172,11 +191,9 @@ int		exec_bacquotes(t_list **elem, t_list **first)
 	t_historic		*termcaps;
 	int		pdes[2];
 	int		child_pid;
-//	t_save_fd	save;
 	t_list *root;
 	char	*new_entry;
 
-//	save_fd(&save);
 	termcaps = get_termcaps();
 	if (pipe(pdes) == -1)
 		return (internal_error("exec_bacquotes", "create pipe", 0));
@@ -201,18 +218,17 @@ int		exec_bacquotes(t_list **elem, t_list **first)
 //		printf("father continue\n");
 		close(pdes[PIPE_ENTRY]);
 		new_entry = format_cmd(pdes[PIPE_EXIT]);
-//		printf("new_entry: %s\n", new_entry);
+//		fprintf(stderr, "new_entry: -%s-\n", new_entry);
 //		new_list = lexer(&new_entry);
 //		first = add_list(elem, new_list);
 		change_elem_in_word(*elem, new_entry);
 		if ((*elem)->prev != NULL && (*elem)->prev->type == LEX_WORD)
 			*elem = merge_elems((*elem)->prev, *elem);
 		ft_strdel(&new_entry);
-	//	show_elem(*elem);
+		//show_elem(*elem);
 		if ((*elem)->prev == NULL)
 			*first = *elem;
 	}
-//	return (first);
 	return (1);
 }
 
@@ -220,9 +236,43 @@ void	del_backquote_char(t_list *elem) // check si seulement `` ?
 {
 	int		len;
 	char	*new_str;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	len = ft_strlen(elem->content);
 	new_str = s_strndup(elem->content + 1, (len - 2), __FILE__);
+
+	i = 0;
+	j = 0;
+	while (new_str[i] != '\0')
+	{
+		if (new_str[i] == '\\' && new_str[i + 1] == '`')
+		{
+			++j;
+		}
+		++i;
+	}
+	if (j > 0)
+	{
+		tmp = s_memalloc(sizeof(char) * (ft_strlen(new_str) - j), __FILE__);
+		i = 0;
+		j = 0;
+		while (new_str[j] != '\0')
+		{
+			if (new_str[j] == '\\' && new_str[j + 1] == '`')
+				++j;
+			else
+			{
+				tmp[i] = new_str[j];
+				++i;
+				++j;
+			}
+		}
+		free(new_str);
+		new_str = tmp;
+	}
+
 	free(elem->content);
 	elem->content = new_str;
 }
@@ -236,8 +286,9 @@ void	check_bacquotes(t_list **first)
 	{
 		if (elem->type == LEX_BQ)
 		{
-	//		printf("bq find: %s\n", elem->content);
+		//	fprintf(stderr, "bq find: %s\n", elem->content);
 			del_backquote_char(elem);
+		//	fprintf(stderr, "elem modified: %s\n", elem->content);
 			exec_bacquotes(&elem, first);
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 10:39:20 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/08 18:12:14 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/08 23:55:00 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int		is_ope_backquote(char *s)
 	i = 0;
 	if (s[i] != '`')
 		return (0);
-	++i;///
-	while (s[i] != '`') // penser aux multiples bacquotes
+	++i;
+	while (s[i] != '\0')
 	{
+		if (s[i] == '`' && s[i - 1] != '\\')
+			break ;
 		++i;
 	}
-	++i;///
+	++i;
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/01 10:58:50 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/19 14:12:39 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 00:20:47 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_print_tab(char **argv)
 {
 	while (*argv != NULL)
 	{
-		ft_putendl(*argv);
+		ft_putendl_fd(*argv, STDERR_FILENO);
 		++argv;
 	}
 }

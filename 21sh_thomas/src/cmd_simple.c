@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/08 22:00:43 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 00:48:22 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int			exec_simple(t_list *elem, char ***env, t_save_fd *save)
 	int		ret;
 
 	ret = 42;
+//	fprintf(stderr, "fullcontent: %s\n", elem->fullcontent);
 	if (convert_metacharacters(elem, *env) == 0)
 		return (1);
 	if (is_a_builtin(elem->content))
