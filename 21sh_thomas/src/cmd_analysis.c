@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/09 09:56:51 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 22:10:21 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,7 +357,8 @@ void	check_bacquotes(t_list **first)
 			{
 				if (ft_strchr(elem->argv[i], '`') != NULL)
 				{
-		//	show_elem(elem);
+//			show_elem(elem);
+//			exit(12);
 					del_backquote_char(&elem->argv[i]);
 fprintf(stderr, "new_str1: %s\n", elem->argv[i]);
 					del_backslash(&elem->argv[i]);
@@ -395,6 +396,8 @@ t_list		*cmd_analysis(char **entry)
 	first = NULL;
 	if (lexical_analysis(*entry, &first) == -1)
 		return (NULL);
+			show_elem(first);
+			exit(12);
 	if (first == NULL)
 	{
 		internal_error("cmd_analysis", "first NULL", 0);
