@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/17 01:38:32 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/08 20:10:37 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 03:03:13 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int		main(int ac, char **av_entry, char **env)
 		termcaps->in_getcmd = 0;
 		if ((root = cmd_analysis(&entry)) != NULL) // msg err si ret = -1
 			exec_cmd(root->left, get_env());
-		else
-			printf("cmd_analysis: error\n");
+		//else
+		//	printf("cmd_analysis: error\n");
 		free_memory(&entry, termcaps, &root, 1);
 		if (ret == 0)
 			break ;

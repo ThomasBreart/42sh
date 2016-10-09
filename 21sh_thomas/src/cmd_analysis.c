@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/09 01:01:47 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 07:27:51 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,20 +277,40 @@ void	del_backquote_char(t_list *elem) // check si seulement `` ?
 	elem->content = new_str;
 }
 
+int		find_backquotes(char *fullcontent)
+{
+	if (ft_strchr(fullcontent, '`') != NULL)
+		return (1);
+	return (0);
+}
+
 void	check_bacquotes(t_list **first)
 {
 	t_list		*elem;
+	int			i;
 
 	elem = *first;
 	while (elem != NULL)
 	{
-		if (elem->type == LEX_BQ)
+		if (elem->type == LEX_WORD/* && find_backquotes(elem->fullcontent) == 1*/)
 		{
-		//	fprintf(stderr, "bq find: %s\n", elem->content);
-			del_backquote_char(elem);
+			show_elem(elem);
+			exit(12);
+			i = 0;
+			while (elem->argv[i] != NULL)
+			{
+				if (ft_strchr(elem->argv[i], '`') != NULL)
+				{
+					del_backquote_char(elem->argv[i]);
+
+				}
+				++i;
+			}
+			//fprintf(stderr, "word find: %s\n", elem->fullcontent);
+			if (ft_strlen(elem->content) != 0)
+				exec_bacquotes(&elem, first);
 		//	fprintf(stderr, "elem modified: %s\n", elem->content);
-			exec_bacquotes(&elem, first);
-			break ;
+		//	break ;
 		}
 		elem = elem->next;
 	}
@@ -318,10 +338,12 @@ t_list		*cmd_analysis(char **entry)
 		internal_error("cmd_analysis", "first NULL", 0);
 		return (NULL);
 	}
-	if (formatting_cmd_general(&first) == 1)
+	if (formatting_cmd_general(&first) == 1)//check bon formatage `
 	{
 	//	show_list(first);
 		check_bacquotes(&first);
+		if (ft_strlen(first->content) == 0)
+			return (NULL);
 //		return (-1);
 //		printf("here1\n");
 //		show_list(first);
