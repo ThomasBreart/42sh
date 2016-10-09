@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 17:58:14 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/09 07:14:43 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 09:56:27 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 	if (s == NULL)
 		return (NULL);
 	t = ft_get_word_with_quote(s, c);
-	printf("t: %d\n", t);
+//	printf("t: %d\n", t);
 	taab = (char**)s_memalloc(sizeof(char*) * t + sizeof(char*), filename);
 	while (s[i] != '\0')
 	{
@@ -234,7 +234,7 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 		{
 			//str[j++] = ft_cpy_word_with_quote(s, c, &i, filename);
 			len = find_total_word_quote(s, i, c, s[i]);
-			printf("len: %d\n", len);
+//			printf("len: %d\n", len);
 			taab[j++] = s_strsub(s, i, len, filename);
 			i += len;
 			
@@ -243,7 +243,7 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 		{
 		//	str[j++] = ft_cpy_word_with_quote(s, c, &i, filename);
 			len = find_total_word_normal(s, i, c);
-			printf("len: %d\n", len);
+//			printf("len: %d\n", len);
 			taab[j++] = s_strsub(s, i, len, filename);
 			i += len;
 		}
@@ -253,6 +253,6 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 			i++;
 	}
 	taab[j] = NULL;
-	ft_print_tab(taab);
+//	ft_print_tab(taab);
 	return (taab);
 }

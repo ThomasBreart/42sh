@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/09 07:27:51 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/09 09:56:51 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void	show_elem(t_list *elem)
 	fprintf(stderr, "-----------------------------\n");
 }
 
-int		exec_bacquotes(t_list **elem, t_list **first)
+int		exec_bacquotes(char **str)
 {
 	t_historic		*termcaps;
 	int		pdes[2];
@@ -205,7 +205,7 @@ int		exec_bacquotes(t_list **elem, t_list **first)
 	//	printf("in child\n");
 		close(pdes[PIPE_EXIT]);
 		dup2(pdes[PIPE_ENTRY], STDOUT_FILENO);
-		char *save = s_strdup((*elem)->content, __FILE__);
+		char *save = s_strdup(*str, __FILE__);
 		root = cmd_analysis(/*root, */&save);
 		free(save);
 		exec_cmd(root->left, get_env());
@@ -221,60 +221,73 @@ int		exec_bacquotes(t_list **elem, t_list **first)
 //		fprintf(stderr, "new_entry: -%s-\n", new_entry);
 //		new_list = lexer(&new_entry);
 //		first = add_list(elem, new_list);
-		change_elem_in_word(*elem, new_entry);
-		if ((*elem)->prev != NULL && (*elem)->prev->type == LEX_WORD)
-			*elem = merge_elems((*elem)->prev, *elem);
-		ft_strdel(&new_entry);
+		//change_elem_in_word(*elem, new_entry);
+		//if ((*elem)->prev != NULL && (*elem)->prev->type == LEX_WORD)
+		//	*elem = merge_elems((*elem)->prev, *elem);
+		ft_strdel(str);
+		*str = new_entry;
+	//	ft_strdel(&new_entry);
 		//show_elem(*elem);
-		if ((*elem)->prev == NULL)
-			*first = *elem;
+	//	if ((*elem)->prev == NULL)
+	//		*first = *elem;
 	}
 	return (1);
 }
 
-void	del_backquote_char(t_list *elem) // check si seulement `` ?
+void	del_backslash(char **str)
 {
-	int		len;
-	char	*new_str;
 	int		i;
 	int		j;
 	char	*tmp;
-
-	len = ft_strlen(elem->content);
-	new_str = s_strndup(elem->content + 1, (len - 2), __FILE__);
+	int		flag;
 
 	i = 0;
 	j = 0;
-	while (new_str[i] != '\0')
+	while ((*str)[i] != '\0')
 	{
-		if (new_str[i] == '\\' && new_str[i + 1] == '`')
+		if ((*str)[i] == '\\')
 		{
 			++j;
+			++i;
 		}
-		++i;
+		if ((*str)[i] != '\0')
+			++i;
 	}
 	if (j > 0)
 	{
-		tmp = s_memalloc(sizeof(char) * (ft_strlen(new_str) - j), __FILE__);
+		tmp = s_memalloc(sizeof(char) * (ft_strlen(*str) - j + 1), __FILE__);
 		i = 0;
 		j = 0;
-		while (new_str[j] != '\0')
+		flag = 0;
+		while ((*str)[j] != '\0')
 		{
-			if (new_str[j] == '\\' && new_str[j + 1] == '`')
+			if ((*str)[j] == '\\' && flag == 0)
+			{
 				++j;
+				flag = 1;
+			}
 			else
 			{
-				tmp[i] = new_str[j];
+				tmp[i] = (*str)[j];
 				++i;
 				++j;
+				flag = 0;
 			}
 		}
-		free(new_str);
-		new_str = tmp;
+		ft_strdel(str);
+		*str = tmp;
 	}
+}
 
-	free(elem->content);
-	elem->content = new_str;
+void	del_backquote_char(char **str) // check si seulement `` ?
+{
+	int		len;
+	char	*new_str;
+
+	len = ft_strlen(*str);
+	new_str= s_strndup(*str + 1, (len - 2), __FILE__);
+	ft_strdel(str);
+	*str = new_str;
 }
 
 int		find_backquotes(char *fullcontent)
@@ -282,6 +295,50 @@ int		find_backquotes(char *fullcontent)
 	if (ft_strchr(fullcontent, '`') != NULL)
 		return (1);
 	return (0);
+}
+
+char	*implode(char **taab)
+{
+	char	*str;
+	char	**tmp;
+	int		len;
+	int		i;
+
+	tmp = taab;
+	len = 0;
+	i = 0;
+	while (*tmp != NULL)
+	{
+		len += ft_strlen(*tmp);
+		++len;
+		++tmp;
+		++i;
+	}
+	--len;
+	str = s_strnew(len, __FILE__);
+	tmp = taab;
+	while (*tmp != NULL)
+	{
+		ft_strcat(str, *tmp);
+		if (i > 1)
+			ft_strcat(str, " ");
+		++tmp;
+		--i;
+	}
+	return (str);
+}
+
+void	update_elem(t_list *elem)
+{
+	char	**tmp;
+
+	ft_strdel(&elem->content);
+	elem->content = s_strdup(elem->argv[0], __FILE__);
+	ft_strdel(&elem->fullcontent);
+	elem->fullcontent = implode(elem->argv);
+	tmp = s_strsplit_with_quote(elem->fullcontent, ' ', __FILE__);
+	free_double_tab(elem->argv);
+	elem->argv = tmp;
 }
 
 void	check_bacquotes(t_list **first)
@@ -294,21 +351,26 @@ void	check_bacquotes(t_list **first)
 	{
 		if (elem->type == LEX_WORD/* && find_backquotes(elem->fullcontent) == 1*/)
 		{
-			show_elem(elem);
-			exit(12);
+//			exit(12);
 			i = 0;
 			while (elem->argv[i] != NULL)
 			{
 				if (ft_strchr(elem->argv[i], '`') != NULL)
 				{
-					del_backquote_char(elem->argv[i]);
-
+		//	show_elem(elem);
+					del_backquote_char(&elem->argv[i]);
+fprintf(stderr, "new_str1: %s\n", elem->argv[i]);
+					del_backslash(&elem->argv[i]);
+fprintf(stderr, "new_str2: %s\n", elem->argv[i]);
+					if (ft_strlen(elem->argv[i]) != 0)
+						exec_bacquotes(&elem->argv[i]);
+		//			exit(14);
 				}
+			update_elem(elem);
+		//	show_elem(elem);
 				++i;
 			}
 			//fprintf(stderr, "word find: %s\n", elem->fullcontent);
-			if (ft_strlen(elem->content) != 0)
-				exec_bacquotes(&elem, first);
 		//	fprintf(stderr, "elem modified: %s\n", elem->content);
 		//	break ;
 		}
