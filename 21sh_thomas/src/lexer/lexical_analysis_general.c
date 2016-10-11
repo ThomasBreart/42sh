@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 10:06:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/09 03:10:47 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/11 04:48:17 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,25 @@
 **	edite le lexeme trouve
 */
 
-static void	edit_lexeme(t_list *current, char **s, int len_lexeme, int type)
+static int	edit_lexeme(t_list *current, char **s, int len_lexeme, int type)
 {
 	current->type = type;
 	current->aggr_fd = 0;
 	current->content = s_strsub(*s, 0, len_lexeme, __FILE__);
+	*s = *s + len_lexeme;
 	if (type == LEX_WORD)
 	{
 		current->fullcontent = s_strdup(current->content, __FILE__);
 		current->argv = s_strsplit_with_quote(current->content, ' ', __FILE__);
-		free(current->content);
+		ft_strdel(&current->content);
+		if (current->argv[0] == NULL)
+		{
+			del_tlist(current);
+			return (0);
+		}
 		current->content = s_strdup(current->argv[0], __FILE__);
 	}
-	*s = *s + len_lexeme;
+	return (1);
 }
 
 static int	check_lexeme(int *len_lexeme, char *currentchar)
@@ -75,7 +81,7 @@ int			lexical_analysis(char *cmd, t_list **first)
 	int		type_lex;
 
 	prev = NULL;
-	if (ft_strlen(cmd) == 0)
+	if (ft_strlen(cmd) == 0)///pas lieu d etre
 		return (-1);
 	while (*cmd != '\0')
 	{
@@ -85,11 +91,13 @@ int			lexical_analysis(char *cmd, t_list **first)
 		current = s_lstnew(NULL, __FILE__);
 		if ((type_lex = check_lexeme(&len_lexeme, cmd)) == -1)
 			return (internal_error("lexical_analysis", "lexeme inconnu", 0));
-		edit_lexeme(current, &cmd, len_lexeme, type_lex);
-		ft_lst_add_end(prev, current);
-		prev = current;
-		if (*first == NULL)
-			*first = current;
+		if (edit_lexeme(current, &cmd, len_lexeme, type_lex) == 1)
+		{
+			ft_lst_add_end(prev, current);
+			prev = current;
+			if (*first == NULL)
+				*first = current;
+		}
 	}
 	return (1);
 }

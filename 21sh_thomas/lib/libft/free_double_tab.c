@@ -6,11 +6,12 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 21:17:01 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/19 14:05:00 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/11 03:50:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 void	free_double_tab(char **taab)
 {
@@ -24,5 +25,5 @@ void	free_double_tab(char **taab)
 		free(*tmp);
 		++tmp;
 	}
-	free(taab);
+	ft_memdel((void**)&taab);
 }

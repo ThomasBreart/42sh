@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/08 17:49:04 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/11 05:28:32 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@
 # include "redirs.h"
 
 /*
+**	check_backquotes.c
+*/
+void	check_backquotes(t_list **first);
+
+/*
 **	clean.c
 */
 void				free_tree(t_list *root);
@@ -86,6 +91,12 @@ char				**create_env(char **environ);
 */
 int					del_elem_list(t_list *first);
 
+/*
+**	del_tlist.c
+*/
+void	del_tlist(t_list *elem);
+
+int					del_elem_list(t_list *first);
 /*
 **	errors.c
 */
@@ -189,6 +200,11 @@ t_list				*s_lstnew(char const *content, const char *filename);
 **	set_termios.c
 */
 int					set_termios(struct termios *term, t_save_fd *save);
+
+/*
+**	show_elem.c
+*/
+void	show_elem(t_list *elem);
 
 /*
 **	signals.c

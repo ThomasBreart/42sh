@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 17:58:14 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/09 22:07:56 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/11 02:41:23 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,29 @@ char	**realloc_tab(char **oldtab, int *maxlen_tab, const char *filename)
 	return (new_tab);
 }
 
+int		only_quotes_here(char *s, int i, int len)
+{
+	int		j;
+
+	j = 0;
+	while (s[i] != '\0' && j < len)
+	{
+		if (s[i] != '\'' && s[i] != '"' && s[i] != '`')
+			return (0);
+		++i;
+		++j;
+	}
+	return (1);
+}
+
 /*
 **	strsplit qui gere le quoting
 **	le caractere de separation n'est pas pris en compte entre deux
 **	quotes identiques (cf [`], ['] ou ["]) NON echapees (cf [\])
-**	le tableau de retour contient les quotes et les backslashs
+**
+**	recoit une string bien formatee au niveau des quotes (quotes par paire)
+**	le tableau de retour contient les backslashs et
+**	les quotes (SAUF si ces quotes sont vides)
 */
 
 char			**s_strsplit_with_quote(char *s, char c, const char *filename)
@@ -171,13 +189,15 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 		if (backquote_case(s, i))
 		{
 			len = find_total_word_backquote(s, i);
-			new_tab[index_tab++] = s_strsub(s, i, len, filename);
+			if (only_quotes_here(s, i, len) == 0)
+				new_tab[index_tab++] = s_strsub(s, i, len, filename);
 			i += len;
 		}
 		else if (quote_case(s, c, i))
 		{
 			len = find_total_word_classic_quote(s, i, c, s[i]);
-			new_tab[index_tab++] = s_strsub(s, i, len, filename);
+			if (only_quotes_here(s, i, len) == 0)
+				new_tab[index_tab++] = s_strsub(s, i, len, filename);
 			i += len;
 		}
 		else if (s[i] != c)

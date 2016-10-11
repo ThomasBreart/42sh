@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 13:15:52 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 19:26:30 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/11 04:27:40 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ char		*s_strsub(char const *s, unsigned int start, size_t len,
 char		**s_realloc_tab_end(char **source, char *new_index,
 														const char *filename);
 char		**s_tabdup(char **source, const char *filename);
+char		**s_tabjoin(char **tab1, char **tab2, const char *filename);
 
 char		**concat_two_index_tab(char **t, int index1, int index2);
 char		**del_index_tab(char **taab, int index);
 void		free_double_tab(char **taab);
 int			ft_atoi(const char *str);
 void		ft_bzero(void *s, size_t n);
+char		*ft_implode(char **taab);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);
