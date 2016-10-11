@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 07:49:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/27 18:34:18 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/11 19:50:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,25 @@
 static int	cmd_still_open(t_historic *termcaps, char **entry)
 {
 	int		ret;
+	char	*tmp;
+	char	*full_cmd;
 
 	ret = 1;
-	if (check_backslash(termcaps, *entry) == 1 ||
-		(ret = check_open_chars(termcaps, *entry, '(', ')')) != 0 ||
-		(ret = check_open_chars(termcaps, *entry, '[', ']')) != 0 ||
-		(ret = check_open_chars(termcaps, *entry, '{', '}')) != 0 ||
-		(ret = check_open_quotes(termcaps, *entry)) != 0)
+	full_cmd = find_full_cmd(*entry, termcaps);
+//	printf("full_cmd: -%s-\n", full_cmd);
+	if (*entry == NULL || (ret = cmd_is_open(full_cmd)) == 1)
 	{
-		if (ret == -1)
-			return (-1);
+		if (*entry != NULL)
+		{
+			if (termcaps->bslash_split == NULL)
+				termcaps->bslash_split = s_strdup(*entry, __FILE__);
+			else
+			{
+				tmp = s_strjoin(termcaps->bslash_split, *entry, __FILE__);
+				free(termcaps->bslash_split);
+				termcaps->bslash_split = tmp;
+			}
+		}
 		ft_memdel((void**)entry);
 		ft_memdel((void**)&termcaps->cmd_inprogress);
 		tputs(tgoto(tgetstr("do", NULL), 0, 0), 1, ft_outc);
@@ -32,10 +41,13 @@ static int	cmd_still_open(t_historic *termcaps, char **entry)
 		termcaps->prompt_current = termcaps->prompt_open;
 		ft_putstr(termcaps->prompt_current);
 		termcaps->cur_x = 0;
+		free(full_cmd);
+		//printf("hello\n");
 		return (1);
 	}
+		free(full_cmd);
 	termcaps->len_prompt = ft_strlen(termcaps->prompt);
-	return (0);
+	return (ret);
 }
 
 static void	concat_bslash_split(t_historic *termcaps, char **entry)

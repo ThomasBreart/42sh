@@ -6,12 +6,12 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 07:39:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 17:34:27 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/11 19:44:30 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
+/*
 static void	find_second_quote(int *open, int *i, char *tmp)
 {
 	char	save;
@@ -36,8 +36,8 @@ static void	find_second_quote(int *open, int *i, char *tmp)
 		*open = 0;
 	*i = j;
 }
-
-static char	*find_full_cmd(char *s, t_historic *termcaps)
+*/
+char	*find_full_cmd(char *s, t_historic *termcaps)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -57,7 +57,7 @@ static char	*find_full_cmd(char *s, t_historic *termcaps)
 /*
 ** '' "" ``
 */
-
+/*
 int			check_open_quotes(t_historic *termcaps, char *s)
 {
 	char	*tmp;
@@ -72,7 +72,9 @@ int			check_open_quotes(t_historic *termcaps, char *s)
 	while (tmp[i] != '\0')
 	{
 		open = 0;
-		if (tmp[i] == '`' || tmp[i] == '\'' || tmp[i] == '"')
+		if (tmp[i] == '\\')
+			++i;
+		else if (tmp[i] == '`' || tmp[i] == '\'' || tmp[i] == '"')
 			find_second_quote(&open, &i, tmp);
 		if (tmp[i] != '\0')
 			++i;
@@ -86,43 +88,4 @@ int			check_open_quotes(t_historic *termcaps, char *s)
 		free(tmp);
 	return (open);
 }
-
-static int	open_chars_error(t_historic *tcaps, char close)
-{
-	tputs(tgoto(tgetstr("do", NULL), 0, 0), 1, ft_outc);
-	ft_putstr_fd("Parse error near '", STDERR_FILENO);
-	ft_putchar_fd(close, STDERR_FILENO);
-	ft_putendl_fd("'", STDERR_FILENO);
-	ft_putstr(tcaps->prompt);
-	return (-1);
-}
-
-/*
-** () {} []
 */
-
-int			check_open_chars(t_historic *tcaps, char *s, char open, char close)
-{
-	char	*tmp;
-	int		a;
-
-	a = calculation_parenthesis(tcaps, s, open, close);
-	if (a > 0)
-	{
-		if (s != NULL)
-		{
-			if (tcaps->bslash_split == NULL)
-				tcaps->bslash_split = s_strdup(s, __FILE__);
-			else
-			{
-				tmp = s_strjoin(tcaps->bslash_split, s, __FILE__);
-				free(tcaps->bslash_split);
-				tcaps->bslash_split = tmp;
-			}
-		}
-		return (1);
-	}
-	if (a < 0)
-		return (open_chars_error(tcaps, close));
-	return (0);
-}
