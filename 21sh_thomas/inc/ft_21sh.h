@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/11 08:51:50 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/12 04:18:41 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 
 #include <stdio.h>
 
+
+# define SUBCMD_BACKQUOTE	1
+# define SUBCMD_DOLLAR		2
 
 # define ERR_ARGV		0
 # define ERR_SETTERM	1

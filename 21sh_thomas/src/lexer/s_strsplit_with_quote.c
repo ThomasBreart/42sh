@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 17:58:14 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/11 02:41:23 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/12 05:33:37 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ static int		find_total_word_normal(char *s, int i, char c)
 	{
 		if (s[i] == '\\' && s[i + 1] != '\0')
 			++i;
-		else if (s[i] == '\'' || s[i] == '"')
+		else if (s[i] == '\'' || s[i] == '"' || s[i] == '`')
 		{
 			i += find_total_word_classic_quote(s, i, c, s[i]);
-			break ;
+			//break ;
 		}
-		else if (s[i] == c || s[i] == '`')
+		else if (s[i] == c/* || s[i] == '`'*/)
 				break ;
 		if (s[i] != '\0')
 			i++;
@@ -170,7 +170,7 @@ int		only_quotes_here(char *s, int i, int len)
 **	les quotes (SAUF si ces quotes sont vides)
 */
 
-char			**s_strsplit_with_quote(char *s, char c, const char *filename)
+char			**s_strsplit_with_quote(char *s, char c, const char *filename) // Nope, toujours pas parfait hein
 {
 	int		i;
 	int		index_tab;
@@ -196,7 +196,7 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 		else if (quote_case(s, c, i))
 		{
 			len = find_total_word_classic_quote(s, i, c, s[i]);
-			if (only_quotes_here(s, i, len) == 0)
+		//	if (only_quotes_here(s, i, len) == 0)
 				new_tab[index_tab++] = s_strsub(s, i, len, filename);
 			i += len;
 		}
