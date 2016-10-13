@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 10:59:15 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 10:59:28 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 13:09:07 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
 **	modifie le maillon en fonction de son argv
 */
 
-void	update_elem(t_list *elem/*, char *save_word, char *sub_cmd*/)
+void	update_elem(t_list *elem, int change_argv)
 {
 	char	**tmp;
 
 	ft_strdel(&elem->content);
 	ft_strdel(&elem->fullcontent);
 	elem->fullcontent = ft_implode(elem->argv);
-	tmp = s_strsplit_with_quote(elem->fullcontent, ' ', __FILE__);
-	free_double_tab(elem->argv);
-	elem->argv = tmp;
+	if (change_argv == 1)
+	{
+		tmp = s_strsplit_with_quote(elem->fullcontent, ' ', __FILE__);
+		free_double_tab(elem->argv);
+		elem->argv = tmp;
+	}
 	elem->content = s_strdup(elem->argv[0], __FILE__);
 //	fprintf(stderr, "econttent: %s\n", elem->content);
 }

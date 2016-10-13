@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 11:34:31 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 13:10:10 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ void	check_backquotes(t_list **first)
 				}
 				++i;
 			}
-			update_elem(elem);
+			update_elem(elem, 1);
 			//show_elem(elem);
 		}
 		elem = elem->next;

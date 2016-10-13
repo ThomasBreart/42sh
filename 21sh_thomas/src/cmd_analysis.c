@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 11:29:16 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 12:21:48 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_list		*cmd_analysis(char **entry)
 	{
 //		show_elem(first);
 		check_backquotes(&first);
-//		show_elem(first);
+		show_elem(first);
 		if (ft_strlen(first->content) == 0)
 			return (NULL);
 		root = semantic_analysis(first);

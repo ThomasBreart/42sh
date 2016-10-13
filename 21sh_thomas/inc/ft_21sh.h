@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 10:59:57 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 13:09:39 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*goto_next_parenthesis(char *str);
 char	*goto_next_word(char *str, char c);
 char	**realloc_tab(char **oldtab, int *maxlen, const char *filename);
 void	remove_quoting_chars(t_list *elem);
-void	update_elem(t_list *elem);
+void	update_elem(t_list *elem, int change_argv);
 
 /*
 **	check_backquotes.c

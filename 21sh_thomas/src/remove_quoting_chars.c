@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 09:08:28 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 11:32:09 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 13:09:13 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	remove_quoting_chars(t_list *elem)
 	int		k;
 	char	*tmp;
 	char	*str;
+	char	*tmp2;
 
 	i = 0;
 	while (elem->argv[i] != NULL)
@@ -38,11 +39,14 @@ void	remove_quoting_chars(t_list *elem)
 				++k;
 			}
 			else if (str[j] == '\'' || str[j] == '"')
-				++k;
+			{
+				tmp = goto_next_quote(str + j);
+				j += tmp - (str + j);
+				k = k + 2;
+			}
 			if (str[j] != '\0')
 				++j;
 		}
-//			fprintf(stderr, "k: %d\n", k);
 		if (k > 0)
 		{
 			tmp = ft_strnew(ft_strlen(str) - k);
@@ -56,9 +60,20 @@ void	remove_quoting_chars(t_list *elem)
 					if (str[j] != '\0')
 						tmp[k++] = str[j++];
 				}
-				else if (str[j] != '\'' && str[j] != '"')
+				else if (str[j] == '\'' || str[j] == '"')
+				{
+					tmp2 = goto_next_quote(str + j);
+					++j;
+					while ((str + j) < tmp2)
+					{
+						tmp[k++] = str[j++];
+					}
+				}
+				else
+				{
 					tmp[k++] = str[j++];
-				else if (str[j] != '\0')
+				}
+				if (str[j] != '\0')
 					++j;
 			}
 			free(elem->argv[i]);
@@ -67,5 +82,5 @@ void	remove_quoting_chars(t_list *elem)
 		}
 		++i;
 	}
-	update_elem(elem);
+	update_elem(elem, 0);
 }
