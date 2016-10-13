@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 08:58:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 09:00:09 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 13:25:52 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*goto_next_quote(char *str)
 	++str;
 	while (*str != '\0' && *str != quote)
 	{
-		if (*str == '\\')
+		if (quote == '"' && *str == '\\')
 			++str;
 		else if (quote == '"' && *str == '`')
 		{

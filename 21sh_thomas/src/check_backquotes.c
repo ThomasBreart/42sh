@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 13:10:10 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 14:13:28 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ char	*format_cmd(int fd_pipe_exit)
 	return (new_entry);
 }
 
+void	backquotes_child(int pdes[2], char *str)
+{
+	char	*save;
+	t_list	*root;
+
+	close(pdes[PIPE_EXIT]);
+	dup2(pdes[PIPE_ENTRY], STDOUT_FILENO);
+	save = s_strdup(str, __FILE__);
+	root = cmd_analysis(&save);
+	free(save);
+	exec_cmd(root->left, get_env());
+	free_tree(root);
+	exit(1);
+}
+
 /*
 **	execute la sous-commande, son resultat est stockay dans une pipe
 */
@@ -54,9 +69,7 @@ int		exec_bacquotes(char **str)
 {
 	int		pdes[2];
 	int		child_pid;
-	t_list *root;
 	char	*new_entry;
-	char	*save;
 
 	if (pipe(pdes) == -1)
 		return (internal_error("exec_bacquotes", "create pipe", 0));
@@ -64,20 +77,13 @@ int		exec_bacquotes(char **str)
 	if (child_pid == -1)
 		return (internal_error("exec_bacquotes", "fork", 0));
 	if (child_pid == 0)
-	{
-		close(pdes[PIPE_EXIT]);
-		dup2(pdes[PIPE_ENTRY], STDOUT_FILENO);
-		save = s_strdup(*str, __FILE__);
-		root = cmd_analysis(&save);
-		free(save);
-		exec_cmd(root->left, get_env());
-		exit(1);
-	}
+		backquotes_child(pdes, *str);
 	else
 	{
 		waitpid(child_pid, NULL, 0);
 		close(pdes[PIPE_ENTRY]);
 		new_entry = format_cmd(pdes[PIPE_EXIT]);
+		close(pdes[PIPE_EXIT]);
 		ft_strdel(str);
 		*str = new_entry;
 	}
