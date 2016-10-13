@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/14 21:43:10 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/19 17:23:42 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 12:10:48 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,23 @@ void	check_shell_variable(char **entry, char *tmp, char **env)
 	int		j;
 	char	*key;
 	char	*value;
+	char	*tmp2;
 
 	i = 0;
 	while (tmp[i] != '\0')
 	{
-		if (tmp[i] == '$' && tmp[i + 1] != '\0' && tmp[i + 1] != ' ' &&
+		if (tmp[i] == '\\')
+			++i;
+		else if (tmp[i] == '\'')
+		{
+			tmp2 = goto_next_quote(tmp + i);
+			i += tmp2 - tmp;
+		}
+		else if (tmp[i] == '$' && tmp[i + 1] != '\0' && tmp[i + 1] != ' ' &&
 															tmp[i + 1] != '$')
 		{
 			j = i + 1;
-			while (tmp[j] != '\0' && tmp[j] != ' ' && tmp[j] != '$')
+			while (tmp[j] != '\0' && tmp[j] != ' ' && tmp[j] != '$' && tmp[j] != '"')
 				j++;
 			key = s_strsub(tmp, i + 1, (j - (i + 1)), __FILE__);
 			value = ft_getenv(key, env);
@@ -44,6 +52,7 @@ void	check_shell_variable(char **entry, char *tmp, char **env)
 				free(value);
 			free(key);
 		}
-		i++;
+		if (tmp[i] != '\0')
+			++i;
 	}
 }

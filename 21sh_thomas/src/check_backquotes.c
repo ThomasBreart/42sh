@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/12 05:35:31 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 11:34:31 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,24 +154,6 @@ void	del_subcmd_indicator(char **str/*, int type*/)
 	*str = new_str;
 }
 
-/*
-**	modifie le maillon avec le resultat de la sous commande
-*/
-
-void	update_elem(t_list *elem/*, char *save_word, char *sub_cmd*/)
-{
-	char	**tmp;
-
-	ft_strdel(&elem->content);
-	ft_strdel(&elem->fullcontent);
-	elem->fullcontent = ft_implode(elem->argv);
-	tmp = s_strsplit_with_quote(elem->fullcontent, ' ', __FILE__);
-	free_double_tab(elem->argv);
-	elem->argv = tmp;
-	elem->content = s_strdup(elem->argv[0], __FILE__);
-	fprintf(stderr, "econttent: %s\n", elem->content);
-}
-
 int		extract_subcmd(char **str, int start_analysis, int *start_subcmd, char **sub_cmd)
 {
 	int		i;
@@ -269,7 +251,7 @@ void	check_backquotes(t_list **first)
 				++i;
 			}
 			update_elem(elem);
-			show_elem(elem);
+			//show_elem(elem);
 		}
 		elem = elem->next;
 	}

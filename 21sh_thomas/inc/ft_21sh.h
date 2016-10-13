@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/12 04:18:41 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 10:59:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,12 @@
 int		cmd_is_open(char *str);
 int		open_chars_error(t_historic *tcaps, char error);
 char	*find_full_cmd(char *s, t_historic *termcaps);
-
+char	*goto_next_quote(char *str);
+char	*goto_next_parenthesis(char *str);
+char	*goto_next_word(char *str, char c);
+char	**realloc_tab(char **oldtab, int *maxlen, const char *filename);
+void	remove_quoting_chars(t_list *elem);
+void	update_elem(t_list *elem);
 
 /*
 **	check_backquotes.c
