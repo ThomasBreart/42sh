@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 11:01:08 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 11:33:40 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 15:52:07 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	exec_and(t_list *elem, char ***env, t_save_fd *save)
 		ret = exec_lc(elem->left, env, NULL, save);
 	else if (elem->left->type == LEX_LL_R)
 		ret = exec_llc(elem->left, env, NULL, save);
+	else if (elem->left->type == LEX_SUBSH)///
+		ret = exec_subshell(elem->left, env, save);///
 	if (ret != -1)
 	{
 		restore_fd(save);
@@ -54,6 +56,8 @@ static int	exec_or(t_list *elem, char ***env, t_save_fd *save)
 		ret = exec_lc(elem->left, env, NULL, save);
 	else if (elem->left->type == LEX_LL_R)
 		ret = exec_llc(elem->left, env, NULL, save);
+	else if (elem->left->type == LEX_SUBSH)///
+		ret = exec_subshell(elem->left, env, save);///
 	if (ret == -1)
 	{
 		restore_fd(save);
@@ -83,6 +87,8 @@ static int	exec_coma(t_list *elem, char ***env, t_save_fd *save)
 		exec_or(elem->left, env, save);
 	else if (elem->left->type == LEX_AND)
 		exec_and(elem->left, env, save);
+	else if (elem->left->type == LEX_SUBSH)///
+		ret = exec_subshell(elem->left, env, save);///
 	restore_fd(save);
 	ret = exec_cmd(elem->right, env);
 	return (ret);
@@ -111,6 +117,8 @@ int			exec_cmd(t_list *first, char ***env)
 		ret = exec_lc(first, env, NULL, &save);
 	else if (first->type == LEX_LL_R)
 		ret = exec_llc(first, env, NULL, &save);
+	else if (first->type == LEX_SUBSH)///
+		ret = exec_subshell(first, env, &save);///
 	else if (first->type == LEX_WORD)
 		ret = exec_simple(first, env, &save);
 	close_fd(&save);

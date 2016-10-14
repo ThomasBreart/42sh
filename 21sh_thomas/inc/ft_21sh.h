@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 13:09:39 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 15:52:49 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define LEX_RR_R 8
 # define LEX_COMA 9
 # define LEX_SPACES 10
-# define LEX_BQ 11
+# define LEX_SUBSH 11
 
 # include "structs.h"
 # include "lexer.h"
@@ -72,6 +72,7 @@ char	*goto_next_word(char *str, char c);
 char	**realloc_tab(char **oldtab, int *maxlen, const char *filename);
 void	remove_quoting_chars(t_list *elem);
 void	update_elem(t_list *elem, int change_argv);
+int		exec_subshell(t_list *elem);
 
 /*
 **	check_backquotes.c

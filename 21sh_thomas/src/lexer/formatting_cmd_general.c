@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/03 22:46:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/07 19:50:12 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 08:12:52 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_missing_word(t_list *elem)
 	int			ret;
 
 	ret = 1;
-	if (elem == NULL || (elem->type != LEX_WORD && elem->type != LEX_BQ))
+	if (elem == NULL || (elem->type != LEX_WORD && elem->type != LEX_SUBSH))
 	{
 		ft_putendl_fd("Invalid command.", STDERR_FILENO);
 		return (-1);
@@ -78,12 +78,17 @@ static int	useless_comas(t_list **first)
 
 int			formatting_cmd_general(t_list **first)
 {
+	printf("plop1\n");
 	if (find_aggregator_fd(*first) == -1)
 		return (-1);
+	printf("plop2\n");
 	swap_argv_with_redir(first);
+	printf("plop3\n");
 	if (useless_comas(first) == -1)
 		return (-1);
+	printf("plop4\n");
 	if (check_missing_word(*first) == -1)
 		return (-1);
+	printf("plop5\n");
 	return (1);
 }

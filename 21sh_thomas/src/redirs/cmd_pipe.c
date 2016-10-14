@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 11:53:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 15:50:43 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 13:13:21 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	cmd_pipe_redirs(t_list *elem, char ***env, t_save_fd *save)
 	ret = 42;
 	if (elem->right->type == LEX_WORD)
 		ret = exec_simple(elem->right, env, save);
+	else if (elem->right->type == LEX_SUBSH)
+		ret = exec_subshell(elem->right, env, save);
 	else if (elem->right->type == LEX_R_R)
 		ret = exec_rc(elem->right, env, elem->right->left, save);
 	else if (elem->right->type == LEX_RR_R)
@@ -56,7 +58,10 @@ static void	cmd_pipe_child(int pdes[2], t_list *prog, char ***env,
 	signals_reset();
 	close(pdes[PIPE_EXIT]);
 	master_dup2(pdes[PIPE_ENTRY], STDOUT_FILENO);
-	exec_simple(prog, env, save);
+	if (prog->type == LEX_WORD)
+		exec_simple(prog, env, save);// pas svg ret ?
+	else if (prog->type == LEX_SUBSH)
+		exec_subshell(prog, env, save);
 	close(pdes[PIPE_ENTRY]);
 	exit(42);
 }
@@ -83,6 +88,7 @@ int			cmd_pipe(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 	pid_t		father;
 	t_historic	*termcaps;
 
+	fprintf(stderr, "yop\n");
 	termcaps = get_termcaps();
 	ret = 42;
 	if (prog == NULL)
@@ -98,8 +104,8 @@ int			cmd_pipe(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 	{
 		save_pid(father);
 		cmd_pipe_father(pdes, elem, env, save);
+		waitpid(0, NULL, 0);
 		kill_process_still_in_progress();
-		waitpid(father, NULL, 0);
 		init_var_aggrfd(termcaps);
 	}
 	return (ret);

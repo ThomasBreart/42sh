@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 09:58:48 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/09 03:11:15 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 08:26:34 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			is_a_word(char *s)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\"')
+		if (s[i] == '\"')// pas beau ca
 		{
 			i++;
 			while (s[i] != '\0' && s[i] != '\"')
@@ -58,8 +58,8 @@ int			is_a_word(char *s)
 			break ;
 		else if (s[i] == '<' || s[i] == ';' || s[i] == '|' || s[i] == '>')
 			break ;
-//		else if (s[i] == '`')
-//			break ;
+		else if (s[i] == '(')
+			break ;
 		i++;
 	}
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:48:06 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/07 19:39:06 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 08:09:21 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		lexical_analysis(char *cmd, t_list **first);
 /*
 **lexical_analysis_ope_others.c
 */
-int		is_ope_backquote(char *s);
+int		is_ope_subshell(char *s);
 int		is_ope_and(char *s);
 int		is_ope_or(char *s);
 int		is_ope_pipe(char *s);

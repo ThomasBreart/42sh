@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 13:37:16 by tbreart           #+#    #+#             */
-/*   Updated: 2016/05/19 07:22:09 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 08:32:13 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		lex_is_cmd(t_list *firstcpy)
 {
-	if (firstcpy->type == LEX_WORD)
+	if (firstcpy->type == LEX_WORD || firstcpy->type == LEX_SUBSH)
 		return (1);
 	return (0);
 }

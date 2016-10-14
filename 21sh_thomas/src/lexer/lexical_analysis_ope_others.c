@@ -6,28 +6,23 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 10:39:20 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/08 23:55:00 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 08:06:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		is_ope_backquote(char *s)
+int		is_ope_subshell(char *s)
 {
-	int		i;
+	char	*tmp;
 
-	i = 0;
-	if (s[i] != '`')
+	if (*s == '(')// etre sur que ce char ne peut pas etre echapay
+		tmp = goto_next_parenthesis(s);
+	else
 		return (0);
-	++i;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '`' && s[i - 1] != '\\')
-			break ;
-		++i;
-	}
-	++i;
-	return (i);
+	if (*tmp != '\0')
+		++tmp;
+	return (tmp - s);
 }
 
 int		is_ope_and(char *s)
