@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/22 02:40:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/26 01:07:37 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 12:35:30 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		signals_management(void)
 		i++;
 	}
 	signal(SIGSEGV, SIG_DFL);
-	signal(SIGCHLD, SIG_DFL);
+	// signal(SIGCHLD, SIG_DFL);
 	signal(SIGINT, handler);
 	signal(SIGWINCH, resize_win);
 }

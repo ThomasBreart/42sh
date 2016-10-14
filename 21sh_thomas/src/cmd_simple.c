@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_simple.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/26 04:06:21 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/12 18:04:21 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 **	Return -1 si ya pas de builtin
 */
 
+#include "stdio.h"
+
+
 static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 {
 	t_historic	*termcaps;
@@ -78,6 +81,8 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 		ret = builtin_goto(elem, env);
 	else if (ft_strcmp("change_prompt", elem->content) == 0)
 		ret = builtin_change_prompt(elem);
+	else if (ft_strcmp("history", elem->content) == 0)
+		ret = builtin_history(elem->argv);
 	else
 		return (-1);
 	return (ret);

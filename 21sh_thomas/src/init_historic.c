@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_historic.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:44:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/23 15:58:17 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 16:22:55 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char		**recover_historic_file(t_historic *termcaps)
 	if (i == 501)
 		recover_historic_file_error(&taab);
 	close(fd);
+	ft_putstr("YOLO\n");
 	return (taab);
 }
 

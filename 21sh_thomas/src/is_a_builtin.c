@@ -30,6 +30,8 @@ int		is_a_builtin(char *s)
 		return (1);
 	else if (ft_strcmp("change_prompt", s) == 0)
 		return (1);
+	else if (ft_strcmp("history", s) == 0)
+		return (1);
 	else
 		return (0);
 }

@@ -3,15 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 20:02:22 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/14 16:15:08 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_BUILTINS_H
 # define FT_BUILTINS_H
+
+/*
+**	builtin_history.c
+*/
+
+int			                builtin_history(char **argv);
+char                    *reverse_split(char **argv);
+int                     history_usage();
+int                     numeric_argument_error(char *argv);
+int                     check_errors(char *argv, int index);
+int                     check_numeric_arg(char *argv);
+void                    print_historyy(int n);
+int                     out_of_range(char *argv);
+int                     get_value(char *cpy, int index);
+int                     flag_d(char *args, t_flags *flags);
+int                     put_flag_d(t_flags *flags);
+char                    *get_argument(char *argv, int end);
+int                     check_history_flags(char *args, t_flags flags);
+int                     history_anrw_error(void);
+void                    flag_p(char *str);
+void                    flag_c(void);
+int                     del_indice_history(t_flags flags);
+int                     ft_lst_size(t_list *history);
+void                    flag_w(t_flags *flags);
+void                    check_what_element_to_delete(t_historic
+                        *termcaps, t_list *cpy);
+void                     flag_r(t_flags *flags);
+
 
 /*
 **	builtin_cd.c

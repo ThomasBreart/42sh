@@ -3,15 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:24:18 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 15:40:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/13 16:19:53 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_STRUCTS_H
 # define FT_STRUCTS_H
+
+typedef struct   s_flags
+{
+  int     	indice;
+  int     	flag_d;
+  int     	flag_c;
+  int     	flag_a;
+  int     	flag_n;
+  int     	flag_r;
+  int     	flag_w;
+  int     	flag_s;
+  int     	flag_p;
+  char    	*argument;
+}                	t_flags;
 
 typedef struct		s_list
 {
