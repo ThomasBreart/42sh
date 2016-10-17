@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 13:41:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/13 17:22:56 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 17:28:48 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ static void print_spaces(int max, int indice)
 
 static void     print_n_history(t_list *cpy, int max, int n, int lst_size)
 {
+  t_historic  *termcaps;
+
+  termcaps = get_termcaps();
   while (n > 1)
   {
     cpy = cpy->prev;
@@ -62,6 +65,13 @@ static void     print_n_history(t_list *cpy, int max, int n, int lst_size)
   {
     print_spaces(max, lst_size);
     ft_putnbr(lst_size);
+    if (termcaps->need_wildcard)
+    {
+      if (cpy->content_modified)
+        ft_putchar('*');
+      else
+        ft_putchar(' ');
+    }
     ft_putchar(' ');
     ft_putstr(cpy->content);
     ft_putstr("\n");
@@ -75,7 +85,7 @@ static void     print_n_history(t_list *cpy, int max, int n, int lst_size)
 ** on affiche l'historique en entier.
 */
 
-static void     print_full_history(t_list *cpy, int max)
+static void     print_full_history(t_list *cpy, int max, t_historic *termcaps)
 {
   int     i;
 
@@ -84,6 +94,13 @@ static void     print_full_history(t_list *cpy, int max)
   {
     print_spaces(max, i);
     ft_putnbr(i);
+    if (termcaps->need_wildcard)
+    {
+      if (cpy->content_modified)
+        ft_putchar('*');
+      else
+        ft_putchar(' ');
+    }
     ft_putchar(' ');
     ft_putstr(cpy->content);
     ft_putstr("\n");
@@ -110,7 +127,7 @@ void print_historyy(int n)
   lst_size = ft_lst_size(cpy);
   max = get_len_of_int(lst_size);
   if (!n || n > lst_size)
-    print_full_history(cpy, max);
+    print_full_history(cpy, max, termcaps);
   else
   {
     cpy = termcaps->end;

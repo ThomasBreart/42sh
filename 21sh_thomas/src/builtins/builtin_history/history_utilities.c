@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 12:36:18 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/13 16:02:36 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 17:22:57 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 #include "ft_21sh.h"
 #include "stdio.h"
 
-int  ft_lst_size(t_list *history)
+int  ft_lst_size(t_list *cpy)
 {
   int   i;
+  t_historic  *termcaps;
 
+  termcaps = get_termcaps();
   i = 0;
-  while (history)
+  while (cpy)
   {
-    history = history->next;
+    if (cpy->content_modified)
+      termcaps->need_wildcard = 1;
+    cpy = cpy->next;
     i++;
   }
   return (i);
