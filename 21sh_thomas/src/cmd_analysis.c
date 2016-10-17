@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 08:57:31 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 18:37:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ t_list		*cmd_analysis(char **entry)
 	if (formatting_cmd_general(&first) == 1)
 	{
 		show_elem(first);
+	/*	if (check_event_designators(&first) == -1)
+		{
+			//free list first
+			return (NULL);
+		}
+		show_elem(first);*/
 		check_backquotes(&first);
 		show_elem(first);
 		if (ft_strlen(first->content) == 0)
@@ -41,6 +47,7 @@ t_list		*cmd_analysis(char **entry)
 		show_binary_tree(root);
 		if (root == NULL)
 		{
+			// free list first ?
 			internal_error("cmd_analysis", "Root NULL", 0);
 			return (NULL);
 		}

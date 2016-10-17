@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 15:52:49 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 18:49:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@
 # include "termcaps.h"
 # include "redirs.h"
 
+void	check_event_designators(t_list **first);
 int		cmd_is_open(char *str);
 int		open_chars_error(t_historic *tcaps, char error);
 char	*find_full_cmd(char *s, t_historic *termcaps);
 char	*goto_next_quote(char *str);
+char	*goto_next_backquote(char *str);
 char	*goto_next_parenthesis(char *str);
 char	*goto_next_word(char *str, char c);
 char	**realloc_tab(char **oldtab, int *maxlen, const char *filename);

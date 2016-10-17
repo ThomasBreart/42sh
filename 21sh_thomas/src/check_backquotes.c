@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 14:13:28 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 19:08:45 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,10 @@ int		extract_subcmd(char **str, int start_analysis, int *start_subcmd, char **su
 	int		i;
 	int		len_subcmd;
 	char	*new_str;
+	char	*tmp;
 
 	i = 0;
+	printf("111\n");
 	*start_subcmd = -1;
 	while ((*str)[i] != '\0' && i < start_analysis)
 		++i;
@@ -174,21 +176,23 @@ int		extract_subcmd(char **str, int start_analysis, int *start_subcmd, char **su
 	{
 		if ((*str)[i] == '\\')
 			++i;
+		else if ((*str)[i] == '\'')
+		{
+			tmp = goto_next_quote(*str + i);
+			i = tmp - *str;
+		}
 		else if ((*str)[i] == '`')
 		{
-			if (*start_subcmd == -1)
-				*start_subcmd = i;
-			else
-			{
-				len_subcmd = i - *start_subcmd + 1;// prend en compte le 2e '`'
-				*sub_cmd = s_strsub(*str, *start_subcmd, len_subcmd, __FILE__);
-				new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
-				ft_strncat(new_str, *str, *start_subcmd);
-				ft_strcat(new_str, *str + (*start_subcmd + len_subcmd));
-				ft_strdel(str);
-				*str = new_str;
-				return (1);
-			}
+			*start_subcmd = i;
+			tmp = goto_next_backquote((*str + i));
+			len_subcmd = tmp - (*str + i) + 1;// prend en compte le 2e '`'
+			*sub_cmd = s_strsub(*str, i, len_subcmd, __FILE__);
+			new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
+			ft_strncat(new_str, *str, *start_subcmd);
+			ft_strcat(new_str, *str + (*start_subcmd + len_subcmd));
+			ft_strdel(str);
+			*str = new_str;
+			return (1);
 		}
 		if ((*str)[i] != '\0')
 			++i;
@@ -251,7 +255,6 @@ void	check_backquotes(t_list **first)
 					elem->argv[i] = tmp;
 					start_analysis = start_subcmd + ft_strlen(sub_cmd);
 					ft_strdel(&sub_cmd);
-
 					}
 				}
 				++i;
