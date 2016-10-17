@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 17:47:40 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 17:49:29 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 19:01:25 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int check_flags_anrw(char *args, t_flags *flags)
 ** Dans l'ordre des priorité vient ensuite le 's' et le 'p'.
 ** Le 's' est supérieur au 'p'.
 */
-
 
 static int check_flags_s_and_p(char *args, t_flags flags, char **ar)
 {

@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 15:02:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/14 11:45:30 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 19:24:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	free_historic(t_historic *termcaps)
 	while (tmp != NULL)
 	{
 		tmp2 = tmp;
-		ft_strdel(&tmp->content);
+		ft_memdel((void**)&tmp->content);
 		tmp = tmp->next;
 		ft_memdel((void**)&tmp2);
 	}

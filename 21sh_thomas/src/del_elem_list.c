@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_elem_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 14:25:11 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/07 09:23:41 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 18:50:30 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int		del_elem_list(t_list *first)
 		else
 			first->prev->next = NULL;
 	}
-	free(first->content);
+	ft_memdel((void**)&first->content);
 	free_double_tab(first->argv);
-	free(first);
+	ft_memdel((void**)&first);
 	return (1);
 }
