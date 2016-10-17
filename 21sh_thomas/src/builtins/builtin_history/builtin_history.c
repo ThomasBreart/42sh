@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 16:49:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 16:12:35 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 17:50:53 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int			builtin_history(char **ar)
   else
   {
     if (!(ret = parse_flags(&argv, &flags)))
-      ret = check_history_flags(argv, flags);
+      ret = check_history_flags(argv, flags, ar);
   }
   ft_memdel((void**)&begin);
   return (ret);

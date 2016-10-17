@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 17:47:40 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/14 16:14:45 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 17:49:29 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int check_flags_anrw(char *args, t_flags *flags)
 */
 
 
-static int check_flags_s_and_p(char *args, t_flags flags)
+static int check_flags_s_and_p(char *args, t_flags flags, char **ar)
 {
   int   ret;
 
@@ -50,7 +50,7 @@ static int check_flags_s_and_p(char *args, t_flags flags)
   if (flags.flag_s)
     printf("FLAG S is ON WITH ARG = %s\n", flags.argument);
   else if (flags.flag_p)
-    flag_p(flags.argument);
+    flag_p(ar);
   else
     ret = check_flags_anrw(args, &flags);
   ft_memdel((void**)&flags.argument);
@@ -80,14 +80,14 @@ static int  handle_flag_d(t_flags flags, char *args)
 ** Si l'un des deux est ativé, on ne se préocupe pas des autres options.
 */
 
-int check_history_flags(char *args, t_flags flags)
+int check_history_flags(char *args, t_flags flags, char **ar)
 {
   if (handle_flag_d(flags, args))
     return (1);
   if (flags.flag_c)
     flag_c();
   else if (!flags.flag_d && !flags.flag_c)
-    if (check_flags_s_and_p(args, flags))
+    if (check_flags_s_and_p(args, flags, ar))
       return (1);
   return (0);
 }
