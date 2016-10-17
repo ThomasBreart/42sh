@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 15:48:49 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/19 17:33:20 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 16:25:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_list	*s_lstnew(char const *content, const char *filename)
 	newlist->left = NULL;
 	newlist->right = NULL;
 	newlist->argv = NULL;
+	newlist->content_modified = 0;
 	if (content == NULL)
 		newlist->content = NULL;
 	else

@@ -6,11 +6,11 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 12:33:15 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/11 17:24:16 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 16:13:32 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "ft_21sh.h"
 
 int history_anrw_error(void)
 {

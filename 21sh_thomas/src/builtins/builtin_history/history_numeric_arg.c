@@ -6,11 +6,12 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 15:39:58 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/10 17:18:21 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 16:13:54 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+//#include "../../include/minishell.h"
+#include "ft_21sh.h"
 #include "ctype.h"
 
 /*

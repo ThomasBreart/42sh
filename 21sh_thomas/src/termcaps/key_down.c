@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 10:18:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/27 16:29:05 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 16:29:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int			ft_key_down(t_historic *tcaps, char **entry)
 	if (*entry != NULL)
 		free(*entry);
 	erase_cmd(col_sup, tcaps);
-	if (tcaps->cur == tcaps->end)
-		give_cmd_inprogress(tcaps, entry);
+	if (tcaps->cur == tcaps->end)///
+		give_cmd_inprogress(tcaps, entry);///
 	else if (tcaps->cur != tcaps->end)
 	{
 		tcaps->cur = tcaps->cur->next;

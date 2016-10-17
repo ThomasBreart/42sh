@@ -6,12 +6,11 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 16:49:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/12 19:08:37 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 16:12:35 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-
+#include "ft_21sh.h"
 
 /*
 ** On rempli notre structure pour savoir quelles options ont été activées.

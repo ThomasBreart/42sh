@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:24:18 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 16:19:53 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/17 16:29:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_list
 	struct s_list	*next;
 	struct s_list	*left;
 	struct s_list	*right;
+	int				content_modified;
 }					t_list;
 
 typedef struct		s_save_fd
