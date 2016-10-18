@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/17 19:08:45 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/17 19:16:28 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ int		extract_subcmd(char **str, int start_analysis, int *start_subcmd, char **su
 	char	*tmp;
 
 	i = 0;
-	printf("111\n");
 	*start_subcmd = -1;
 	while ((*str)[i] != '\0' && i < start_analysis)
 		++i;

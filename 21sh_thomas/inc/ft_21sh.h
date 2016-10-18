@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/17 18:49:01 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/18 17:52:09 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@
 # include "termcaps.h"
 # include "redirs.h"
 
-void	check_event_designators(t_list **first);
+char		*add_str_in_str(char *dest, char *src, int position);
+int		check_event_designators(t_list **first);
 int		cmd_is_open(char *str);
 int		open_chars_error(t_historic *tcaps, char error);
 char	*find_full_cmd(char *s, t_historic *termcaps);
