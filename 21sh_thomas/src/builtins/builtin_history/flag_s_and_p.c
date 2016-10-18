@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 14:47:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:12:10 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 16:30:46 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void		flag_p(char **ar)
 	skip_flags(&ar);
 	if (*ar)
 	{
-		tmp = termcaps->end->prev;
+		if (termcaps->end && termcaps->end->prev)
+			tmp = termcaps->end->prev;
+		else
+			tmp = NULL;
 		if (termcaps->end == termcaps->head)
 			termcaps->head = NULL;
 		del_elem_list(termcaps->end);
@@ -79,7 +82,10 @@ void		flag_s(char *str)
 	termcaps = get_termcaps();
 	if (*str)
 	{
-		tmp = termcaps->end->prev;
+		if (termcaps->end && termcaps->end->prev)
+			tmp = termcaps->end->prev;
+		else
+			tmp = NULL;
 		if (termcaps->end == termcaps->head)
 			termcaps->head = NULL;
 		del_elem_list(termcaps->end);

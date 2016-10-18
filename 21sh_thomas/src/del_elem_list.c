@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 14:25:11 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/17 18:50:30 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 16:23:13 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		del_elem_list(t_list *first)
 {
-	if (first->next != NULL)
+	if (first && first->next != NULL)
 	{
 		if (first->prev != NULL)
 		{
@@ -24,7 +24,7 @@ int		del_elem_list(t_list *first)
 		else
 			first->next->prev = NULL;
 	}
-	if (first->prev != NULL)
+	if (first && first->prev != NULL)
 	{
 		if (first->next != NULL)
 		{
@@ -34,8 +34,11 @@ int		del_elem_list(t_list *first)
 		else
 			first->prev->next = NULL;
 	}
-	ft_memdel((void**)&first->content);
-	free_double_tab(first->argv);
-	ft_memdel((void**)&first);
+	if (first)
+	{
+		ft_memdel((void**)&first->content);
+		free_double_tab(first->argv);
+		ft_memdel((void**)&first);
+	}
 	return (1);
 }

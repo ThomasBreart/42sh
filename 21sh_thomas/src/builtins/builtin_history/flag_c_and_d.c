@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_d.c                                           :+:      :+:    :+:   */
+/*   flag_c_and_d.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:38:34 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:38:43 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 16:37:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int		del_indice_history(t_flags flags)
 
 	i = 0;
 	termcaps = get_termcaps();
-	cpy = termcaps->head;
+	if (termcaps->head)
+		cpy = termcaps->head;
+	else
+		return (0);
 	if ((ft_lst_size(cpy)) < flags.indice)
 		return (out_of_range(flags.argument));
 	while (i < flags.indice - 1 && cpy->next)

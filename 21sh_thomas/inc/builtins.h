@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 15:32:18 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 18:52:59 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void                     flag_s(char *str);
 int		                   del_element_list(t_list *first);
 int                      ft_isnumber(int c);
 int	                     get_len_of_int(int nb);
+void	                   flag_n(void);
 
 
 /*

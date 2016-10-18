@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:24:18 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/17 17:21:56 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 18:50:00 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct		s_historic
 	int				end_select;
 	int				stdout_modified;
   int				need_wildcard;
+  int				n_indice;
 }					t_historic;
 
 typedef struct		s_vars_redirs

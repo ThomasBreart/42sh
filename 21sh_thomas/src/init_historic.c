@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:44:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 15:01:51 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 19:16:14 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,36 @@ static void	recover_historic_file_error(char ***taab)
 	*taab = NULL;
 }
 
-char		**recover_historic_file(t_historic *termcaps)
+static void call_gnl(int fd, char **taab, t_historic *termcaps)
 {
-	int		fd;
-	char	**taab;
 	char	*entry;
 	int		i;
 
-	if ((fd = open(termcaps->path_historic_file, O_RDONLY)) == -1)
-		return (NULL);
-	taab = (char**)s_memalloc(sizeof(char *) * 501, __FILE__);
-	i = 0;
-	while (i < 501)
-		taab[i++] = NULL;
 	i = 0;
 	while (get_next_line(fd, &entry) != 0)
 	{
 		if (taab[i] != NULL)
-			free(taab[i]);
+			ft_memdel((void**)taab[i]);
 		taab[i++] = entry;
+		termcaps->n_indice++;
 		if (i == 501)
 			break ;
 	}
 	ft_strdel(&entry);
 	if (i == 501)
 		recover_historic_file_error(&taab);
+}
+
+char		**recover_historic_file(t_historic *termcaps)
+{
+	int		fd;
+	char	**taab;
+
+	if ((fd = open(termcaps->path_historic_file, O_RDONLY)) == -1)
+		return (NULL);
+	taab = (char**)s_memalloc(sizeof(char *) * 501, __FILE__);
+	ft_bzero(taab, sizeof(taab));
+	call_gnl(fd, taab, termcaps);
 	close(fd);
 	return (taab);
 }

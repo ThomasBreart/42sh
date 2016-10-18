@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 17:47:40 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:39:07 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 18:53:14 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_flags_anrw(char *args, t_flags *flags)
 		ft_putstr("FLAG A is ON WITH FILENAME = %s\n");
 	else if (flags->flag_n && !flags->flag_a && !flags->flag_r &&
 			!flags->flag_w)
-		ft_putstr("FLAG N is ON WITH FILENAME = %s\n");
+			flag_n();
 	else if (flags->flag_r && !flags->flag_a && !flags->flag_n &&
 			!flags->flag_w)
 		flag_r(flags);
