@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_c.c                                           :+:      :+:    :+:   */
+/*   history_tools.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/13 15:02:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 14:33:34 by mfamilar         ###   ########.fr       */
+/*   Created: 2016/10/18 15:27:19 by mfamilar          #+#    #+#             */
+/*   Updated: 2016/10/18 15:40:56 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/*
-** Supprime tout l'historique
-*/
-
-void flag_c(void)
+int	get_len_of_int(int nb)
 {
-  t_historic  *termcaps;
+	int	i;
 
-  termcaps = get_termcaps();
-  free_historic(termcaps);
-	termcaps->head = NULL;
-	termcaps->cur = NULL;
-	termcaps->end = NULL;
+	i = 0;
+	while (nb > 0)
+	{
+		nb /= 10;
+		i++;
+	}
+	return (i);
+}
+
+int	history_usage(void)
+{
+	ft_putstr_fd("history: usage: history [-c] [-d offset] [n] or", 2);
+	ft_putstr_fd("history -awrn [filename] or history -ps arg [arg...]\n", 2);
+	return (1);
 }

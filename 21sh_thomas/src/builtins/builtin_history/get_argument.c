@@ -6,59 +6,59 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 16:16:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 14:25:18 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 15:13:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 /*
-** Fonctions qui servent à récupérer le ou les arguments situés après les commandes.
+** Fonctions qui servent à récupérer le ou les arguments situés après les cmds.
 ** En fonction de l'option, soit on recupère toute la ligne d'argument ou bien
 ** seulement jusqu'au prochain espace.
 */
 
-static int    parse_line_until_end(char *argv)
+static int		parse_line_until_end(char *argv)
 {
-  int   index;
+	int	index;
 
-  index = 0;
-  while (*argv)
-  {
-    index++;
-    argv++;
-  }
-  return (index);
+	index = 0;
+	while (*argv)
+	{
+		index++;
+		argv++;
+	}
+	return (index);
 }
 
-static int    parse_line_until_space(char *argv)
+static int		parse_line_until_space(char *argv)
 {
-  int   index;
+	int	index;
 
-  index = 0;
-  while (*argv && *argv != ' ')
-  {
-    index++;
-    argv++;
-  }
-  return (index);
+	index = 0;
+	while (*argv && *argv != ' ')
+	{
+		index++;
+		argv++;
+	}
+	return (index);
 }
 
-char  *get_argument(char *argv, int end)
+char			*get_argument(char *argv, int end)
 {
-  char  *ret;
-  char  *cpy;
-  int   index;
+	char	*ret;
+	char	*cpy;
+	int		index;
 
-  if (!*argv)
-    return (NULL);
-  cpy = argv;
-  if (end)
-    index = parse_line_until_end(argv);
-  else
-    index = parse_line_until_space(argv);
-  ret = ft_strnew(index + 1);
-  if (index)
-    ret = ft_strncpy(ret, cpy, index);
-  return (ret);
+	if (!*argv)
+		return (NULL);
+	cpy = argv;
+	if (end)
+		index = parse_line_until_end(argv);
+	else
+		index = parse_line_until_space(argv);
+	ret = ft_strnew(index + 1);
+	if (index)
+		ret = ft_strncpy(ret, cpy, index);
+	return (ret);
 }

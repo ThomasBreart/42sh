@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 14:42:36 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 15:32:18 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int                     flag_d(char *args, t_flags *flags);
 int                     put_flag_d(t_flags *flags);
 char                    *get_argument(char *argv, int end);
 int                     check_history_flags(char *args, t_flags flags, char **ar);
-int                     history_anrw_error(void);
 void                    flag_p(char **ar);
 void                    flag_c(void);
 int                     del_indice_history(t_flags flags);
@@ -42,6 +41,7 @@ void                     flag_r(t_flags *flags);
 void                     flag_s(char *str);
 int		                   del_element_list(t_list *first);
 int                      ft_isnumber(int c);
+int	                     get_len_of_int(int nb);
 
 
 /*
