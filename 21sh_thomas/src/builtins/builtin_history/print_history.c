@@ -6,12 +6,11 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 13:41:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 19:51:01 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 14:37:30 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-#include "stdio.h"
 
 static int  get_len_of_int(int nb)
 {

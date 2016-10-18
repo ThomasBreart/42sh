@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 16:34:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/24 14:13:15 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/18 14:42:24 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	exit_check_errors(char **argv)
 	return (1);
 }
 
-static void	free_historic(t_historic *termcaps)
+void			free_historic(t_historic *termcaps)
 {
 	t_list		*tmp;
 	t_list		*tmp2;

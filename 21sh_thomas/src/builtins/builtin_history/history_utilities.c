@@ -6,13 +6,20 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 12:36:18 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 19:04:17 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 14:39:53 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../include/minishell.h"
 #include "ft_21sh.h"
-#include "stdio.h"
+
+int  ft_isnumber(int c)
+{
+  if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' ||
+      c == '6' || c == '7' || c == '8' || c == '9')
+      return (1);
+  else
+    return (0);
+}
 
 int  ft_lst_size(t_list *cpy)
 {

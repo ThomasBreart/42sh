@@ -6,13 +6,11 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 15:39:58 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 16:13:54 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/18 14:42:59 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../../include/minishell.h"
 #include "ft_21sh.h"
-#include "ctype.h"
 
 /*
 ** On récupère et renvoie la valeure numérique pour la commande "history [n]"
@@ -25,7 +23,7 @@ static int get_numeric_value(char *argv)
 
   index = 0;
   cpy = argv;
-  while (isnumber(*argv)) // fonction system à modifier
+  while (ft_isnumber(*argv)) // fonction system à modifier
   {
     index++;
     argv++;
@@ -48,7 +46,7 @@ int check_numeric_arg(char *argv)
 
   while (*argv)
   {
-    if (!isnumber(*argv)) // fonction system à modifier
+    if (!ft_isnumber(*argv)) // fonction system à modifier
       return (numeric_argument_error(argv));
     else
     {

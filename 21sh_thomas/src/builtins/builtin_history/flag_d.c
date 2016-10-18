@@ -6,13 +6,11 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:38:34 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/14 15:10:40 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 14:41:44 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-#include "ctype.h"
-#include "stdio.h"
 
 /*
 ** Un cas particulier en fonction de si on supprime le premier ou dernier élément
@@ -65,7 +63,7 @@ int flag_d(char *args, t_flags *flags)
   cpy = args;
   while (*args && *args != ' ')
   {
-    if (!isnumber(*args)) //fonction system à recoder
+    if (!ft_isnumber(*args)) //fonction system à recoder
       return (out_of_range(args - index));
     index++;
     args++;

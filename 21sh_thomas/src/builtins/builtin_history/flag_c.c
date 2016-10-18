@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history_flag_c.c                                   :+:      :+:    :+:   */
+/*   flag_c.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 15:02:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 19:24:35 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 14:33:34 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-static void	free_historic(t_historic *termcaps)
-{
-	t_list		*tmp;
-	t_list		*tmp2;
-
-	tmp = termcaps->head;
-	while (tmp != NULL)
-	{
-		tmp2 = tmp;
-		ft_memdel((void**)&tmp->content);
-		tmp = tmp->next;
-		ft_memdel((void**)&tmp2);
-	}
-  termcaps->head = NULL;
-  termcaps->cur = NULL;
-  termcaps->end = NULL;
-
-}
 
 /*
 ** Supprime tout l'historique
@@ -41,4 +22,7 @@ void flag_c(void)
 
   termcaps = get_termcaps();
   free_historic(termcaps);
+	termcaps->head = NULL;
+	termcaps->cur = NULL;
+	termcaps->end = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/17 17:50:36 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 14:42:36 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void                    flag_w(t_flags *flags);
 void                    check_what_element_to_delete(t_historic
                         *termcaps, t_list *cpy);
 void                     flag_r(t_flags *flags);
+void                     flag_s(char *str);
+int		                   del_element_list(t_list *first);
+int                      ft_isnumber(int c);
 
 
 /*
@@ -64,6 +67,7 @@ int		builtin_env_options(char **argv);
 */
 int		builtin_exit(t_list *elem, char **env, t_save_fd *save);
 int		clean_exit(char **env, t_save_fd *save);
+void	free_historic(t_historic *termcaps);
 
 /*
 **	builtin_setenv.c

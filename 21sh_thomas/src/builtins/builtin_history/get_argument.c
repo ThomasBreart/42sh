@@ -6,14 +6,14 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 16:16:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 16:12:59 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/18 14:25:18 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 /*
-** Fonctions qui servent à récupérer le ou les arguments situés après les fonctions.
+** Fonctions qui servent à récupérer le ou les arguments situés après les commandes.
 ** En fonction de l'option, soit on recupère toute la ligne d'argument ou bien
 ** seulement jusqu'au prochain espace.
 */

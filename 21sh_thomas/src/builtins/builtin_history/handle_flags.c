@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history_flags.c                                    :+:      :+:    :+:   */
+/*   handle_flags.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 17:47:40 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 19:01:25 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 14:28:47 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-#include "stdio.h"
 
 /*
 ** Viennent ensuite les flags 'a', 'n', 'r', 'w' qui sont de priorité égale.
@@ -22,9 +21,9 @@ static int check_flags_anrw(char *args, t_flags *flags)
 {
   flags->argument = get_argument(args, 0);
   if (flags->flag_a && !flags->flag_n && !flags->flag_r && !flags->flag_w)
-    printf("FLAG A is ON WITH FILENAME = %s\n", flags->argument);
+    ft_putstr("FLAG A is ON WITH FILENAME = %s\n");
   else if (flags->flag_n && !flags->flag_a && !flags->flag_r && !flags->flag_w)
-    printf("FLAG N is ON WITH FILENAME = %s\n", flags->argument);
+    ft_putstr("FLAG N is ON WITH FILENAME = %s\n");
   else if (flags->flag_r && !flags->flag_a && !flags->flag_n && !flags->flag_w)
     flag_r(flags);
   else if (flags->flag_w && !flags->flag_a && !flags->flag_n && !flags->flag_r)
@@ -47,7 +46,7 @@ static int check_flags_s_and_p(char *args, t_flags flags, char **ar)
   if (flags.flag_s || flags.flag_p)
     flags.argument = get_argument(args, 1);
   if (flags.flag_s)
-    printf("FLAG S is ON WITH ARG = %s\n", flags.argument);
+    flag_s(args);
   else if (flags.flag_p)
     flag_p(ar);
   else
@@ -72,7 +71,6 @@ static int  handle_flag_d(t_flags flags, char *args)
   ft_memdel((void**)&flags.argument);
   return (ret);
 }
-
 
 /*
 ** Les deux flags prioritaires sur les autres sont le 'c' et le 'd'.

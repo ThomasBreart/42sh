@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 16:49:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/17 18:38:13 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/18 14:56:25 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,32 @@
 ** arrête le parsing.
 */
 
-static int append_flag(char **args, t_flags *flags)
+static int	append_flag(char **args, t_flags *flags)
 {
-  (*args) += 1;
-  while (**args && **args != ' ')
-  {
-    if (**args == 'c')
-      flags->flag_c =  1;
-    else if (**args == 'd')
-      return (put_flag_d(flags));
-    else if (**args == 'a')
-      flags->flag_a =  1;
-    else if (**args == 'n')
-      flags->flag_n =  1;
-    else if (**args == 'r')
-      flags->flag_r =  1;
-    else if (**args == 'w')
-      flags->flag_w =  1;
-    else if (**args == 'p')
-      flags->flag_p =  1;
-    else if (**args == 's')
-      flags->flag_s =  1;
-    else
-      return (history_usage());
-    (*args) += 1;
-  }
-  return (0);
+	(*args) += 1;
+	while (**args && **args != ' ')
+	{
+		if (**args == 'c')
+			flags->flag_c = 1;
+		else if (**args == 'd')
+			return (put_flag_d(flags));
+		else if (**args == 'a')
+			flags->flag_a = 1;
+		else if (**args == 'n')
+			flags->flag_n = 1;
+		else if (**args == 'r')
+			flags->flag_r = 1;
+		else if (**args == 'w')
+			flags->flag_w = 1;
+		else if (**args == 'p')
+			flags->flag_p = 1;
+		else if (**args == 's')
+			flags->flag_s = 1;
+		else
+			return (history_usage());
+		(*args) += 1;
+	}
+	return (0);
 }
 
 /*
@@ -53,17 +53,17 @@ static int append_flag(char **args, t_flags *flags)
 ** c'est une erreur.
 */
 
-static int     check_stop_flags(char **args)
+static int	check_stop_flags(char **args)
 {
-  if ((*(*args + 2) == ' ' || *(*args + 2) == '\0'))
-  {
-    *(args) += 2;
-    while (**args == ' ')
-      *(args) += 1;
-    return (0);
-  }
-  else
-    return (history_usage());
+	if ((*(*args + 2) == ' ' || *(*args + 2) == '\0'))
+	{
+		*(args) += 2;
+		while (**args == ' ')
+			*(args) += 1;
+		return (0);
+	}
+	else
+		return (history_usage());
 }
 
 /*
@@ -73,27 +73,27 @@ static int     check_stop_flags(char **args)
 ** des options.
 */
 
-static int    parse_flags(char **args, t_flags *flags)
+static int	parse_flags(char **args, t_flags *flags)
 {
-  while (**args)
-  {
-    if (**args == '-' && *(*args + 1)  == '-')
-      return (check_stop_flags(args));
-    else if (**args == '-')
-    {
-      if (ft_isalpha(*(*args + 1)))
-      {
-        if (append_flag(args, flags))
-          return (1);
-      }
-      else
-        return (history_usage());
-    }
-    if (**args != ' ')
-      break ;
-    *(args) += 1;
-  }
-  return (0);
+	while (**args)
+	{
+		if (**args == '-' && *(*args + 1) == '-')
+			return (check_stop_flags(args));
+		else if (**args == '-')
+		{
+			if (ft_isalpha(*(*args + 1)))
+			{
+				if (append_flag(args, flags))
+					return (1);
+			}
+			else
+				return (history_usage());
+		}
+		if (**args != ' ')
+			break ;
+		*(args) += 1;
+	}
+	return (0);
 }
 
 /*
@@ -106,24 +106,24 @@ static int    parse_flags(char **args, t_flags *flags)
 
 int			builtin_history(char **ar)
 {
-  t_flags   flags;
-  char      *begin;
-  char      *argv;
-  int       ret;
+	t_flags		flags;
+	char		*begin;
+	char		*argv;
+	int			ret;
 
-  ret = 0;
-  argv = reverse_split(ar);
-  begin = argv;
-  ft_bzero(&flags, sizeof(t_flags));
-  if (*argv == '\0')
-    print_historyy(0);
-  else if (*argv != '-')
-    ret = check_numeric_arg(argv);
-  else
-  {
-    if (!(ret = parse_flags(&argv, &flags)))
-      ret = check_history_flags(argv, flags, ar);
-  }
-  ft_memdel((void**)&begin);
-  return (ret);
+	ret = 0;
+	argv = reverse_split(ar);
+	begin = argv;
+	ft_bzero(&flags, sizeof(t_flags));
+	if (*argv == '\0')
+		print_historyy(0);
+	else if (*argv != '-')
+		ret = check_numeric_arg(argv);
+	else
+	{
+		if (!(ret = parse_flags(&argv, &flags)))
+			ret = check_history_flags(argv, flags, ar);
+	}
+	ft_memdel((void**)&begin);
+	return (ret);
 }
