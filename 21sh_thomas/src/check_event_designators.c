@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 18:07:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 15:37:05 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 20:31:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,119 @@ int		is_previous_command(char *str)
 	return (0);
 }
 
+int		is_sharp(char *str)
+{
+	++str;
+	if (*str == '#')
+		return (1);
+	return (0);
+}
+
 int		event_previous_command(char **new_str)
 {
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();
-	if (termcaps->end == NULL || termcaps->end->content == NULL)
+	if (termcaps->end == NULL || termcaps->end->prev == NULL || termcaps->end->prev->content == NULL)
 		return (-1);
-	*new_str = s_strdup(termcaps->end->prev->content, __FILE__);// pas passer par prev -> del elem avant
+	*new_str = s_strdup(termcaps->end->prev->content, __FILE__);
 	return (1);
 }
 
-int		exec_event(char **sub_cmd)
+int		event_positif_number(char *sub_cmd, char **new_str)
+{
+	t_historic	*termcaps;
+	int		cmd_number;
+	int		i;
+	t_list	*cmd_histo;
+
+	termcaps = get_termcaps();
+	cmd_number = ft_atoi(sub_cmd + 1);
+	i = 1;
+	cmd_histo = termcaps->head;
+	while (i < cmd_number)
+	{
+		if (cmd_histo == termcaps->end)
+			break ;
+		cmd_histo = cmd_histo->next;
+		++i;
+	}
+	if (i < cmd_number)
+		return (-1);
+	*new_str = s_strdup(cmd_histo->content, __FILE__);
+	return (1);
+}
+
+int		event_negatif_number(char *sub_cmd, char **new_str)
+{
+	t_historic	*termcaps;
+	int		cmd_number;
+	t_list	*cmd_histo;
+
+	termcaps = get_termcaps();
+	cmd_number = ft_atoi(sub_cmd + 1);
+	cmd_histo = termcaps->end;
+	printf("cmd_number: %d\n", cmd_number);
+	while (cmd_number < 0)
+	{
+		if (cmd_histo == termcaps->head)
+			break ;
+		cmd_histo = cmd_histo->prev;
+		++cmd_number;
+	}
+	if (cmd_number < 0)
+		return (-1);
+	*new_str = s_strdup(cmd_histo->content, __FILE__);
+	return (1);
+}
+
+void	error_event_not_found(char *str)
+{
+	ft_putstr_fd("42sh: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putendl_fd(": event not found", STDERR_FILENO);
+}
+
+int		event_sharp(char *sub_cmd, char *entry, int start_subcmd, char **new_str)
+{
+	char *tmp;
+
+	if (start_subcmd == 0)
+		return (-2);
+	*new_str = s_strndup(entry, start_subcmd, __FILE__);
+	if (sub_cmd[2] != '\0')
+	{
+		tmp = s_strjoin(*new_str, sub_cmd + 2, __FILE__);
+		ft_strdel(new_str);
+		*new_str = tmp;
+	}
+	return (1);
+}
+
+int		event_string(char *sub_cmd, char **new_str)
+{
+	t_historic *termcaps;
+	t_list	*tmp;
+	int		len;
+
+	termcaps = get_termcaps();
+	len = ft_strlen(sub_cmd + 1);
+	tmp = termcaps->end->prev;///
+	while (tmp != NULL)
+	{
+		if (ft_strncmp(tmp->content, sub_cmd + 1, len) == 0)
+		{
+			*new_str = s_strdup(tmp->content, __FILE__);
+			break ;
+		}
+		tmp = tmp->prev;
+	}
+	if (tmp == NULL)
+		return (-1);
+	return (1);
+}
+
+int		exec_event(char **sub_cmd, char *entry, int start_subcmd)
 {
 	char	*new_str;
 	int		ret;
@@ -111,124 +212,73 @@ int		exec_event(char **sub_cmd)
 	new_str = NULL;
 	if (is_previous_command(*sub_cmd))
 		ret = event_previous_command(&new_str);
-/*	else if (is_positif_number(*sub_cmd))
-		;
+	else if (is_positif_number(*sub_cmd))
+		ret = event_positif_number(*sub_cmd, &new_str);
 	else if (is_negatif_number(*sub_cmd))
-		;
-	else if (is_string_anywhere(*sub_cmd))
+		ret = event_negatif_number(*sub_cmd, &new_str);
+	else if (is_sharp(*sub_cmd))
+		ret = event_sharp(*sub_cmd, entry, start_subcmd, &new_str);
+	else
+		ret = event_string(*sub_cmd, &new_str);
+/*	else if (is_string_anywhere(*sub_cmd))
 		;
 	else if (is_string_substitution(*sub_cmd))
-		;
-	else if (is_sharp(*sub_cmd))
-		;
-	else
-		event_string();*/
+		;*/
+	if (ret == -1)
+		error_event_not_found(*sub_cmd);
+	if (ret == -2)
+		ret = -1;
 	ft_strdel(sub_cmd);
 	*sub_cmd = new_str;
 	return (ret);
 }
 
-void	modif_last_elem_history(t_list *first)
+void	modif_last_elem_history(char *str)
 {
-	char	*new_cmd_in_history;
-	int		len;
-	char	**tabtmp;
-	t_list	*tmp;
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();
-	len = 0;
-	tmp = first;
-	while (first != NULL)
-	{
-		if (first->type == LEX_WORD)
-		{
-			tabtmp = first->argv;
-			while (*tabtmp != NULL)
-			{
-				len += ft_strlen(*tabtmp) + 1; // + 1 pour l'espace
-				tabtmp++;
-			}
-		}
-		else
-		{
-			len += ft_strlen(first->content) + 1;
-		}
-		first = first->next;
-	}
-	--len;
-	new_cmd_in_history = s_strnew(len, __FILE__);
-	while (tmp != NULL)
-	{
-		if (tmp->type == LEX_WORD)
-		{
-			tabtmp = tmp->argv;
-			while (*tabtmp != NULL)
-			{
-				ft_strcat(new_cmd_in_history, *tabtmp);
-				ft_strcat(new_cmd_in_history, " ");
-				tabtmp++;
-			}
-		}
-		else
-		{
-			ft_strcat(new_cmd_in_history, tmp->content);
-			ft_strcat(new_cmd_in_history, " ");
-		}
-		tmp = tmp->next;
-	}
-	printf("new_cmd_in_history: -%s-\n", new_cmd_in_history);
-	new_cmd_in_history[len] = '\0';
-	printf("new_cmd_in_history: -%s-\n", new_cmd_in_history);
 	ft_strdel(&termcaps->end->content);
-	termcaps->end->content = new_cmd_in_history;
+	termcaps->end->content = s_strdup(str, __FILE__);
+	printf("new_cmd_in_history: -%s-\n", str);
 }
 
-int		check_event_designators(t_list **first)
+int		check_event_designators(char **entry)
 {
-	t_list		*elem;
-	int			i;
 	char		*sub_cmd;
 	int			start_subcmd;
 	int			start_analysis;
 	char	*tmp;
 	int		flag_show_new_cmd = 0;
+	t_historic		*termcaps;
 
-	elem = *first;
-	while (elem != NULL)
-	{
-		if (elem->type == LEX_WORD)
-		{
-			i = 0;
-			while (elem->argv[i] != NULL)
-			{
+	termcaps = get_termcaps();
 				start_analysis = 0;
 				start_subcmd = -1;
 				sub_cmd = NULL;
-				while (extract_subcmd2(&elem->argv[i], start_analysis, &start_subcmd, &sub_cmd) == 1)
+				while (extract_subcmd2(entry, start_analysis, &start_subcmd, &sub_cmd) == 1)
 				{
 	fprintf(stderr, "start_subcmd1: %d\n", start_subcmd);
 	fprintf(stderr, "subcmd1: %s\n", sub_cmd);
-					if (exec_event(&sub_cmd) == -1)
+					if (exec_event(&sub_cmd, *entry, start_subcmd) == -1)
+					{
+				/*		termcaps->end = termcaps->end->prev;///pas safe, check si histo = 1 seul arg
+						del_elem_list(termcaps->end);///*/
 						return (-1);
+					}
 	fprintf(stderr, "subcmd2: %s\n", sub_cmd);
 	fprintf(stderr, "subcmd4: %s\n", sub_cmd);
-					tmp = add_str_in_str(elem->argv[i], sub_cmd, start_subcmd);
+					tmp = add_str_in_str(*entry, sub_cmd, start_subcmd);
 	fprintf(stderr, "tmp: %s\n", tmp);
-					ft_strdel(&elem->argv[i]);
-					elem->argv[i] = tmp;
+					ft_strdel(entry);
+					*entry = tmp;
 					start_analysis = start_subcmd + ft_strlen(sub_cmd);
 					ft_strdel(&sub_cmd);
 
 					flag_show_new_cmd = 1;
 				}
-				++i;
-			}
 			//show_elem(elem);
-		}
-		elem = elem->next;
-	}
-	modif_last_elem_history(*first);
+	modif_last_elem_history(*entry);
 	//while ()
 	//update_elem(elem, 1);
 ///	if (flag_show_new_cmd == 1)
