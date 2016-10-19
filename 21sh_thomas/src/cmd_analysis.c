@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 17:51:16 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 15:37:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ t_list		*cmd_analysis(char **entry)
 	if (formatting_cmd_general(&first) == 1)
 	{
 		show_elem(first);
-		if (check_event_designators(&first) == -1)
-		{
+	//	if (check_event_designators(&first) == -1)
+	//	{
 			//free list first
-			return (NULL);
-		}
+	//		return (NULL);
+	//	}
 		show_elem(first);
 		check_backquotes(&first);
 		show_elem(first);

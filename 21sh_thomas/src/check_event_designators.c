@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 18:07:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 17:58:33 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 15:37:05 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,62 @@ int		exec_event(char **sub_cmd)
 	return (ret);
 }
 
+void	modif_last_elem_history(t_list *first)
+{
+	char	*new_cmd_in_history;
+	int		len;
+	char	**tabtmp;
+	t_list	*tmp;
+	t_historic	*termcaps;
+
+	termcaps = get_termcaps();
+	len = 0;
+	tmp = first;
+	while (first != NULL)
+	{
+		if (first->type == LEX_WORD)
+		{
+			tabtmp = first->argv;
+			while (*tabtmp != NULL)
+			{
+				len += ft_strlen(*tabtmp) + 1; // + 1 pour l'espace
+				tabtmp++;
+			}
+		}
+		else
+		{
+			len += ft_strlen(first->content) + 1;
+		}
+		first = first->next;
+	}
+	--len;
+	new_cmd_in_history = s_strnew(len, __FILE__);
+	while (tmp != NULL)
+	{
+		if (tmp->type == LEX_WORD)
+		{
+			tabtmp = tmp->argv;
+			while (*tabtmp != NULL)
+			{
+				ft_strcat(new_cmd_in_history, *tabtmp);
+				ft_strcat(new_cmd_in_history, " ");
+				tabtmp++;
+			}
+		}
+		else
+		{
+			ft_strcat(new_cmd_in_history, tmp->content);
+			ft_strcat(new_cmd_in_history, " ");
+		}
+		tmp = tmp->next;
+	}
+	printf("new_cmd_in_history: -%s-\n", new_cmd_in_history);
+	new_cmd_in_history[len] = '\0';
+	printf("new_cmd_in_history: -%s-\n", new_cmd_in_history);
+	ft_strdel(&termcaps->end->content);
+	termcaps->end->content = new_cmd_in_history;
+}
+
 int		check_event_designators(t_list **first)
 {
 	t_list		*elem;
@@ -165,15 +221,16 @@ int		check_event_designators(t_list **first)
 					ft_strdel(&sub_cmd);
 
 					flag_show_new_cmd = 1;
-				///	modif_last_elem_history();
 				}
 				++i;
 			}
-			update_elem(elem, 1);
 			//show_elem(elem);
 		}
 		elem = elem->next;
 	}
+	modif_last_elem_history(*first);
+	//while ()
+	//update_elem(elem, 1);
 ///	if (flag_show_new_cmd == 1)
 ///		show_new_cmd();
 	return (1);
