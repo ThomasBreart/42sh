@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 19:29:08 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 10:06:42 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void				init_var_aggrfd(t_historic *termcaps);
 /*
 **	init_historic.c
 */
-char				**recover_historic_file(t_historic *termcaps);
+char				**recover_historic_file(t_historic *termcaps, int limit);
 void				create_historic_list(t_historic *termcaps, char **taab);
 void				set_path_historic_file(t_historic *termcaps, char **env);
 

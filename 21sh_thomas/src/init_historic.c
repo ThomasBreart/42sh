@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:44:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 19:16:14 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/19 15:15:57 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,35 @@ static void	recover_historic_file_error(char ***taab)
 	*taab = NULL;
 }
 
-static void call_gnl(int fd, char **taab, t_historic *termcaps)
+static void call_gnl(int fd, char **taab, t_historic *termcaps, int limit)
 {
 	char	*entry;
 	int		i;
 
 	i = 0;
-	while (get_next_line(fd, &entry) != 0)
+	while ((get_next_line(fd, &entry) != 0) && i <= 501)
 	{
 		if (taab[i] != NULL)
 			ft_memdel((void**)taab[i]);
-		taab[i++] = entry;
-		termcaps->n_indice++;
-		if (i == 501)
-			break ;
+		if (limit != -1)
+		{
+			if (limit >= termcaps->n_indice)
+				taab[i++] = ft_strdup(entry);
+			limit++;
+		}
+		else
+		{
+			taab[i++] = ft_strdup(entry);
+			termcaps->n_indice++;
+		}
+		ft_strdel(&entry);
 	}
 	ft_strdel(&entry);
 	if (i == 501)
 		recover_historic_file_error(&taab);
 }
 
-char		**recover_historic_file(t_historic *termcaps)
+char		**recover_historic_file(t_historic *termcaps, int limit)
 {
 	int		fd;
 	char	**taab;
@@ -48,8 +56,8 @@ char		**recover_historic_file(t_historic *termcaps)
 	if ((fd = open(termcaps->path_historic_file, O_RDONLY)) == -1)
 		return (NULL);
 	taab = (char**)s_memalloc(sizeof(char *) * 501, __FILE__);
-	ft_bzero(taab, sizeof(taab));
-	call_gnl(fd, taab, termcaps);
+	ft_bzero(taab, sizeof(taab) * 501);
+	call_gnl(fd, taab, termcaps, limit);
 	close(fd);
 	return (taab);
 }

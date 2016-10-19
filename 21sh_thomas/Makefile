@@ -1,12 +1,7 @@
-
 NAME = 21sh
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
-# O6 ?A
 LIBFT = lib/libft/
-
-#MAIN = main.c
-#MAINDEBUG = main_test.c
 
 SRC := $(filter %.c, $(shell find src -type f))
 
@@ -45,3 +40,4 @@ test: $(OBJ) tests/main_tests.o
 	@echo "-> Perfect !"
 
 .PHONY: all clean fclean re
+
