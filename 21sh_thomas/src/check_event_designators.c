@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 18:07:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 20:31:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 22:17:24 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,17 @@ int		extract_subcmd2(char **str, int start_analysis, int *start_subcmd, char **s
 			if ((*str)[i + 1] != ' ' && (*str)[i + 1] != 9 && (*str)[i + 1] != '=')//man dit qui yen a dautre mais ca se verifie po sur le bash
 			{
 				*start_subcmd = i;
-				tmp = goto_next_char((*str + i), ' ');
+				if ((*str)[i + 1] == '?')
+				{
+					tmp = goto_next_char((*str + i + 2), '?');
+					if (*tmp == '\0')
+						tmp = goto_next_char((*str + i + 2), ' ');
+					else
+						++tmp;
+				}
+				else
+					tmp = goto_next_char((*str + i), ' ');
+				printf("tmp: %s\n", tmp);
 				len_subcmd = tmp - (*str + i);
 				*sub_cmd = s_strsub(*str, i, len_subcmd, __FILE__);
 				new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
@@ -203,7 +213,46 @@ int		event_string(char *sub_cmd, char **new_str)
 	return (1);
 }
 
-int		exec_event(char **sub_cmd, char *entry, int start_subcmd)
+int		is_string_anywhere(char *str)
+{
+	++str;
+	if (*str == '?')
+		return (1);
+	return (0);
+}
+
+int		event_string_anywhere(char *sub_cmd, char **new_str)
+{
+	t_historic *termcaps;
+	t_list	*tmp;
+	int		len;
+	char	*new_subcmd;
+
+	termcaps = get_termcaps();
+	len = ft_strlen(sub_cmd);
+	if (sub_cmd[len - 1] == '?')
+		new_subcmd = s_strsub(sub_cmd, 2, (len - 3), __FILE__);
+	else
+		new_subcmd = s_strdup(sub_cmd + 2, __FILE__);
+	tmp = termcaps->end->prev;///
+	while (tmp != NULL)
+	{
+		if (ft_strstr(tmp->content, new_subcmd) != NULL)
+		{
+			*new_str = s_strdup(tmp->content, __FILE__);
+			break ;
+		}
+		tmp = tmp->prev;
+	}
+	free(new_subcmd);
+	if (tmp == NULL)
+		return (-1);
+	return (1);
+}
+
+
+
+int		exec_event(char **sub_cmd, char *entry, int *start_subcmd)
 {
 	char	*new_str;
 	int		ret;
@@ -217,13 +266,13 @@ int		exec_event(char **sub_cmd, char *entry, int start_subcmd)
 	else if (is_negatif_number(*sub_cmd))
 		ret = event_negatif_number(*sub_cmd, &new_str);
 	else if (is_sharp(*sub_cmd))
-		ret = event_sharp(*sub_cmd, entry, start_subcmd, &new_str);
+		ret = event_sharp(*sub_cmd, entry, *start_subcmd, &new_str);
+	else if (is_string_anywhere(*sub_cmd))
+		ret = event_string_anywhere(*sub_cmd, &new_str);
+//	else if (is_string_substitution(*sub_cmd))
+//		;
 	else
 		ret = event_string(*sub_cmd, &new_str);
-/*	else if (is_string_anywhere(*sub_cmd))
-		;
-	else if (is_string_substitution(*sub_cmd))
-		;*/
 	if (ret == -1)
 		error_event_not_found(*sub_cmd);
 	if (ret == -2)
@@ -260,7 +309,7 @@ int		check_event_designators(char **entry)
 				{
 	fprintf(stderr, "start_subcmd1: %d\n", start_subcmd);
 	fprintf(stderr, "subcmd1: %s\n", sub_cmd);
-					if (exec_event(&sub_cmd, *entry, start_subcmd) == -1)
+					if (exec_event(&sub_cmd, *entry, &start_subcmd) == -1)
 					{
 				/*		termcaps->end = termcaps->end->prev;///pas safe, check si histo = 1 seul arg
 						del_elem_list(termcaps->end);///*/
