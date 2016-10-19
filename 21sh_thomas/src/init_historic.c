@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:44:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 15:15:57 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/19 16:54:04 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		create_historic_list(t_historic *termcaps, char **taab)
 	tmp_taab = taab;
 	while (*tmp_taab != NULL)
 	{
-		add_historic(termcaps, tmp_taab, 0);
+		add_historic(termcaps, tmp_taab, 0, 0);
 		++tmp_taab;
 	}
 	free_double_tab(taab);

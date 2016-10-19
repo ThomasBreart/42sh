@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 16:34:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 14:42:24 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/19 17:03:08 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			clean_exit(char **env, t_save_fd *save)
 	termcaps = get_termcaps();
 	if (env != NULL)
 		free_double_tab(env);
-	save_historic_file(termcaps);
+	save_historic_file(termcaps, 0);
 	free_historic(termcaps);
 	free_hash(termcaps);
 	ft_memdel((void**)termcaps->entry);

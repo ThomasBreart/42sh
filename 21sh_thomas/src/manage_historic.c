@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_historic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:56:39 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 19:28:03 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 17:10:45 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	check_max_history_list(t_historic *termcaps)
 	}
 }
 
-void		add_historic(t_historic *termcaps, char **entry, int check_max)
+void		add_historic(t_historic *termcaps, char **entry, int check_max, int new)
 {
 	t_list	*tmp;
 	char	*cmd;
@@ -56,23 +56,35 @@ void		add_historic(t_historic *termcaps, char **entry, int check_max)
 	termcaps->end = tmp;
 	termcaps->cur = tmp;
 	termcaps->hist = 0;
+	if (new)
+		tmp->new = 1;
+	else
+		tmp->new = 0;
 }
 
-void		save_historic_file(t_historic *termcaps)
+void		save_historic_file(t_historic *termcaps, int flag_a)
 {
 	int		fd;
 	t_list	*tmp;
 
 	if (termcaps->path_historic_file == NULL)
 		return ;
-	fd = open(termcaps->path_historic_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (!flag_a)
+		fd = open(termcaps->path_historic_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd = open(termcaps->path_historic_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return ;
 	tmp = termcaps->head;
 	while (tmp != NULL)
 	{
 		if (ft_strlen(tmp->content) < 500)
-			ft_putendl_fd(tmp->content, fd);
+		{
+			if (flag_a && tmp->new)
+				ft_putendl_fd(tmp->content, fd);
+			else if (!flag_a)
+				ft_putendl_fd(tmp->content, fd);
+		}
 		tmp = tmp->next;
 	}
 	close(fd);

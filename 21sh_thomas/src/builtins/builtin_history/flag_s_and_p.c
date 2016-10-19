@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 14:47:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 16:30:46 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/19 16:53:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void		flag_s(char *str)
 		del_elem_list(termcaps->end);
 		termcaps->end = tmp;
 		termcaps->cur = tmp;
-		add_historic(termcaps, &str, 1);
+		add_historic(termcaps, &str, 1, 1);
 	}
 }

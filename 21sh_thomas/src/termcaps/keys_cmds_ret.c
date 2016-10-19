@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 07:49:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/17 16:17:51 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 16:56:46 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	empty_entry(t_historic *termcaps, char **entry)
 	if (termcaps->bslash_split != NULL)
 	{
 		*entry = s_strdup(termcaps->bslash_split, __FILE__);
-		add_historic(termcaps, entry, 1);
+		add_historic(termcaps, entry, 1, 1);
 		return (0);
 	}
 	termcaps->cur_x = 0;
@@ -96,7 +96,7 @@ int			ft_key_ret(t_historic *termcaps, char **entry)
 	if (*entry == NULL || is_just_spaces(*entry) != 0)
 		return (empty_entry(termcaps, entry));
 	concat_bslash_split(termcaps, entry);
-	add_historic(termcaps, entry, 1);
+	add_historic(termcaps, entry, 1, 1);
 	ft_memdel((void**)&termcaps->cmd_inprogress);
 	if (ret == -1)
 		ft_memdel((void**)entry);

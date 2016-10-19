@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 10:06:42 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/19 17:02:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,8 @@ void				free_memory(char **entry, t_historic *termcaps,
 **	manage_historic.c
 */
 void				add_historic(t_historic *termcaps, char **entry,
-																int check_max);
-void				save_historic_file(t_historic *termcaps);
+																int check_max, int new);
+void				save_historic_file(t_historic *termcaps, int flag_a);
 
 /*
 **	proc_management.c

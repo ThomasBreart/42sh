@@ -6,11 +6,41 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 18:48:41 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/19 15:50:11 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/19 17:19:06 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+static void 	set_all_elem_old(t_list *head)
+{
+	while (head)
+	{
+		head->new = 0;
+		head = head->next;
+	}
+}
+
+void	flag_a(t_flags *flags)
+{
+	char		*tmp;
+	t_historic	*termcaps;
+
+	termcaps = get_termcaps();
+	if (flags->argument)
+	{
+		tmp = ft_strdup(termcaps->path_historic_file);
+		ft_strdel(&termcaps->path_historic_file);
+		termcaps->path_historic_file = ft_strdup(flags->argument);
+		save_historic_file(termcaps, 1);
+		ft_strdel(&termcaps->path_historic_file);
+		termcaps->path_historic_file = ft_strdup(tmp);
+		ft_strdel(&tmp);
+	}
+	else
+		save_historic_file(termcaps, 1);
+	set_all_elem_old(termcaps->head);
+}
 
 /*
 ** Même chose que le 'flag r' à la différence qu'ici seules les nouvelles
