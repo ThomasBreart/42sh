@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 15:38:34 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 16:37:39 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 09:02:08 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	flag_c(void)
 	termcaps->head = NULL;
 	termcaps->cur = NULL;
 	termcaps->end = NULL;
+	termcaps->block_flag_a = 1;
 }
 
 /*

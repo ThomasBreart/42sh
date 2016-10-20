@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:44:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 16:54:04 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 09:10:34 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,16 @@ char		**recover_historic_file(t_historic *termcaps, int limit)
 	char	**taab;
 
 	if ((fd = open(termcaps->path_historic_file, O_RDONLY)) == -1)
+	{
+		termcaps->block_flag_a = 1;
 		return (NULL);
+	}
 	taab = (char**)s_memalloc(sizeof(char *) * 501, __FILE__);
 	ft_bzero(taab, sizeof(taab) * 501);
 	call_gnl(fd, taab, termcaps, limit);
 	close(fd);
+	if (limit == -1 && termcaps->n_indice == 0)
+		termcaps->block_flag_a = 1;
 	return (taab);
 }
 

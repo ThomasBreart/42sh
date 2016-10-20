@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_n.c                                           :+:      :+:    :+:   */
+/*   flag_n_and_a.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 18:48:41 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/19 17:19:06 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 09:12:55 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static void 	set_all_elem_old(t_list *head)
+static void	set_all_elem_old(t_list *head)
 {
 	while (head)
 	{
@@ -21,12 +21,14 @@ static void 	set_all_elem_old(t_list *head)
 	}
 }
 
-void	flag_a(t_flags *flags)
+void		flag_a(t_flags *flags)
 {
 	char		*tmp;
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();
+	if (termcaps->block_flag_a)
+		return ;
 	if (flags->argument)
 	{
 		tmp = ft_strdup(termcaps->path_historic_file);
@@ -47,7 +49,7 @@ void	flag_a(t_flags *flags)
 ** (depuis la début de la sesions en cours) commandes sont prises en compte
 */
 
-void	flag_n(t_flags *flags)
+void		flag_n(t_flags *flags)
 {
 	char		*tmp;
 	char		**taab;
