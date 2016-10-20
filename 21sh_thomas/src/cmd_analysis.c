@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 15:47:07 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/20 16:10:22 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ t_list		*cmd_analysis(char **entry)
 		return (NULL);
 	if (lexical_analysis(*entry, &first) == -1 || first == NULL)
 		return (NULL);
-	show_list(first);
+//	show_list(first);
 	if (formatting_cmd_general(&first) == 1)
 	{
-		show_elem(first);
+//		show_elem(first);
 	//	if (check_event_designators(&first) == -1)
 	//	{
 			//free list first
 	//		return (NULL);
 	//	}
-		show_elem(first);
+//		show_elem(first);
 		check_backquotes(&first);
-		show_elem(first);
+//		show_elem(first);
 		if (ft_strlen(first->content) == 0)
 			return (NULL);
 		root = semantic_analysis(first);
-		show_binary_tree(root);
+//		show_binary_tree(root);
 		if (root == NULL)
 		{
 			// free list first ?

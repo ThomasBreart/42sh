@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 18:07:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 22:17:24 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/20 16:18:54 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ int		extract_subcmd2(char **str, int start_analysis, int *start_subcmd, char **s
 				return (1);
 			}
 		}
+		else if ((*str)[i] == '^')
+		{
+				*start_subcmd = i;
+				tmp = goto_next_char(*str + i + 1, '^');
+				if (*tmp == '^')
+					tmp = goto_next_char(tmp + 1, '^');
+				len_subcmd = tmp + 1 - (*str + i);
+				printf("len_subcmd: %d\n", len_subcmd);
+				*sub_cmd = s_strsub(*str, i, len_subcmd, __FILE__);
+				new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
+				ft_strncat(new_str, *str, *start_subcmd);
+				ft_strcat(new_str, *str + (*start_subcmd + len_subcmd));
+				ft_strdel(str);
+				*str = new_str;
+				printf("str: %s\n", *str);
+				return (1);
+		}
 		if ((*str)[i] != '\0')
 			++i;
 	}
@@ -109,18 +126,21 @@ int		is_sharp(char *str)
 	return (0);
 }
 
-int		event_previous_command(char **new_str)
+int		event_previous_command(char **new_str, char **error)
 {
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();
 	if (termcaps->end == NULL || termcaps->end->prev == NULL || termcaps->end->prev->content == NULL)
+	{
+		*error = s_strdup("event not found", __FILE__);
 		return (-1);
+	}
 	*new_str = s_strdup(termcaps->end->prev->content, __FILE__);
 	return (1);
 }
 
-int		event_positif_number(char *sub_cmd, char **new_str)
+int		event_positif_number(char *sub_cmd, char **new_str, char **error)
 {
 	t_historic	*termcaps;
 	int		cmd_number;
@@ -139,12 +159,15 @@ int		event_positif_number(char *sub_cmd, char **new_str)
 		++i;
 	}
 	if (i < cmd_number)
+	{
+		*error = s_strdup("event not found", __FILE__);
 		return (-1);
+	}
 	*new_str = s_strdup(cmd_histo->content, __FILE__);
 	return (1);
 }
 
-int		event_negatif_number(char *sub_cmd, char **new_str)
+int		event_negatif_number(char *sub_cmd, char **new_str, char **error)
 {
 	t_historic	*termcaps;
 	int		cmd_number;
@@ -162,16 +185,23 @@ int		event_negatif_number(char *sub_cmd, char **new_str)
 		++cmd_number;
 	}
 	if (cmd_number < 0)
+	{
+		*error = s_strdup("event not found", __FILE__);
 		return (-1);
+	}
 	*new_str = s_strdup(cmd_histo->content, __FILE__);
 	return (1);
 }
 
-void	error_event_not_found(char *str)
+void	error_event_not_found(char *str, char **error)
 {
-	ft_putstr_fd("42sh: ", STDERR_FILENO);
-	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putendl_fd(": event not found", STDERR_FILENO);
+	if (*error != NULL)
+	{
+		ft_putstr_fd("42sh: ", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putendl_fd(*error, STDERR_FILENO);
+		ft_strdel(error);
+	}
 }
 
 int		event_sharp(char *sub_cmd, char *entry, int start_subcmd, char **new_str)
@@ -179,7 +209,7 @@ int		event_sharp(char *sub_cmd, char *entry, int start_subcmd, char **new_str)
 	char *tmp;
 
 	if (start_subcmd == 0)
-		return (-2);
+		return (-1);
 	*new_str = s_strndup(entry, start_subcmd, __FILE__);
 	if (sub_cmd[2] != '\0')
 	{
@@ -190,7 +220,7 @@ int		event_sharp(char *sub_cmd, char *entry, int start_subcmd, char **new_str)
 	return (1);
 }
 
-int		event_string(char *sub_cmd, char **new_str)
+int		event_string(char *sub_cmd, char **new_str, char **error)
 {
 	t_historic *termcaps;
 	t_list	*tmp;
@@ -209,7 +239,10 @@ int		event_string(char *sub_cmd, char **new_str)
 		tmp = tmp->prev;
 	}
 	if (tmp == NULL)
+	{
+		*error = s_strdup("event not found", __FILE__);
 		return (-1);
+	}
 	return (1);
 }
 
@@ -221,7 +254,7 @@ int		is_string_anywhere(char *str)
 	return (0);
 }
 
-int		event_string_anywhere(char *sub_cmd, char **new_str)
+int		event_string_anywhere(char *sub_cmd, char **new_str, char **error)
 {
 	t_historic *termcaps;
 	t_list	*tmp;
@@ -246,37 +279,100 @@ int		event_string_anywhere(char *sub_cmd, char **new_str)
 	}
 	free(new_subcmd);
 	if (tmp == NULL)
+	{
+		*error = s_strdup("event not found", __FILE__);
 		return (-1);
+	}
 	return (1);
 }
 
+int		is_string_substitution(char *str)
+{
+	if (*str == '^')
+		return (1);
+	return (0);
+}
 
+int		event_string_substitution(char *sub_cmd, char **new_str, char **error)//check erreurs possibles
+{
+	t_historic	*termcaps;
+	t_list		*tmplist;
+	char		*tmpstr;
+	char		*tmpstr2;
+	char	*new_subcmd;
+	char	*replace;
+	char	*ret;
+	int		len;
+	char	*s1;
+	char	*s2;
+	char	*s3;
+
+	termcaps = get_termcaps();
+	if (ft_strlen(sub_cmd) == 1)
+	{
+		*error = s_strdup("no previous substitution", __FILE__);
+		return (-1);
+	}
+	tmpstr = goto_next_char(sub_cmd + 1, '^');
+	len = tmpstr - (sub_cmd + 1);
+	new_subcmd = s_strndup(sub_cmd + 1, len, __FILE__);
+	printf("new_subcmd: %s\n", new_subcmd);
+	if (tmpstr[0] == '\0' || tmpstr[1] == '\0')
+		replace = s_strdup("", __FILE__);
+	else
+	{
+		tmpstr2 = goto_next_char(tmpstr + 1, '^');
+		len = tmpstr2 - (tmpstr + 1);
+		replace = s_strndup(tmpstr + 1, len, __FILE__);
+	}
+	tmplist = termcaps->end->prev;///
+		if ((ret = ft_strstr(tmplist->content, new_subcmd)) != NULL)
+		{
+			s1 = s_strndup(tmplist->content, (ret - tmplist->content), __FILE__);
+			s2 = s_strdup(ret + ft_strlen(new_subcmd), __FILE__);
+			s3 = s_strjoin(s1, replace, __FILE__);
+			*new_str = s_strjoin(s3, s2, __FILE__);
+		}
+	
+	free(new_subcmd);
+	if (ret == NULL)
+	{
+		*error = s_strdup("event not found", __FILE__);
+		return (-1);
+	}
+	return (1);
+}
 
 int		exec_event(char **sub_cmd, char *entry, int *start_subcmd)
 {
 	char	*new_str;
 	int		ret;
+	char	*error;
 
 	ret = -1;
+	error = NULL;
 	new_str = NULL;
-	if (is_previous_command(*sub_cmd))
-		ret = event_previous_command(&new_str);
+	if (is_string_substitution(*sub_cmd))
+		ret = event_string_substitution(*sub_cmd, &new_str, &error);
+	else if (is_previous_command(*sub_cmd))
+		ret = event_previous_command(&new_str, &error);
 	else if (is_positif_number(*sub_cmd))
-		ret = event_positif_number(*sub_cmd, &new_str);
+		ret = event_positif_number(*sub_cmd, &new_str, &error);
 	else if (is_negatif_number(*sub_cmd))
-		ret = event_negatif_number(*sub_cmd, &new_str);
+		ret = event_negatif_number(*sub_cmd, &new_str, &error);
 	else if (is_sharp(*sub_cmd))
 		ret = event_sharp(*sub_cmd, entry, *start_subcmd, &new_str);
 	else if (is_string_anywhere(*sub_cmd))
-		ret = event_string_anywhere(*sub_cmd, &new_str);
-//	else if (is_string_substitution(*sub_cmd))
-//		;
+		ret = event_string_anywhere(*sub_cmd, &new_str, &error);
 	else
-		ret = event_string(*sub_cmd, &new_str);
+		ret = event_string(*sub_cmd, &new_str, &error);
 	if (ret == -1)
-		error_event_not_found(*sub_cmd);
+		error_event_not_found(*sub_cmd, &error);
 	if (ret == -2)
+	{
+		printf("po normol\n");
 		ret = -1;
+	}
 	ft_strdel(sub_cmd);
 	*sub_cmd = new_str;
 	return (ret);
@@ -298,7 +394,7 @@ int		check_event_designators(char **entry)
 	int			start_subcmd;
 	int			start_analysis;
 	char	*tmp;
-	int		flag_show_new_cmd = 0;
+	int			event = 0;
 	t_historic		*termcaps;
 
 	termcaps = get_termcaps();
@@ -323,14 +419,12 @@ int		check_event_designators(char **entry)
 					*entry = tmp;
 					start_analysis = start_subcmd + ft_strlen(sub_cmd);
 					ft_strdel(&sub_cmd);
-
-					flag_show_new_cmd = 1;
+					event = 1;
 				}
-			//show_elem(elem);
+	if (event == 1)
+	{
 	modif_last_elem_history(*entry);
-	//while ()
-	//update_elem(elem, 1);
-///	if (flag_show_new_cmd == 1)
-///		show_new_cmd();
+	ft_putendl(*entry);
+	}
 	return (1);
 }
