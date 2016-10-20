@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_a_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 20:56:02 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/12 01:51:37 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/20 15:42:08 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		is_a_builtin(char *s)
 	else if (ft_strcmp("change_prompt", s) == 0)
 		return (1);
 	else if (ft_strcmp("history", s) == 0)
+		return (1);
+	else if (ft_strcmp("echo", s) == 0)
 		return (1);
 	else
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 11:53:10 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 15:42:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int		get_value(char *cpy, int index);
 void	check_what_element_to_delete(t_historic
 		*termcaps, t_list *cpy);
 int		get_len_of_int(int nb);
+
+/*
+**	builtin_cd.c
+*/
+int		builtin_echo(char **argv);
 
 /*
 **	builtin_cd.c
