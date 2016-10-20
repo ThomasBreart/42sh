@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 16:16:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:13:27 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 11:02:56 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 ** Fonctions qui servent à récupérer le ou les arguments situés après les cmds.
 ** En fonction de l'option, soit on recupère toute la ligne d'argument ou bien
-** seulement jusqu'au prochain espace.
+** seulement jusqu'au prochain espace (pour le filename).
 */
 
 static int		parse_line_until_end(char *argv)

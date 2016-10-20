@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 13:41:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:43:13 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 10:52:15 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ static void	print_spaces(int max, int indice)
 		delta++;
 	}
 }
+
+/*
+** Si une commande et modifiée, on affiche un petit astérisque après
+** l'indice.
+*/
 
 static void	print_wildcard(t_historic *termcaps, t_list *cpy)
 {
@@ -99,7 +104,7 @@ static void	print_full_history(t_list *cpy, int max, t_historic *termcaps)
 ** affiche l'historique en entier.
 */
 
-void		print_historyy(int n)
+void		print_history(int n)
 {
 	int			max;
 	int			lst_size;

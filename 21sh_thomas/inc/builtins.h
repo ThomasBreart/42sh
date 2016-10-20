@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 16:48:48 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 11:19:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,31 @@
 /*
 **	builtin_history.c
 */
-
-int			                builtin_history(char **argv);
-char                    *reverse_split(char **argv);
-int                     history_usage();
-int                     numeric_argument_error(char *argv);
-int                     check_errors(char *argv, int index);
-int                     check_numeric_arg(char *argv);
-void                    print_historyy(int n);
-int                     out_of_range(char *argv);
-int                     get_value(char *cpy, int index);
-int                     flag_d(char *args, t_flags *flags);
-int                     put_flag_d(t_flags *flags);
-char                    *get_argument(char *argv, int end);
-int                     check_history_flags(char *args, t_flags flags, char **ar);
-void                    flag_p(char **ar);
-void                    flag_c(void);
-int                     del_indice_history(t_flags flags);
-int                     ft_lst_size(t_list *history);
-void                    flag_w(t_flags *flags);
-void                    check_what_element_to_delete(t_historic
-                        *termcaps, t_list *cpy);
-void                     flag_r(t_flags *flags);
-void                     flag_s(char *str);
-int		                   del_element_list(t_list *first);
-int                      ft_isnumber(int c);
-int	                     get_len_of_int(int nb);
-void	                   flag_n(t_flags *flags);
-void	                   flag_a(t_flags *flags);
-
+int		builtin_history(char **argv);
+char	*reverse_split(char **argv);
+void	print_history(int n);
+int		numeric_argument_error(char *argv);
+int		ft_isnumber(int c);
+int		history_usage();
+int		out_of_range(char *argv);
+int		flag_d(char *args, t_flags *flags);
+void	flag_s(char *str);
+void	flag_p(char **ar);
+void	flag_c(void);
+void	flag_r(t_flags *flags);
+void	flag_n(t_flags *flags);
+void	flag_a(t_flags *flags);
+int		put_flag_d(t_flags *flags);
+int		check_history_flags(char *args, t_flags flags, char **ar);
+int		check_numeric_arg(char *argv);
+int		del_indice_history(t_flags flags);
+char	*get_argument(char *argv, int end);
+void	flag_w(t_flags *flags);
+int		ft_lst_size(t_list *history);
+int		get_value(char *cpy, int index);
+void	check_what_element_to_delete(t_historic
+		*termcaps, t_list *cpy);
+int		get_len_of_int(int nb);
 
 /*
 **	builtin_cd.c

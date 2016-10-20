@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:43:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:43:46 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 11:15:03 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,4 @@ int			numeric_argument_error(char *argv)
 	ft_putstr_fd(": numeric argument required\n", 2);
 	ft_memdel((void**)&ret);
 	return (1);
-}
-
-static int	check_too_many(char *argv)
-{
-	while (*argv)
-	{
-		if (*argv != ' ')
-		{
-			ft_putstr_fd("42sh: history: too many arguments\n", 2);
-			return (1);
-		}
-		argv++;
-	}
-	return (0);
-}
-
-int			check_errors(char *argv, int index)
-{
-	if (*argv != ' ' && *argv != '\0')
-		return (numeric_argument_error(argv - index));
-	return (check_too_many(argv));
 }

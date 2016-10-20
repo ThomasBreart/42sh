@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 16:49:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 14:56:25 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 10:48:19 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int			builtin_history(char **ar)
 	begin = argv;
 	ft_bzero(&flags, sizeof(t_flags));
 	if (*argv == '\0')
-		print_historyy(0);
+		print_history(0);
 	else if (*argv != '-')
 		ret = check_numeric_arg(argv);
 	else

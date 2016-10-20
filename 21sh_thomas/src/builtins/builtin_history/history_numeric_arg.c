@@ -6,11 +6,32 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 15:39:58 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:17:04 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 11:15:33 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+static int	check_too_many(char *argv)
+{
+	while (*argv)
+	{
+		if (*argv != ' ')
+		{
+			ft_putstr_fd("42sh: history: too many arguments\n", 2);
+			return (1);
+		}
+		argv++;
+	}
+	return (0);
+}
+
+static int	check_errors(char *argv, int index)
+{
+	if (*argv != ' ' && *argv != '\0')
+		return (numeric_argument_error(argv - index));
+	return (check_too_many(argv));
+}
 
 /*
 ** On récupère et renvoie la valeure numérique pour la commande "history [n]"
@@ -52,7 +73,7 @@ int			check_numeric_arg(char *argv)
 		{
 			if (!(value = get_numeric_value(argv)))
 				return (1);
-			print_historyy(value);
+			print_history(value);
 			break ;
 		}
 		argv++;
