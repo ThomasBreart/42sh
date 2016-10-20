@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 16:49:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/20 10:48:19 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 16:01:53 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** arrête le parsing.
 */
 
-static int	append_flag(char **args, t_flags *flags)
+int			append_flag(char **args, t_flags *flags)
 {
 	(*args) += 1;
 	while (**args && **args != ' ')
@@ -26,7 +26,7 @@ static int	append_flag(char **args, t_flags *flags)
 		if (**args == 'c')
 			flags->flag_c = 1;
 		else if (**args == 'd')
-			return (put_flag_d(flags));
+			return (put_flag_d(flags, args));
 		else if (**args == 'a')
 			flags->flag_a = 1;
 		else if (**args == 'n')
@@ -125,5 +125,6 @@ int			builtin_history(char **ar)
 			ret = check_history_flags(argv, flags, ar);
 	}
 	ft_memdel((void**)&begin);
+	ret = (ret == 1) ? -1 : 1;
 	return (ret);
 }
