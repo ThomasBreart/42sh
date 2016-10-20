@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 15:48:14 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/20 17:39:29 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@
 # define LEX_SPACES 10
 # define LEX_SUBSH 11
 
+# define E_NOT_FOUND 10
+# define E_NO_PREVSUB 11
+
 # include "structs.h"
 # include "lexer.h"
 # include "parser.h"
@@ -63,6 +66,7 @@
 # include "termcaps.h"
 # include "redirs.h"
 
+char	*goto_next_char(char *str, char c);
 char		*add_str_in_str(char *dest, char *src, int position);
 int		check_event_designators(char **entryr);
 int		cmd_is_open(char *str);
@@ -121,6 +125,48 @@ void				errors(int a);
 int					error_name(char *fullpath, char *content);
 int					internal_error(char *s, char *error, int dead);
 int					error_fd_aggr(int fd_aggr);
+
+/*
+**	event_negatif_number.c
+*/
+int					is_event_negatif_number(char *str);
+int					event_negatif_number(char *sub_cmd, char **new_str);
+
+/*
+**	event_positif_number.c
+*/
+int					is_event_positif_number(char *str);
+int					event_positif_number(char *sub_cmd, char **new_str);
+
+/*
+**	event_previous_command.c
+*/
+int					is_event_previous_command(char *str);
+int					event_previous_command(char **new_str);
+
+/*
+**	event_sharp.c
+*/
+int					is_event_sharp(char *str);
+int					event_sharp(char *sub_cmd, char *entry, int start_subcmd,
+																char **new_str);
+
+/*
+**	event_string.c
+*/
+int					event_string(char *sub_cmd, char **new_str);
+
+/*
+**	event_string_anywhere.c
+*/
+int					is_event_string_anywhere(char *str);
+int					event_string_anywhere(char *sub_cmd, char **new_str);
+
+/*
+**	event_string_substitution.c
+*/
+int					is_event_string_substitution(char *str);
+int					event_string_substitution(char *sub_cmd, char **new_str);
 
 /*
 **	exec_cmd.c
