@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:56:39 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 09:19:56 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 12:42:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ static void	check_max_history_list(t_historic *termcaps)
 		free(tmp);
 	}
 }
+
+/*
+** Pour distinguer les commandes tapées depuis le début de session (nouvelles)
+** par rapport aux commandes importées depuis l'historique,
+** on passe le flag 'new' à la fonction add_historic().
+*/
 
 void		add_historic(t_historic *termcaps, char **entry, int check_max,
 			int new)
@@ -75,6 +81,12 @@ static int	get_fd(t_historic *termcaps, int flag_a)
 				| O_APPEND, 0644);
 	return (fd);
 }
+
+/*
+** Si le 'flag -a' est activé avec la commande "history", on ajoute au fichier
+** ".42sh_history" uniquement les nouvelles commandes, c'est-à-dire les
+** commandes tapées depuis le début de la nouvelle session du 42sh.
+*/
 
 void		save_historic_file(t_historic *termcaps, int flag_a)
 {

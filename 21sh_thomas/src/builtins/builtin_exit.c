@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 16:34:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 17:03:08 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 12:28:07 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	exit_check_errors(char **argv)
 	return (1);
 }
 
-void			free_historic(t_historic *termcaps)
+void		free_historic(t_historic *termcaps)
 {
 	t_list		*tmp;
 	t_list		*tmp2;

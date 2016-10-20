@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:43:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/20 11:15:03 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 11:24:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,12 @@ int			numeric_argument_error(char *argv)
 		ft_putstr_fd(ret, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
 	ft_memdel((void**)&ret);
+	return (1);
+}
+
+int			history_usage(void)
+{
+	ft_putstr_fd("history: usage: history [-c] [-d offset] [n] or ", 2);
+	ft_putstr_fd("history -awrn [filename] or history -ps arg [arg...]\n", 2);
 	return (1);
 }

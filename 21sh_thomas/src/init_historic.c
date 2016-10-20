@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:44:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 09:10:34 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 12:47:30 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	recover_historic_file_error(char ***taab)
 	*taab = NULL;
 }
 
-static void call_gnl(int fd, char **taab, t_historic *termcaps, int limit)
+static void	call_gnl(int fd, char **taab, t_historic *termcaps, int limit)
 {
 	char	*entry;
 	int		i;
@@ -47,6 +47,14 @@ static void call_gnl(int fd, char **taab, t_historic *termcaps, int limit)
 	if (i == 501)
 		recover_historic_file_error(&taab);
 }
+
+/*
+** Le int "limit" en paramètre de la fonction sert lorsque l'on
+** utilise le "flag -n" avec la commande "history" et qu'il faut
+** ajouter à l'historique actuel, uniquement les nouvelles
+** commandes, ajoutés au fichier ".42sh_history" après le début
+** de session.
+*/
 
 char		**recover_historic_file(t_historic *termcaps, int limit)
 {

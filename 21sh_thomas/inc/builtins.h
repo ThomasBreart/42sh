@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 11:19:27 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 11:53:10 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,13 @@ int		flag_d(char *args, t_flags *flags);
 void	flag_s(char *str);
 void	flag_p(char **ar);
 void	flag_c(void);
-void	flag_r(t_flags *flags);
-void	flag_n(t_flags *flags);
-void	flag_a(t_flags *flags);
+void	flag_r_or_n(t_flags *flags);
+void	flag_a_or_w(t_flags *flags);
 int		put_flag_d(t_flags *flags);
 int		check_history_flags(char *args, t_flags flags, char **ar);
 int		check_numeric_arg(char *argv);
 int		del_indice_history(t_flags flags);
 char	*get_argument(char *argv, int end);
-void	flag_w(t_flags *flags);
 int		ft_lst_size(t_list *history);
 int		get_value(char *cpy, int index);
 void	check_what_element_to_delete(t_historic

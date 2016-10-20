@@ -1,66 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_r_and_w.c                                     :+:      :+:    :+:   */
+/*   flag_a_or_w.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 18:09:46 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/19 17:03:30 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 12:05:38 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/*
-** Copie l'historique actuel dans le fichier '.42sh_history'.
-*/
-
-void	flag_w(t_flags *flags)
+static void	set_all_elem_old(t_list *head)
 {
-	char		*tmp;
-	t_historic	*termcaps;
-
-	termcaps = get_termcaps();
-	if (flags->argument)
+	while (head)
 	{
-		tmp = ft_strdup(termcaps->path_historic_file);
-		ft_strdel(&termcaps->path_historic_file);
-		termcaps->path_historic_file = ft_strdup(flags->argument);
-		save_historic_file(termcaps, 0);
-		ft_strdel(&termcaps->path_historic_file);
-		termcaps->path_historic_file = ft_strdup(tmp);
-		ft_strdel(&tmp);
+		head->new = 0;
+		head = head->next;
 	}
+}
+
+static void	save(t_flags *flags, t_historic *termcaps)
+{
+	if (flags->flag_a)
+		save_historic_file(termcaps, 1);
 	else
 		save_historic_file(termcaps, 0);
 }
 
 /*
-** Ajoute le contenu du fichier '.42sh_history' à l'historique actuel.
+** Ajoute le contenu de l'historique actuel dans le fichier '.42sh_history'.
+** Petite particularité du 'flag -a' qui n'ajoute que les nouveaux éléments.
 */
 
-void	flag_r(t_flags *flags)
+void		flag_a_or_w(t_flags *flags)
 {
 	char		*tmp;
-	char		**taab;
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();
+	if (flags->flag_a && termcaps->block_flag_a)
+		return ;
 	if (flags->argument)
 	{
 		tmp = ft_strdup(termcaps->path_historic_file);
 		ft_strdel(&termcaps->path_historic_file);
 		termcaps->path_historic_file = ft_strdup(flags->argument);
-		if ((taab = recover_historic_file(termcaps, -1)) != NULL)
-			create_historic_list(termcaps, taab);
+		save(flags, termcaps);
 		ft_strdel(&termcaps->path_historic_file);
 		termcaps->path_historic_file = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
-	else
+	else if (flags->flag_a)
 	{
-		if ((taab = recover_historic_file(termcaps, -1)) != NULL)
-			create_historic_list(termcaps, taab);
+		save_historic_file(termcaps, 1);
+		set_all_elem_old(termcaps->head);
 	}
+	else
+		save_historic_file(termcaps, 0);
 }

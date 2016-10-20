@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/12 18:04:21 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 12:31:56 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 /*
 **	Return -1 si ya pas de builtin
 */
-
-#include "stdio.h"
-
 
 static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 {

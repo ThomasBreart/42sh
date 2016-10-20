@@ -6,13 +6,20 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 14:25:11 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/18 16:23:13 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/20 12:30:49 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		del_elem_list(t_list *first)
+static	void	free_all(t_list *first)
+{
+	ft_memdel((void**)&first->content);
+	free_double_tab(first->argv);
+	ft_memdel((void**)&first);
+}
+
+int				del_elem_list(t_list *first)
 {
 	if (first && first->next != NULL)
 	{
@@ -35,10 +42,6 @@ int		del_elem_list(t_list *first)
 			first->prev->next = NULL;
 	}
 	if (first)
-	{
-		ft_memdel((void**)&first->content);
-		free_double_tab(first->argv);
-		ft_memdel((void**)&first);
-	}
+		free_all(first);
 	return (1);
 }
