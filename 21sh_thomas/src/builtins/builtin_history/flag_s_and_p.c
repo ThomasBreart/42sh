@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 14:47:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/19 16:53:54 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/25 13:49:24 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	print_arguments(char **ar)
 	while (*ar)
 	{
 		ft_putstr(*ar);
-		ft_putchar(' ');
 		ft_putchar('\n');
 		ar++;
 	}

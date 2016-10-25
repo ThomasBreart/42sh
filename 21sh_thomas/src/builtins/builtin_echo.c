@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 12:51:30 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/20 13:55:03 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/10/25 13:51:18 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,28 @@ static void	print_string(char **av, int delta, int flag)
 
 static int	check_flags(char **av, int *flag)
 {
+	int			j;
 	int			i;
 
 	i = 1;
-	if (av[i] && ft_strcmp(av[i], "-n"))
+	if (av[i] && ft_strncmp(av[i], "-", 1))
 		return (i);
 	while (av[i])
 	{
-		if (av[i] && !ft_strcmp(av[i], "-n"))
+		j = 2;
+		if (av[i] && ft_strncmp(av[i], "-n", 2) &&
+			(!ft_strcmp(av[i], "--") || av[i][0] != ' '))
+			return (i);
+		if (av[i] && !ft_strncmp(av[i], "-n", 2))
 		{
+			while (av[i][j] && av[i][j] == 'n')
+				j++;
+			if (av[i][j] && av[i][j] != ' ' && av[i][j] != '\0')
+				return (i);
 			remove_flag(av, i);
 			*flag = 1;
+			i--;
 		}
-		if (av[i] && ft_strcmp(av[i], "-n") &&
-				(!ft_strcmp(av[i], "--") || av[i][0] != ' '))
-			return (i);
 		i++;
 	}
 	return (i);
