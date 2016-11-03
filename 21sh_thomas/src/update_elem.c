@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 10:59:15 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 13:09:07 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/03 06:57:07 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	update_elem(t_list *elem, int change_argv)
 		free_double_tab(elem->argv);
 		elem->argv = tmp;
 	}
-	elem->content = s_strdup(elem->argv[0], __FILE__);
+	if (ft_strlen(elem->fullcontent) == 0)
+		elem->content = s_strdup(elem->fullcontent, __FILE__);
+	else
+		elem->content = s_strdup(elem->argv[0], __FILE__);
 //	fprintf(stderr, "econttent: %s\n", elem->content);
 }

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 17:39:29 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/03 07:37:28 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ char	**realloc_tab(char **oldtab, int *maxlen, const char *filename);
 void	remove_quoting_chars(t_list *elem);
 void	update_elem(t_list *elem, int change_argv);
 int		exec_subshell(t_list *elem);
+int		extract_event(char **str, int start_analysis, int *start_subcmd, char **sub_cmd);
+int		extract_subcmd(char **str, int start_analysis, int *start_subcmd, char **sub_cmd);
+void		remove_onelvl_escape_backslash(char **str);
+int		exec_backquotes(char **str);
 
 /*
 **	check_backquotes.c

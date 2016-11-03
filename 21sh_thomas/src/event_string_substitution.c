@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 17:31:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 18:53:19 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/03 05:06:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void		extract_data_substitution(char *sub_cmd, char **new_subcmd,
 	tmp = goto_next_char(sub_cmd + 1, '^');
 	len = tmp - (sub_cmd + 1);
 	*new_subcmd = s_strndup(sub_cmd + 1, len, __FILE__);
-//	printf("new_subcmd: %s\n", new_subcmd);
 	if (tmp[0] == '\0' || tmp[1] == '\0')
 		*replace = s_strdup("", __FILE__);
 	else
@@ -70,6 +69,8 @@ int				event_string_substitution(char *sub_cmd, char **new_str)
 	if (ft_strlen(sub_cmd) == 1)
 		return (E_NO_PREVSUB);
 	extract_data_substitution(sub_cmd, &new_subcmd, &replace);
+	if (ft_strlen(new_subcmd) == 0)
+		return (E_NO_PREVSUB);
 	tmplist = termcaps->end->prev;///
 	if ((pos = ft_strstr(tmplist->content, new_subcmd)) != NULL)
 		*new_str = str_substitution(tmplist->content, pos, new_subcmd, replace);
