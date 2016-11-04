@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_simple.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 13:16:21 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/04 14:05:04 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 		ret = builtin_goto(elem, env);
 	else if (ft_strcmp("change_prompt", elem->content) == 0)
 		ret = builtin_change_prompt(elem);
+	else if (ft_strcmp("read", elem->content) == 0)
+		ret = builtin_read(elem->argv, save);
 	else
 		return (-1);
 	return (ret);

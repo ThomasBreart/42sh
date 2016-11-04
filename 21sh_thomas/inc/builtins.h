@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 20:02:22 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/04 15:27:22 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_BUILTINS_H
 # define FT_BUILTINS_H
+
+/*
+**	builtin_read.c
+*/
+int    builtin_read(char **argv, t_save_fd *save);
+int		 read_usage(void);
+int     parse_flag(char **args, int *flag);
 
 /*
 **	builtin_cd.c
