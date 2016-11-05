@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/19 06:18:52 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 22:52:23 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 06:24:40 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static void	swap_argv(t_list *prev, t_list *next)
 }
 
 /*
+**	FEATURE OBSOLETE / CODE PLUS UTILISAY
+**
 ** SI format de type [cmd][redir][file], transfert argv de file a cmd
 **	ex: pwd >> toto -u -l === pwd -u -l >> toto
 */

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/03 22:46:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 16:11:53 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 06:23:36 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,35 @@ static int	useless_comas(t_list **first)
 	return (1);
 }
 
+static int	formatting_file(t_list *first)
+{
+	t_list *elem;
+
+	elem = first;
+	while (elem != NULL)
+	{
+		if (is_a_redir(elem->type) == 1)
+		{
+			if (ft_tablen(elem->next->argv) > 1)
+			{
+				ft_putendl_fd("file bad formatted", STDERR_FILENO);
+				return (-1);
+			}
+		}
+		elem = elem->next;
+	}
+	return (1);
+}
+
 int			formatting_cmd_general(t_list **first)
 {
 	if (find_aggregator_fd(*first) == -1)
 		return (-1);
-	swap_argv_with_redir(first);
 	if (useless_comas(first) == -1)
 		return (-1);
 	if (check_missing_word(*first) == -1)
+		return (-1);
+	if (formatting_file(*first) == -1)
 		return (-1);
 	return (1);
 }
