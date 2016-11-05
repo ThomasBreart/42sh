@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 03:26:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 14:53:16 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 05:09:12 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int		redir_file_rc(t_list *elem, t_save_fd *save)
 {
 	int		fd;
 	int		fd_tmp;
+	t_historic	*termcaps;
 
+	termcaps = get_termcaps();
 	fd = -1;
 	fd_tmp = -1;
 	if (elem->aggr_fd == 1)
@@ -37,6 +39,8 @@ int		redir_file_rc(t_list *elem, t_save_fd *save)
 		}
 		else
 			dup2(fd_tmp, save->fd_parent);
+		if (save->fd_parent == '&' || save->fd_parent == 1)
+			termcaps->stdout_modified = 1;
 	}
 	return (fd_tmp);
 }

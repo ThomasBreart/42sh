@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 11:53:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 16:16:26 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 05:54:41 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,18 @@ static int	cmd_pipe_redirs(t_list *elem, char ***env, t_save_fd *save)
 	return (ret);
 }
 
-/*
-**	comme pour dup2, transforme newfd en une copie de oldfd
-*/
-
-static void	master_dup2(int oldfd, int newfd)
+static void	master_dup2(int pdes_entry)
 {
 	t_historic	*termcaps;
 	int			i;
 
 	termcaps = get_termcaps();
 	if (termcaps->stdout_modified == 0)
-		dup2(oldfd, newfd);
+		dup2(pdes_entry, STDOUT_FILENO);
 	i = 0;
 	while (i < termcaps->index_tab_aggrfd)
 	{
-		dup2(oldfd, termcaps->tab_aggrfd[i]);
+		dup2(pdes_entry, termcaps->tab_aggrfd[i]);
 		++i;
 	}
 }
@@ -57,7 +53,7 @@ static void	cmd_pipe_child(int pdes[2], t_list *prog, char ***env,
 {
 	signals_reset();
 	close(pdes[PIPE_EXIT]);
-	master_dup2(pdes[PIPE_ENTRY], STDOUT_FILENO);
+	master_dup2(pdes[PIPE_ENTRY]);
 	if (prog->type == LEX_WORD)
 		exec_simple(prog, env, save);// pas svg ret ?
 	else if (prog->type == LEX_SUBSH)
@@ -74,6 +70,9 @@ static int	cmd_pipe_father(int pdes[2], t_list *elem, char ***env,
 	close(pdes[PIPE_ENTRY]);
 	dup2(pdes[PIPE_EXIT], STDIN_FILENO);
 	close(pdes[PIPE_EXIT]);
+
+	dup2(save->save_stdout, STDOUT_FILENO);// restore original stdout
+
 	if (elem->right->type == LEX_PIPE)
 		ret = cmd_pipe(elem->right, env, NULL, save);
 	else
@@ -88,7 +87,6 @@ int			cmd_pipe(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 	pid_t		father;
 	t_historic	*termcaps;
 
-	fprintf(stderr, "yop\n");
 	termcaps = get_termcaps();
 	ret = 42;
 	if (prog == NULL)

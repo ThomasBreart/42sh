@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/03 13:43:56 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/14 13:44:23 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 05:54:07 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,24 @@ int		save_fd(t_save_fd *save)
 
 int		close_fd(t_save_fd *save)
 {
+	t_historic	*termcaps;
+
+	termcaps = get_termcaps();
 	restore_fd(save);
 	close(save->save_stdin);
 	close(save->save_stdout);
 	close(save->save_stderr);
+	termcaps->stdout_modified = 0;
 	return (1);
 }
 
 int		restore_fd(t_save_fd *save)
 {
-	int		i;
+	int			i;
+	t_historic	*termcaps;
 
 	i = 0;
+	termcaps = get_termcaps();
 	while (i <= save->index_file)
 	{
 		close(save->fd_file[i]);
@@ -76,5 +82,6 @@ int		restore_fd(t_save_fd *save)
 	dup2(save->save_stdin, STDIN_FILENO);
 	dup2(save->save_stdout, STDOUT_FILENO);
 	dup2(save->save_stderr, STDERR_FILENO);
+	termcaps->stdout_modified = 0;
 	return (1);
 }
