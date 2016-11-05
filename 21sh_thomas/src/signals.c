@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/22 02:40:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 07:35:58 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 09:17:13 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,27 @@ static void	handler_sigint(int numsig)
 {
 	t_historic *termcaps;
 
+	numsig = 42;
 	termcaps = get_termcaps();
-	if (numsig == SIGINT)
+	if (termcaps->istty == 0)
+		exit(0);
+	if (termcaps->in_getcmd == 1)
 	{
-		if (termcaps->in_getcmd == 1)
+		ft_memdel((void**)&termcaps->cmd_inprogress);
+		ft_memdel((void**)&termcaps->bslash_split);
+		if ((*termcaps->entry) != NULL)
 		{
-			ft_memdel((void**)&termcaps->cmd_inprogress);
-			ft_memdel((void**)&termcaps->bslash_split);
-			if ((*termcaps->entry) != NULL)
-			{
-				free((*termcaps->entry));
-				(*termcaps->entry) = NULL;
-				termcaps->cur_x = 0;
-				termcaps->hist = 0;
-			}
+			free((*termcaps->entry));
+			(*termcaps->entry) = NULL;
+			termcaps->cur_x = 0;
+			termcaps->hist = 0;
 		}
-		ft_putchar('\n');
-		if (termcaps->in_child == 0 && termcaps->in_llr == 0)
-		{
-			ft_putstr(termcaps->prompt);
-			termcaps->prompt_current = termcaps->prompt;
-		}
+	}
+	ft_putchar('\n');
+	if (termcaps->in_child == 0 && termcaps->in_llr == 0)
+	{
+		ft_putstr(termcaps->prompt);
+		termcaps->prompt_current = termcaps->prompt;
 	}
 }
 
