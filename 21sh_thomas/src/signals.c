@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/22 02:40:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/26 01:07:37 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 07:35:58 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			sig_child_func(int status)
 	return (-1);
 }
 
-static void	handler(int numsig)
+static void	handler_sigint(int numsig)
 {
 	t_historic *termcaps;
 
@@ -61,6 +61,36 @@ void		resize_win(int numsig)
 	(void)numsig;
 }
 
+void	handler_sigtstp(int numsig)
+{
+	t_historic	*termcaps;
+	t_save_fd	*save;
+	pid_t		pid;
+
+	numsig = 42;
+	termcaps = get_termcaps();
+	save = get_set_save_fd(NULL);
+	if (termcaps->istty == 1 && set_termios(&termcaps->save, save) == -1)
+		internal_error("handler_sigcont", "set_termcaps", 1);
+	signal(SIGTSTP, SIG_DFL);
+	pid = getpid();
+	kill(pid, SIGTSTP);
+}
+
+static void	handler_sigcont(int numsig)
+{
+	t_historic	*termcaps;
+	t_save_fd	*save;
+
+	signal(SIGTSTP, handler_sigtstp);
+	termcaps = get_termcaps();
+	numsig = 42;
+	save = get_set_save_fd(NULL);
+	if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
+		internal_error("handler_sigcont", "set_termcaps", 1);
+	ft_putstr(termcaps->prompt);
+}
+
 void		signals_management(void)
 {
 	int		i;
@@ -73,7 +103,9 @@ void		signals_management(void)
 	}
 	signal(SIGSEGV, SIG_DFL);
 	signal(SIGCHLD, SIG_DFL);
-	signal(SIGINT, handler);
+	signal(SIGTSTP, handler_sigtstp);
+	signal(SIGINT, handler_sigint);
+	signal(SIGCONT, handler_sigcont);
 	signal(SIGWINCH, resize_win);
 }
 

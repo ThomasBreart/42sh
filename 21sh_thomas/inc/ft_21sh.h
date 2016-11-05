@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/03 07:37:28 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 07:19:26 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int		extract_event(char **str, int start_analysis, int *start_subcmd, char **sub
 int		extract_subcmd(char **str, int start_analysis, int *start_subcmd, char **sub_cmd);
 void		remove_onelvl_escape_backslash(char **str);
 int		exec_backquotes(char **str);
+t_save_fd	*get_set_save_fd(t_save_fd *save);
 
 /*
 **	check_backquotes.c

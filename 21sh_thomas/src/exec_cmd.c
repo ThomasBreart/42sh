@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 11:01:08 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 05:54:46 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/05 07:19:08 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,15 @@ static int	exec_coma(t_list *elem, char ***env, t_save_fd *save)
 	return (ret);
 }
 
+t_save_fd	*get_set_save_fd(t_save_fd *save)
+{
+	static	t_save_fd	savecpy;
+
+	if (save != NULL)
+		savecpy = *save;
+	return (&savecpy);
+}
+
 int			exec_cmd(t_list *first, char ***env)
 {
 	t_save_fd	save;
@@ -101,6 +110,7 @@ int			exec_cmd(t_list *first, char ***env)
 
 	ret = -1;
 	save_fd(&save);
+	get_set_save_fd(&save);
 	if (first->type == LEX_COMA)
 		ret = exec_coma(first, env, &save);
 	else if (first->type == LEX_PIPE)
