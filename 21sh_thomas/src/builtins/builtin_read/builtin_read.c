@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 16:15:00 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/07 16:50:15 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 17:21:32 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ char		*return_one_line(int flag)
 	return (str);
 }
 
+/*
+** S'il n'y a pas de variables données en paramètre, on ajoute
+** la clé à la valeur par défaut : "REPLY".
+*/
+
 static void	put_on_reply(char ***env, int flag)
 {
 	char	**ret;
@@ -82,6 +87,13 @@ static void	put_on_reply(char ***env, int flag)
 	ft_memdel((void**)&str);
 	free_double_tab(ret);
 }
+
+/*
+**	Built-in de la commande read
+**	Elle lit une ligne depuis l'entrée standard et l'ajoute dans l'env.
+**	Une seule option possible, "-r", qui lorsqu'elle est présente
+** 	empêche les backslashes d'agir comme des caractères d'échappement.
+*/
 
 int			builtin_read(char **ar, t_save_fd *save, char ***env)
 {

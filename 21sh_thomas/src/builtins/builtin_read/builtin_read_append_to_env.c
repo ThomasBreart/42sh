@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 16:04:33 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/07 17:10:25 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 17:22:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ static char	*reverse_split(char **argv, int i)
 	}
 	return (ret);
 }
+
+/*
+** S'il y a plus de clés que de variables, la dernière varible
+** héritera de toutes les clés restantes.
+*/
 
 static char	*convert_values_to_one_value(char **values, int i)
 {
@@ -92,6 +97,11 @@ static void	add_keys_to_env(char **keys, char **values, char ***env)
 	}
 	free_double_tab(ret);
 }
+
+/*
+**	Si des variables sont données en paramètre, on les
+** ajoute dans l'environnement avec les clés correspondantes.
+*/
 
 void		make_copies(char *argv, char ***env, int flag)
 {
