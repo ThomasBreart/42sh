@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/04 15:27:22 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 11:37:26 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 /*
 **	builtin_read.c
 */
-int    builtin_read(char **argv, t_save_fd *save);
-int		 read_usage(void);
+int    builtin_read(char **argv, t_save_fd *save, char ***env);
 int     parse_flag(char **args, int *flag);
 
 /*

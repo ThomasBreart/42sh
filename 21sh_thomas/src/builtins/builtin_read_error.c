@@ -6,13 +6,13 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 14:55:50 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/04 15:22:00 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/04 15:41:04 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int			read_usage(void)
+static int			read_usage(void)
 {
 	ft_putstr_fd("read: usage: read [-r] [name ...]\n", 2);
 	return (1);
