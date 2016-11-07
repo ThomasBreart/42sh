@@ -6,19 +6,17 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 16:04:33 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/07 16:17:53 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 17:10:25 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static int	get_size(char **argv)
+static int	get_size(char **argv, int i)
 {
-	int		i;
 	int		len;
 
 	len = 0;
-	i = 1;
 	while (argv[i])
 	{
 		len += ft_strlen(argv[i]);
@@ -33,7 +31,7 @@ static char	*reverse_split(char **argv, int i)
 	char	*ret;
 	int		len;
 
-	len = get_size(argv);
+	len = get_size(argv, i);
 	ret = (char*)ft_memalloc(sizeof(char) * (len + 1));
 	while (argv[i])
 	{

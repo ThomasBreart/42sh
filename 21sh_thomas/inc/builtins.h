@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 16:09:53 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 17:14:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 /*
 **	builtin_read.c
 */
-int    builtin_read(char **argv, t_save_fd *save, char ***env);
-int     parse_flag(char **args, int *flag);
-char    *return_one_line(int flag);
-void    make_copies(char *argv, char ***env, int flag);
+int		builtin_read(char **argv, t_save_fd *save, char ***env);
+int		parse_flag(char **args, int *flag);
+char	*return_one_line(int flag);
+void	make_copies(char *argv, char ***env, int flag);
 
 /*
 **	builtin_cd.c
