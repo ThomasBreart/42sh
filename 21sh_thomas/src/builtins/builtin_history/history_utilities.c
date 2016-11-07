@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 12:36:18 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/18 15:19:50 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 18:31:01 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,11 @@ int			get_value(char *cpy, int index)
 ** options et arguments.
 */
 
-static int	get_size(char **argv)
+static int	get_size(char **argv, int i)
 {
-	int		i;
 	int		len;
 
 	len = 0;
-	i = 1;
 	while (argv[i])
 	{
 		len += ft_strlen(argv[i]);
@@ -79,14 +77,12 @@ static int	get_size(char **argv)
 	return (len);
 }
 
-char		*reverse_split(char **argv)
+char		*reverse_split(char **argv, int i)
 {
 	char	*ret;
 	int		len;
-	int		i;
 
-	i = 1;
-	len = get_size(argv);
+	len = get_size(argv, i);
 	ret = (char*)ft_memalloc(sizeof(char) * (len + 1));
 	while (argv[i])
 	{

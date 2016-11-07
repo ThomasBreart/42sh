@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 16:00:28 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 18:30:41 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 **	builtin_history.c
 */
 int		builtin_history(char **argv);
-char	*reverse_split(char **argv);
 void	print_history(int n);
 int		numeric_argument_error(char *argv);
 int		ft_isnumber(int c);
@@ -40,11 +39,20 @@ void	check_what_element_to_delete(t_historic
 		*termcaps, t_list *cpy);
 int		get_len_of_int(int nb);
 int		append_flag(char **args, t_flags *flags);
+char	*reverse_split(char **argv, int i);
 
 /*
 **	builtin_cd.c
 */
 int		builtin_echo(char **argv);
+
+/*
+**	builtin_read.c
+*/
+int		builtin_read(char **argv, t_save_fd *save, char ***env);
+int		parse_flag(char **args, int *flag);
+char	*return_one_line(int flag);
+void	make_copies(char *argv, char ***env, int flag);
 
 /*
 **	builtin_cd.c

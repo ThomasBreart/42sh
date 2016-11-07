@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 18:08:39 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 18:32:51 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 		ret = builtin_history(elem->argv);
 	else if (ft_strcmp("echo", elem->content) == 0)
 		ret = builtin_echo(elem->argv);
+	else if (ft_strcmp("read", elem->content) == 0)
+		ret = builtin_read(elem->argv, save, env);
 	else
 		return (-1);
 	return (ret);

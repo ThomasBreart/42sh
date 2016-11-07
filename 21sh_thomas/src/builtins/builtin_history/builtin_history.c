@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 16:49:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/20 16:01:53 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 18:36:34 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int			builtin_history(char **ar)
 	int			ret;
 
 	ret = 0;
-	argv = reverse_split(ar);
+	argv = reverse_split(ar, 1);
 	begin = argv;
 	ft_bzero(&flags, sizeof(t_flags));
 	if (*argv == '\0')

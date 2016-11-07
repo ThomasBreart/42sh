@@ -6,63 +6,69 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/08 11:42:10 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/19 14:28:29 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 12:27:25 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-static int		ft_get_word(char const *s, char c)
+static int		count_words(const char *s, char c)
 {
-	int		i;
-	int		j;
+	int		cnt;
+	int		tmp;
 
-	i = 0;
-	j = 0;
-	while (s[i] != '\0')
+	tmp = 0;
+	cnt = 0;
+	while (*s)
 	{
-		if ((i == 0 && s[i] != c) || (s[i] != c && s[i - 1] == c))
-			++j;
-		++i;
+		if (tmp && *s == c)
+			tmp = 0;
+		if (!tmp && *s != c)
+		{
+			tmp = 1;
+			cnt++;
+		}
+		s++;
 	}
-	return (j);
+	return (cnt);
 }
 
-static char		*ft_cpy_word(char const *s, char c)
+static int		count_letter(const char *s, char c)
 {
-	int		a;
-	char	*tmp;
+	int		len;
 
-	a = 0;
-	if (!s)
-		return (NULL);
-	while (s[a] != c && s[a] != '\0')
-		++a;
-	tmp = ft_strsub(s, 0, a);
-	return (tmp);
+	len = 0;
+	while (*s != c && *s)
+	{
+		len++;
+		s++;
+	}
+	return (len);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	int		i;
-	int		j;
-	char	**str;
-	int		t;
+	char	**t;
+	int		nb_word;
+	int		index;
 
-	i = 0;
-	j = 0;
-	if (s == NULL)
+	index = 0;
+	nb_word = count_words((const char *)s, c);
+	t = (char **)malloc(sizeof(*t) * (count_words((const char *)s, c) + 1));
+	if (t == NULL)
 		return (NULL);
-	t = ft_get_word(s, c);
-	str = (char**)malloc(sizeof(char*) * t + sizeof(char*));
-	if (str == NULL)
-		return (NULL);
-	while (s[i] != '\0')
+	while (nb_word--)
 	{
-		if ((i == 0 && s[i] != c) || (s[i] != c && s[i - 1] == c))
-			str[j++] = ft_cpy_word(&s[i], c);
-		++i;
+		while (*s == c && *s)
+			s++;
+		t[index] = ft_strsub((const char *)s, 0,
+			count_letter((const char *)s, c));
+		if (t[index] == NULL)
+			return (NULL);
+		s = s + count_letter(s, c);
+		index++;
 	}
-	str[j] = NULL;
-	return (str);
+	t[index] = NULL;
+	return (t);
 }
