@@ -6,19 +6,19 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 14:55:50 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/04 15:41:04 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 16:16:14 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static int			read_usage(void)
+static int	read_usage(void)
 {
 	ft_putstr_fd("read: usage: read [-r] [name ...]\n", 2);
 	return (1);
 }
 
-static int			append_flag(char **args, int *flag)
+static int	append_flag(char **args, int *flag)
 {
 	(*args) += 1;
 	while (**args && **args != ' ')
@@ -45,17 +45,17 @@ static int	stop_flag(char **args)
 		return (read_usage());
 }
 
-int	parse_flag(char **args, int *flag)
+int			parse_flag(char **args, int *flag)
 {
 	while (**args)
 	{
 		if (**args == '-' && *(*args + 1) == '-')
-      return (stop_flag(args));
+			return (stop_flag(args));
 		else if (**args == '-')
-    {
-      if (append_flag(args, flag))
-        return (1);
-    }
+		{
+			if (append_flag(args, flag))
+				return (1);
+		}
 		if (**args != ' ')
 			break ;
 		*(args) += 1;

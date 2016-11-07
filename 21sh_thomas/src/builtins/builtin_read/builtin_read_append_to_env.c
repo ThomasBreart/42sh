@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_read.c                                     :+:      :+:    :+:   */
+/*   builtin_read_append_to_env.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/27 16:15:00 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/07 15:13:52 by mfamilar         ###   ########.fr       */
+/*   Created: 2016/11/07 16:04:33 by mfamilar          #+#    #+#             */
+/*   Updated: 2016/11/07 16:17:53 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-#include "stdio.h"
 
 static int	get_size(char **argv)
 {
@@ -29,7 +28,7 @@ static int	get_size(char **argv)
 	return (len);
 }
 
-static char		*reverse_split(char **argv, int i)
+static char	*reverse_split(char **argv, int i)
 {
 	char	*ret;
 	int		len;
@@ -46,30 +45,7 @@ static char		*reverse_split(char **argv, int i)
 	return (ret);
 }
 
-static void put_cooked_mode(t_save_fd *save)
-{
-  t_historic  *termcaps;
-
-  termcaps = get_termcaps();
-  set_termios(&termcaps->term, save);
-}
-
-static void put_raw_mode(t_save_fd *save)
-{
-  t_historic  *termcaps;
-
-  termcaps = get_termcaps();
-  set_termios(&termcaps->save, save);
-}
-
-char *return_one_line(void) {
-  char    *str;
-
-  get_next_line(STDIN_FILENO, &str);
-  return (str);
-}
-
-char	*convert_values_to_one_value(char **values, int i)
+static char	*convert_values_to_one_value(char **values, int i)
 {
 	char		*str;
 
@@ -77,7 +53,7 @@ char	*convert_values_to_one_value(char **values, int i)
 	return (str);
 }
 
-char **create_key_plus_value(char **keys, char **values, int *j, int i)
+static char	**create_key_plus_value(char **keys, char **values, int *j, int i)
 {
 	char **ret;
 	char *str;
@@ -96,7 +72,7 @@ char **create_key_plus_value(char **keys, char **values, int *j, int i)
 	return (ret);
 }
 
-void add_keys_to_env(char **keys, char **values, char ***env)
+static void	add_keys_to_env(char **keys, char **values, char ***env)
 {
 	int		i;
 	int		j;
@@ -119,42 +95,17 @@ void add_keys_to_env(char **keys, char **values, char ***env)
 	free_double_tab(ret);
 }
 
-void make_copies(char *argv, char ***env)
+void		make_copies(char *argv, char ***env, int flag)
 {
-  char  **values;
-	char  *str;
-	char  **keys;
+	char	**values;
+	char	*str;
+	char	**keys;
 
-  keys = s_strsplit(argv, ' ', __FILE__);
-  str = return_one_line();
-  values = s_strsplit(str, ' ', __FILE__);
-  ft_memdel((void**)&str);
-  add_keys_to_env(keys, values, env);
+	keys = s_strsplit(argv, ' ', __FILE__);
+	str = return_one_line(flag);
+	values = s_strsplit(str, ' ', __FILE__);
+	ft_memdel((void**)&str);
+	add_keys_to_env(keys, values, env);
 	free_double_tab(keys);
 	free_double_tab(values);
-}
-
-int         builtin_read(char **ar, t_save_fd *save, char ***env)
-{
-  char  *begin;
-  char  *argv;
-  int   flag;
-  int   ret;
-
-  ret = 0;
-  flag = 0;
-  argv = reverse_split(ar, 1);
-  begin = argv;
-  put_raw_mode(save);
-  if (*argv == '\0')
-    return_one_line();
-  else
-  {
-    ret = parse_flag(&argv, &flag);
-    if (!ret)
-      make_copies(argv, env);
-  }
-  put_cooked_mode(save);
-  ft_memdel((void**)&begin);
-  return (ret);
 }
