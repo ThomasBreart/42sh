@@ -30,7 +30,6 @@ typedef struct		s_flags
 typedef struct		s_list
 {
 	char			*content;
-	char			*fullcontent;
 	char			**argv;
 	int				type;
 	int				aggr_fd;

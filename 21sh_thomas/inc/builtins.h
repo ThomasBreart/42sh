@@ -3,15 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 20:02:22 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/20 16:00:28 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_BUILTINS_H
 # define FT_BUILTINS_H
+
+/*
+**	builtin_history.c
+*/
+int		builtin_history(char **argv);
+char	*reverse_split(char **argv);
+void	print_history(int n);
+int		numeric_argument_error(char *argv);
+int		ft_isnumber(int c);
+int		history_usage();
+int		out_of_range(char *argv);
+int		flag_d(char *args, t_flags *flags);
+void	flag_s(char *str);
+void	flag_p(char **ar);
+void	flag_c(void);
+void	flag_r_or_n(t_flags *flags);
+void	flag_a_or_w(t_flags *flags);
+int		put_flag_d(t_flags *flags, char **args);
+int		check_history_flags(char *args, t_flags flags, char **ar);
+int		check_numeric_arg(char *argv);
+int		del_indice_history(t_flags flags);
+char	*get_argument(char *argv, int end);
+int		ft_lst_size(t_list *history);
+int		get_value(char *cpy, int index);
+void	check_what_element_to_delete(t_historic
+		*termcaps, t_list *cpy);
+int		get_len_of_int(int nb);
+int		append_flag(char **args, t_flags *flags);
+
+/*
+**	builtin_cd.c
+*/
+int		builtin_echo(char **argv);
 
 /*
 **	builtin_cd.c
@@ -36,6 +69,7 @@ int		builtin_env_options(char **argv);
 */
 int		builtin_exit(t_list *elem, char **env, t_save_fd *save);
 int		clean_exit(char **env, t_save_fd *save);
+void	free_historic(t_historic *termcaps);
 
 /*
 **	builtin_setenv.c

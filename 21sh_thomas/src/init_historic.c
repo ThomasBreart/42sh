@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_historic.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:44:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/23 15:58:17 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/20 12:47:30 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,58 @@ static void	recover_historic_file_error(char ***taab)
 	*taab = NULL;
 }
 
-char		**recover_historic_file(t_historic *termcaps)
+static void	call_gnl(int fd, char **taab, t_historic *termcaps, int limit)
 {
-	int		fd;
-	char	**taab;
 	char	*entry;
 	int		i;
 
-	if ((fd = open(termcaps->path_historic_file, O_RDONLY)) == -1)
-		return (NULL);
-	taab = (char**)s_memalloc(sizeof(char *) * 501, __FILE__);
 	i = 0;
-	while (i < 501)
-		taab[i++] = NULL;
-	i = 0;
-	while (get_next_line(fd, &entry) != 0)
+	while ((get_next_line(fd, &entry) != 0) && i <= 501)
 	{
 		if (taab[i] != NULL)
-			free(taab[i]);
-		taab[i++] = entry;
-		if (i == 501)
-			break ;
+			ft_memdel((void**)taab[i]);
+		if (limit != -1)
+		{
+			if (limit >= termcaps->n_indice)
+				taab[i++] = ft_strdup(entry);
+			limit++;
+		}
+		else
+		{
+			taab[i++] = ft_strdup(entry);
+			termcaps->n_indice++;
+		}
+		ft_strdel(&entry);
 	}
 	ft_strdel(&entry);
 	if (i == 501)
 		recover_historic_file_error(&taab);
+}
+
+/*
+** Le int "limit" en paramètre de la fonction sert lorsque l'on
+** utilise le "flag -n" avec la commande "history" et qu'il faut
+** ajouter à l'historique actuel, uniquement les nouvelles
+** commandes, ajoutés au fichier ".42sh_history" après le début
+** de session.
+*/
+
+char		**recover_historic_file(t_historic *termcaps, int limit)
+{
+	int		fd;
+	char	**taab;
+
+	if ((fd = open(termcaps->path_historic_file, O_RDONLY)) == -1)
+	{
+		termcaps->block_flag_a = 1;
+		return (NULL);
+	}
+	taab = (char**)s_memalloc(sizeof(char *) * 501, __FILE__);
+	ft_bzero(taab, sizeof(taab) * 501);
+	call_gnl(fd, taab, termcaps, limit);
 	close(fd);
+	if (limit == -1 && termcaps->n_indice == 0)
+		termcaps->block_flag_a = 1;
 	return (taab);
 }
 
@@ -56,7 +82,7 @@ void		create_historic_list(t_historic *termcaps, char **taab)
 	tmp_taab = taab;
 	while (*tmp_taab != NULL)
 	{
-		add_historic(termcaps, tmp_taab, 0);
+		add_historic(termcaps, tmp_taab, 0, 0);
 		++tmp_taab;
 	}
 	free_double_tab(taab);
