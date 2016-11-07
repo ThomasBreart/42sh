@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/22 02:40:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 18:34:17 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 19:03:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	handler_sigint(int numsig)
 	termcaps = get_termcaps();
 	if (termcaps->istty == 0)
 		exit(0);
+	if (termcaps->in_read == 1)
+		ft_putchar_fd(EOF, STDIN_FILENO);
 	if (termcaps->in_getcmd == 1)
 	{
 		ft_memdel((void**)&termcaps->cmd_inprogress);

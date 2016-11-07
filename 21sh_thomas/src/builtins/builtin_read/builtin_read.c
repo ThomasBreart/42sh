@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 16:15:00 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/07 18:31:26 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 18:59:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,18 @@ static void	put_on_reply(char ***env, int flag)
 ** 	empêche les backslashes d'agir comme des caractères d'échappement.
 */
 
+#include <stdio.h>
+
 int			builtin_read(char **ar, t_save_fd *save, char ***env)
 {
 	char	*begin;
 	char	*argv;
 	int		flag;
 	int		ret;
+	t_historic	*termcaps;
 
+	termcaps = get_termcaps();
+	termcaps->in_read = 1;
 	ret = 0;
 	flag = 0;
 	argv = reverse_split(ar, 1);
@@ -81,5 +86,7 @@ int			builtin_read(char **ar, t_save_fd *save, char ***env)
 		make_copies(argv, env, flag);
 	put_cooked_mode(save);
 	ft_memdel((void**)&begin);
+	termcaps->in_read = 0;
+	ret = (ret == 1) ? -1 : 1;
 	return (ret);
 }

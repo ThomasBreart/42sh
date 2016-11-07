@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:24:18 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 11:21:32 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/07 18:59:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct		s_historic
 	int				need_wildcard: 1;
 	int				n_indice;
 	int				block_flag_a: 1;
+	int				in_read: 1;
 }					t_historic;
 
 typedef struct		s_vars_redirs
