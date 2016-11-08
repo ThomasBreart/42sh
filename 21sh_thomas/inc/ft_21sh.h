@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 07:19:26 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/19 17:02:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ void				init_var_aggrfd(t_historic *termcaps);
 /*
 **	init_historic.c
 */
-char				**recover_historic_file(t_historic *termcaps);
+char				**recover_historic_file(t_historic *termcaps, int limit);
 void				create_historic_list(t_historic *termcaps, char **taab);
 void				set_path_historic_file(t_historic *termcaps, char **env);
 
@@ -250,8 +250,8 @@ void				free_memory(char **entry, t_historic *termcaps,
 **	manage_historic.c
 */
 void				add_historic(t_historic *termcaps, char **entry,
-																int check_max);
-void				save_historic_file(t_historic *termcaps);
+																int check_max, int new);
+void				save_historic_file(t_historic *termcaps, int flag_a);
 
 /*
 **	proc_management.c

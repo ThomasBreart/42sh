@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 20:00:21 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 16:24:44 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 18:09:17 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	init_historic(t_historic *termcaps, char **my_env)
 	if (termcaps->istty == 1)
 	{
 		if (termcaps->path_historic_file != NULL)
-			if ((taab = recover_historic_file(termcaps)) != NULL)
+			if ((taab = recover_historic_file(termcaps, -1)) != NULL)
 				create_historic_list(termcaps, taab);
 		ft_putstr(termcaps->prompt);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_historic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:56:39 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 13:13:18 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 18:09:56 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,14 @@ static void	check_max_history_list(t_historic *termcaps)
 	}
 }
 
-void		add_historic(t_historic *termcaps, char **entry, int check_max)
+/*
+** Pour distinguer les commandes tapées depuis le début de session (nouvelles)
+** par rapport aux commandes importées depuis l'historique,
+** on passe le flag 'new' à la fonction add_historic().
+*/
+
+void		add_historic(t_historic *termcaps, char **entry, int check_max,
+			int new)
 {
 	t_list	*tmp;
 	char	*cmd;
@@ -56,23 +63,51 @@ void		add_historic(t_historic *termcaps, char **entry, int check_max)
 	termcaps->end = tmp;
 	termcaps->cur = tmp;
 	termcaps->hist = 0;
+	if (new)
+		tmp->new = 1;
+	else
+		tmp->new = 0;
 }
 
-void		save_historic_file(t_historic *termcaps)
+static int	get_fd(t_historic *termcaps, int flag_a)
+{
+	int		fd;
+
+	if (!flag_a)
+		fd = open(termcaps->path_historic_file, O_WRONLY | O_CREAT
+				| O_TRUNC, 0644);
+	else
+		fd = open(termcaps->path_historic_file, O_WRONLY | O_CREAT
+				| O_APPEND, 0644);
+	return (fd);
+}
+
+/*
+** Si le 'flag -a' est activé avec la commande "history", on ajoute au fichier
+** ".42sh_history" uniquement les nouvelles commandes, c'est-à-dire les
+** commandes tapées depuis le début de la nouvelle session du 42sh.
+*/
+
+void		save_historic_file(t_historic *termcaps, int flag_a)
 {
 	int		fd;
 	t_list	*tmp;
 
 	if (termcaps->path_historic_file == NULL)
 		return ;
-	fd = open(termcaps->path_historic_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = get_fd(termcaps, flag_a);
 	if (fd == -1)
 		return ;
 	tmp = termcaps->head;
 	while (tmp != NULL)
 	{
 		if (ft_strlen(tmp->content) < 500)
-			ft_putendl_fd(tmp->content, fd);
+		{
+			if (flag_a && tmp->new)
+				ft_putendl_fd(tmp->content, fd);
+			else if (!flag_a)
+				ft_putendl_fd(tmp->content, fd);
+		}
 		tmp = tmp->next;
 	}
 	close(fd);

@@ -3,29 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:24:18 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 16:23:36 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/10/08 20:10:26 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_STRUCTS_H
 # define FT_STRUCTS_H
-
-typedef struct		s_flags
-{
-	int				indice;
-	int				flag_d: 1;
-	int				flag_c: 1;
-	int				flag_a: 1;
-	int				flag_n: 1;
-	int				flag_r: 1;
-	int				flag_w: 1;
-	int				flag_s: 1;
-	int				flag_p: 1;
-	char			*argument;
-}					t_flags;
 
 typedef struct		s_list
 {
@@ -34,13 +20,11 @@ typedef struct		s_list
 	char			**argv;
 	int				type;
 	int				aggr_fd;
-	int				new: 1;
 	struct s_list	*parent;
 	struct s_list	*prev;
 	struct s_list	*next;
 	struct s_list	*left;
 	struct s_list	*right;
-	int				content_modified: 1;
 }					t_list;
 
 typedef struct		s_save_fd
@@ -82,7 +66,6 @@ typedef struct		s_historic
 	char			*prompt;
 	char			*prompt_open;
 	int				in_llr;
-	int				llr_eof;
 	char			*prompt_in_llr;
 	int				in_child;
 	int				fd_tty;
@@ -97,10 +80,6 @@ typedef struct		s_historic
 	int				select_mode;
 	int				end_select;
 	int				stdout_modified;
-	int				need_wildcard: 1;
-	int				n_indice;
-	int				block_flag_a: 1;
-	int				in_read: 1;
 }					t_historic;
 
 typedef struct		s_vars_redirs

@@ -3,18 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   del_elem_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 14:25:11 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 19:29:28 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 18:08:55 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		del_elem_list(t_list *first)
+static	void	free_all(t_list *first)
 {
-	if (first->next != NULL)
+	ft_memdel((void**)&first->content);
+	free_double_tab(first->argv);
+	ft_memdel((void**)&first);
+}
+
+int				del_elem_list(t_list *first)
+{
+	if (first && first->next != NULL)
 	{
 		if (first->prev != NULL)
 		{
@@ -24,7 +31,7 @@ int		del_elem_list(t_list *first)
 		else
 			first->next->prev = NULL;
 	}
-	if (first->prev != NULL)
+	if (first && first->prev != NULL)
 	{
 		if (first->next != NULL)
 		{
@@ -34,8 +41,7 @@ int		del_elem_list(t_list *first)
 		else
 			first->prev->next = NULL;
 	}
-	free(first->content);
-	free_double_tab(first->argv);
-	free(first);
+	if (first)
+		free_all(first);
 	return (1);
 }
