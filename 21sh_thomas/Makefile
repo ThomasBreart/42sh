@@ -1,4 +1,4 @@
-NAME = 21sh
+NAME = 42sh
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 LIBFT = lib/libft/
