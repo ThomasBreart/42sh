@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:13:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/24 16:34:13 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/08 16:26:25 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	setenv_check_errors(char **argv)
 		ft_putendl_fd("setenv: Too many arguments.", STDERR_FILENO);
 		return (-1);
 	}
-	if (argv[1] != NULL && !ft_isalnum(argv[1][0]))
+	if (argv[1] != NULL && !ft_isalpha(argv[1][0]))
 	{
 		ft_putstr_fd("setenv: Variable name must begin with ", STDERR_FILENO);
 		ft_putendl_fd("a letter.", STDERR_FILENO);
