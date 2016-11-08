@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 07:49:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 16:16:40 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/08 19:07:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	cmd_still_open(t_historic *termcaps, char **entry)
 
 	end_backslash = 0;
 	ret = 1;
-	if (*entry == NULL && termcaps->bslash_split == NULL)
+	if (*entry == NULL/* && termcaps->bslash_split == NULL*/)
 	{
 		tputs(tgoto(tgetstr("do", NULL), 0, 0), 1, ft_outc);
 		ft_putstr(termcaps->prompt_current);
