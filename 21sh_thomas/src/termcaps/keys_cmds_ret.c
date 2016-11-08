@@ -6,33 +6,49 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 07:49:26 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 18:11:08 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/08 16:16:40 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+void	del_backslash_end(char **entry)
+{
+	char	*tmp;
+
+	tmp = s_strndup(*entry, ft_strlen(*entry) - 1, __FILE__);
+	ft_strdel(entry);
+	*entry = tmp;
+}
 
 static int	cmd_still_open(t_historic *termcaps, char **entry)
 {
 	int		ret;
 	char	*tmp;
 	char	*full_cmd;
+	int		end_backslash;
 
+	end_backslash = 0;
 	ret = 1;
+	if (*entry == NULL && termcaps->bslash_split == NULL)
+	{
+		tputs(tgoto(tgetstr("do", NULL), 0, 0), 1, ft_outc);
+		ft_putstr(termcaps->prompt_current);
+		return (1);
+	}
 	full_cmd = find_full_cmd(*entry, termcaps);
 //	printf("full_cmd: -%s-\n", full_cmd);
-	if (*entry == NULL || (ret = cmd_is_open(full_cmd)) == 1)
+	if ((ret = cmd_is_open(full_cmd, &end_backslash)) == 1)
 	{
-		if (*entry != NULL)
+		if (end_backslash == 1)
+			del_backslash_end(entry);
+		if (termcaps->bslash_split == NULL)
+			termcaps->bslash_split = s_strdup(*entry, __FILE__);
+		else
 		{
-			if (termcaps->bslash_split == NULL)
-				termcaps->bslash_split = s_strdup(*entry, __FILE__);
-			else
-			{
-				tmp = s_strjoin(termcaps->bslash_split, *entry, __FILE__);
-				free(termcaps->bslash_split);
-				termcaps->bslash_split = tmp;
-			}
+			tmp = s_strjoin(termcaps->bslash_split, *entry, __FILE__);
+			free(termcaps->bslash_split);
+			termcaps->bslash_split = tmp;
 		}
 		ft_memdel((void**)entry);
 		ft_memdel((void**)&termcaps->cmd_inprogress);
@@ -42,10 +58,9 @@ static int	cmd_still_open(t_historic *termcaps, char **entry)
 		ft_putstr(termcaps->prompt_current);
 		termcaps->cur_x = 0;
 		free(full_cmd);
-		//printf("hello\n");
 		return (1);
 	}
-		free(full_cmd);
+	free(full_cmd);
 	termcaps->len_prompt = ft_strlen(termcaps->prompt);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/19 17:02:39 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/08 16:12:47 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@
 char	*goto_next_char(char *str, char c);
 char		*add_str_in_str(char *dest, char *src, int position);
 int		check_event_designators(char **entryr);
-int		cmd_is_open(char *str);
+int		cmd_is_open(char *str, int *end_backslash);
 int		open_chars_error(t_historic *tcaps, char error);
 char	*find_full_cmd(char *s, t_historic *termcaps);
 char	*goto_next_quote(char *str);

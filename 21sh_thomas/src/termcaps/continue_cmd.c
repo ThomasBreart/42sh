@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 07:39:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/11 19:44:30 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/08 13:16:41 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	*find_full_cmd(char *s, t_historic *termcaps)
 	char	*tmp2;
 
 	if (s == NULL)
-		tmp2 = s_strdup("\n", __FILE__);
+		tmp2 = s_strdup("", __FILE__);
 	else
-		tmp2 = s_strjoin(s, "\n", __FILE__);
+		tmp2 = s_strjoin(s, "", __FILE__);
 	if (termcaps->bslash_split != NULL)
 		tmp = s_strjoin(termcaps->bslash_split, tmp2, __FILE__);
 	else

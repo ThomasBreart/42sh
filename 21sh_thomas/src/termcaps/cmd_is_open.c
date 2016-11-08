@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 19:39:06 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 08:59:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/08 16:09:56 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@
 **	Gere l'echapement du backslash (\)
 */
 
-int		cmd_is_open(char *str)
+int		cmd_is_open(char *str, int *end_backslash)
 {
 	while (*str != '\0')
 	{
 		if (*str == '\\')
+		{
 			++str;
+			if (*str == '\0')
+				*end_backslash = 1;
+		}
 		else if (*str == '(' || *str == '{' || *str == '[')
 			str = goto_next_parenthesis(str);
 		else if (*str == ')' || *str == '}' || *str == ']')

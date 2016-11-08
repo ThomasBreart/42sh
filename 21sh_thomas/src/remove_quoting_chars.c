@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 09:08:28 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 13:09:13 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/08 12:40:28 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	remove_quoting_chars(t_list *elem)
 				{
 					++j;
 					if (str[j] != '\0')
-						tmp[k++] = str[j++];
+						tmp[k++] = str[j];
 				}
 				else if (str[j] == '\'' || str[j] == '"')
 				{
@@ -71,7 +71,7 @@ void	remove_quoting_chars(t_list *elem)
 				}
 				else
 				{
-					tmp[k++] = str[j++];
+					tmp[k++] = str[j];
 				}
 				if (str[j] != '\0')
 					++j;
