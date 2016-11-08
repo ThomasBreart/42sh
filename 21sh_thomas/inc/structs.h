@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:24:18 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/08 20:10:26 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 16:23:36 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct		s_historic
 	char			*prompt;
 	char			*prompt_open;
 	int				in_llr;
+	int				llr_eof;
 	char			*prompt_in_llr;
 	int				in_child;
 	int				fd_tty;

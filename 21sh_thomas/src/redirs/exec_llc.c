@@ -6,24 +6,32 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 11:00:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/22 07:04:33 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/08 12:13:42 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static void	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
+static int	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
 {
 	char	*s;
 	int		fd;
+	int		ret;
+	int		fd_tmp;
 
-	signals_reset();
-	termcaps->prompt_current = termcaps->prompt_in_llr;
+	ret = -1;
 	if ((fd = open("/tmp/.buf_21sh", O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
-		exit(EXIT_FAILURE);
-	ft_putstr(termcaps->prompt_in_llr);
-	while (get_command(termcaps, &s) != 0)
 	{
+		ft_putendl_fd("can't open buffer file for the heredoc", STDERR_FILENO);
+		return (-1);
+	}
+	fd_tmp = fcntl(STDIN_FILENO, F_DUPFD, 10);
+	termcaps->prompt_current = termcaps->prompt_in_llr;
+	ft_putstr(termcaps->prompt_in_llr);
+	while ((ret = get_command(termcaps, &s)) != 0)
+	{
+		if (termcaps->llr_eof == 1 || ret == -1)
+			break ;
 		if (s != NULL && ft_strcmp(s, elem->content) == 0)
 		{
 			free(s);
@@ -38,7 +46,9 @@ static void	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
 			ft_putchar_fd('\n', fd);
 		ft_putstr(termcaps->prompt_in_llr);
 	}
-	exit(EXIT_SUCCESS);
+	dup2(fd_tmp, STDIN_FILENO);
+	close(fd_tmp);
+	return (ret);
 }
 
 static int	redir_buffer_llc(t_save_fd *save)
@@ -77,27 +87,23 @@ int			redir_file_llc(t_list *elem, t_save_fd *save)
 	int			fd_save_output;
 	int			ret;
 	int			fd_save_input;
-	int			father;
+	int			fd;
 
+	fd = -1;
 	termcaps = get_termcaps();
 	termcaps->in_llr = 1;
 	fd_save_input = dup(STDIN_FILENO);
 	dup2(save->save_stdin, STDIN_FILENO);
 	fd_save_output = dup(STDOUT_FILENO);
 	dup2(save->save_stdout, STDOUT_FILENO);
-	father = fork();
-	if (father == -1)
-		return (internal_error("redir_file_llc", "fork", 0));
-	else if (father == 0)
-		termcaps_redir_llc(termcaps, elem);
-	waitpid(father, &ret, 0);
+	ret = termcaps_redir_llc(termcaps, elem);
 	close_fd_save_llc(fd_save_output, fd_save_input);
 	termcaps->len_prompt = ft_strlen(termcaps->prompt);
 	termcaps->in_llr = 0;
 	termcaps->prompt_current = termcaps->prompt;
-	if (WEXITSTATUS(ret) == EXIT_FAILURE)
-		return (internal_error("termcaps_redir_llc", "open", 0));
-	return (redir_buffer_llc(save));
+	if (ret != -1)
+		fd = redir_buffer_llc(save);
+	return (fd);
 }
 
 int			exec_llc(t_list *elem, char ***env, t_list *prog, t_save_fd *save)

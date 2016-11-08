@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/12 18:25:58 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/13 13:57:17 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 16:24:19 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ void	init_var_cmd(t_historic *termcaps, char **entry)
 	termcaps->cmd_inprogress = NULL;
 	termcaps->hist = 0;
 	termcaps->bslash_split = NULL;
+	termcaps->llr_eof = 0;
 	termcaps->len_prompt = ft_strlen(termcaps->prompt_current);
 }

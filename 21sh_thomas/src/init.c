@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 20:00:21 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 09:08:55 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 16:24:44 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	set_vars(t_historic *termcaps)
 	termcaps->select_mode = 0;
 	termcaps->cur_x = 0;
 	termcaps->in_llr = 0;
+	termcaps->llr_eof = 0;
 	termcaps->in_child = 0;
 	termcaps->cmd_inprogress = NULL;
 	termcaps->buff_paste = NULL;

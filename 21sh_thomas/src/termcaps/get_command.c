@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/10 11:50:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/27 07:16:08 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/07 20:03:36 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int			get_command(t_historic *termcaps, char **entry)
 	r = 0;
 	while ((d = read(STDIN_FILENO, &r, sizeof(long int))))
 	{
+		if (d == -1)
+			return (-1);
 		termcaps->buff = r;
 		x = find_key(r, funcs);
 		if (exec_key(funcs, x, termcaps, entry) == 0)
