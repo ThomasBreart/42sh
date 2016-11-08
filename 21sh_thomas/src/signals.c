@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/22 02:40:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 19:03:35 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:56:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ static void	handler_sigint(int numsig)
 	termcaps = get_termcaps();
 	if (termcaps->istty == 0)
 		exit(0);
-	if (termcaps->in_llr == 1 && termcaps->in_getcmd == 1)
+	if ((termcaps->in_read == 1) ||
+			(termcaps->in_llr == 1 && termcaps->in_getcmd == 1))
+	{
 		close(STDIN_FILENO);
+	}
 	else if (termcaps->in_getcmd == 1)
 	{
 		ft_memdel((void**)&termcaps->cmd_inprogress);
@@ -45,7 +48,8 @@ static void	handler_sigint(int numsig)
 		}
 	}
 	ft_putchar('\n');
-	if (termcaps->in_child == 0 && termcaps->in_llr == 0)
+	if (termcaps->in_child == 0 && termcaps->in_llr == 0 &&
+													termcaps->in_builtin == 0)
 	{
 		ft_putstr(termcaps->prompt);
 		termcaps->prompt_current = termcaps->prompt;

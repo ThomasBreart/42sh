@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 16:15:00 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/07 18:59:54 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:57:15 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,18 @@ static void	put_raw_mode(t_save_fd *save)
 char		*return_one_line(int flag)
 {
 	char	*str;
+	int		fd_tmp;
+	t_historic	*termcaps;
 
+	str = NULL;
+	termcaps = get_termcaps();
+	termcaps->in_read = 1;
+	fd_tmp = fcntl(STDIN_FILENO, F_DUPFD, 10);
 	get_next_line(STDIN_FILENO, &str);
-	if (!flag)
+	dup2(fd_tmp, STDIN_FILENO);
+	close(fd_tmp);
+	termcaps->in_read = 0;
+	if (!flag && str != NULL)
 		remove_onelvl_escape_backslash(&str);
 	return (str);
 }
@@ -48,7 +57,8 @@ static void	put_on_reply(char ***env, int flag)
 	char	**ret;
 	char	*str;
 
-	str = return_one_line(flag);
+	if ((str = return_one_line(flag)) == NULL)
+		return ;
 	ret = fake_argv("REPLY", str);
 	builtin_setenv(ret, env);
 	ft_memdel((void**)&str);
@@ -70,10 +80,6 @@ int			builtin_read(char **ar, t_save_fd *save, char ***env)
 	char	*argv;
 	int		flag;
 	int		ret;
-	t_historic	*termcaps;
-
-	termcaps = get_termcaps();
-	termcaps->in_read = 1;
 	ret = 0;
 	flag = 0;
 	argv = reverse_split(ar, 1);
@@ -86,7 +92,6 @@ int			builtin_read(char **ar, t_save_fd *save, char ***env)
 		make_copies(argv, env, flag);
 	put_cooked_mode(save);
 	ft_memdel((void**)&begin);
-	termcaps->in_read = 0;
 	ret = (ret == 1) ? -1 : 1;
 	return (ret);
 }

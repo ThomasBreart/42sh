@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 18:32:51 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:55:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,20 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 int			exec_simple(t_list *elem, char ***env, t_save_fd *save)
 {
 	int		ret;
+	t_historic	*termcaps;
 
 	ret = 42;
+	termcaps = get_termcaps();
 //	fprintf(stderr, "fullcontent: %s\n", elem->fullcontent);
 	if (convert_metacharacters(elem, *env) == 0) //modif avec quoting
 		return (1);
 	remove_quoting_chars(elem);
 	if (is_a_builtin(elem->content))
+	{
+		termcaps->in_builtin = 1;
 		ret = cmd_simple_builtin(elem, env, save);
+		termcaps->in_builtin = 0;
+	}
 	else
 	{
 		find_fullpath_bin(elem, *env);
