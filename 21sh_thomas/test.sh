@@ -1,20 +1,18 @@
 #!/bin/sh
 
-#=== Modification à faire dans le main ===#
-# 	//	if (termcaps->istty == 1)
-#	// 			ret = get_command(termcaps, &entry);
-#				get_next_line(0, &entry);
-
 SHBASH=/bin/bash
 SHCSH=/bin/csh
-SH=./21sh
+SH=./42sh
 OUT=tmp
 OUTB=tmp2
 V=0
+COUNTER=0
+FAIL=0
 COMMAND=""
 BEHAVIOR=""
 
 check_diff() {
+	COUNTER=$((COUNTER+1))
 	echo ${COMMAND} | ${SH} > ${OUT} 2>&1
 	if [ -n "$2" ]
 	then
@@ -29,6 +27,7 @@ check_diff() {
 		printf "\033[1;32;40m.\033[0m"
 	else
 		printf "\033[1;31;40mX\033[0m"
+		FAIL=$((FAIL+1))
 	fi
 	if [ $V = 1 ]
 	then
@@ -37,6 +36,7 @@ check_diff() {
 }
 
 check_good_behavior() {
+	COUNTER=$((COUNTER+1))
 	echo ${COMMAND} | ${SH} > ${OUT} 2>&1
 	if [ "$1" == "-n" ]
 	then
@@ -103,11 +103,15 @@ fi
 
 touch tmp tmp2 tmp3
 #===TESTS Basiques===#
-printf "Basic tests: "
+printf "basic tests: "
 if [ $V == 1 ]
 then
 	printf "\n"
 fi
+
+COMMAND="cat -e auteur"
+BEHAVIOR="tbreart$\njmaccion$\nfjacquem$\nmfamilar$"
+check_good_behavior
 
 COMMAND="ls"
 check_diff ${SHCSH}
@@ -126,6 +130,9 @@ COMMAND="pwd"
 check_diff ${SHCSH}
 
 COMMAND="ls -ar"
+check_diff ${SHCSH}
+
+COMMAND="ls -a -r"
 check_diff ${SHCSH}
 
 COMMAND="ls -la -z"
@@ -176,6 +183,15 @@ check_diff ${SHCSH}
 COMMAND="ls;truc;ls;"
 check_diff ${SHCSH}
 
+COMMAND=""
+check_diff ${SHCSH}
+
+COMMAND="        "
+check_diff ${SHCSH}
+
+COMMAND="       		 	 		 	 			     						"
+check_diff ${SHCSH}
+
 printf "\n"
 
 #===TESTS BUILTIN ECHO===#
@@ -187,6 +203,10 @@ fi
 
 COMMAND="echo"
 check_diff ${SHCSH}
+
+COMMAND="echo \"It works\""
+check_diff ${SHCSH}
+
 
 COMMAND="echo -n"
 check_diff ${SHCSH}
@@ -236,6 +256,9 @@ check_diff ${SHCSH}
 COMMAND="echo $HOME/Desktop"
 check_diff ${SHCSH}
 
+COMMAND="echo $HOME > file ; cat file"
+check_diff ${SHCSH}
+
 printf "\n"
 
 #===TESTS BUILTIN CD===#
@@ -246,6 +269,21 @@ then
 fi
 
 COMMAND="cd a b c"
+check_diff ${SHCSH}
+
+COMMAND="cd ~/Desktop ; /bin/pwd"
+check_diff ${SHCSH}
+
+COMMAND="cd .. ; /bin/pwd"
+check_diff ${SHCSH}
+
+COMMAND="cd ; /bin/pwd"
+check_diff ${SHCSH}
+
+COMMAND="cd / ; /bin/pwd"
+check_diff ${SHCSH}
+
+COMMAND="cd ; cd / ; cd - ; /bin/pwd"
 check_diff ${SHCSH}
 
 COMMAND="cd;pwd ; echo \$PWD; echo \$OLDPWD"
@@ -334,7 +372,6 @@ check_diff ${SHBASH}
 #printf "\033[1;31;33m?\033[0m"
 printf "\n"
 
-
 #===TESTS BUILTIN SETENV===#
 printf "builtin_setenv: "
 if [ $V == 1 ]
@@ -382,6 +419,9 @@ COMMAND="setenv coucou=truc USER=truc truc=bidule"
 check_diff ${SHCSH}
 
 COMMAND="setenv coucou=\"test\""
+check_diff ${SHCSH}
+
+COMMAND="setenv 0=\"test\""
 check_diff ${SHCSH}
 
 printf "\n"
@@ -447,6 +487,10 @@ check_good_behavior
 
 COMMAND="env pwd"
 check_diff ${SHCSH}
+
+COMMAND="env PATH=fake ls"
+BEHAVIOR="ls: Command not found."
+check_good_behavior
 
 COMMAND="env -i pwd"
 BEHAVIOR="pwd: Command not found."
@@ -623,9 +667,66 @@ check_good_behavior
 COMMAND="history -c ; history ; history -s YOYO ; history -d 1"
 check_diff ${SHBASH}
 
+COMMAND="history -s -s -s -s -s -- --\"dsfdsf sdf sdf sdf dsfdsf\"      sdfdsf       sdf ; history > file ; cat file"
+check_diff ${SHBASH}
+
 printf "\n"
+
+#===TESTS GESTION PATH===#
+printf "gestion_path: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+COMMAND="unsetenv PATH ; ls"
+BEHAVIOR="ls: Command not found."
+check_good_behavior
+
+COMMAND="unsetenv PATH ; /bin/ls"
+check_diff ${SHCSH}
+
+COMMAND="unsetenv PATH ; setenv PATH \"/bin:/usr/bin\" ; ls"
+check_diff ${SHCSH}
+
+COMMAND="ls | cat -e"
+check_diff ${SHCSH}
+
+printf "\n"
+
+#===TESTS REDIRECTIONS===#
+printf "redirections: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+COMMAND="ls | cat -e | cat -e | cat -e | cat -e"
+check_diff ${SHCSH}
+
+COMMAND="ls -r | cat -e | cat -e | cat -e | cat -e | sort"
+check_diff ${SHCSH}
+
+COMMAND="base64 /dev/urandom | head -c 1000 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/No/g'"
+check_diff ${SHBASH}
+
+COMMAND=" echo \"Testing redirections\" > /tmp/test.txt ; cat /tmp/test.txt"
+check_diff ${SHBASH}
+
+COMMAND=" echo \"with multiple lines\" >> /tmp/test.txt  ; cat /tmp/test.txt"
+BEHAVIOR="Testing redirections\nwith multiple lines"
+check_good_behavior
+
+COMMAND=" echo \"Testing redirections\" > /tmp/test.txt ;echo \"with multiple lines\" >> /tmp/test.txt ; wc -c < /tmp/test.txt ;"
+check_diff ${SHBASH}
+
+COMMAND=" read < auteur auteur"
+check_diff ${SHBASH}
+
+printf "\n"
+
 #===TESTS BONUS METACHARACTERS===#
-printf "bonus_metacharacters_\$VAR: "
+printf "bonus_metacharacters: "
 if [ $V == 1 ]
 then
 	printf "\n"
@@ -683,6 +784,7 @@ check_diff ${SHBASH} "export A=\"\";\$A"
 
 
 printf "\n"
+#===TESTS metacharacters===#
 printf "bonus_metacharacters_~: "
 if [ $V == 1 ]
 then
@@ -716,9 +818,140 @@ BEHAVIOR=""
 check_good_behavior
 
 printf "\n"
+
+#===TESTS en vrac===#
+printf "en vrac: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+COMMAND="mkdir TOKEN201611041723 ; cd TOKEN201611041723 ; touch TOKEN201611041723_FILE ; ls -1 ; ls | cat | wc -c > TOKEN201611041723_STDOUT ; cat TOKEN201611041723_STDOUT"
+check_diff ${SHBASH}
+
+COMMAND=" mkdir test 2> /dev/null ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi"
+check_diff ${SHBASH}
+
+COMMAND=" rm nosuchfile 2>&-"
+check_diff ${SHBASH}
+
+COMMAND=" rm nosuchfile 2>&1 | cat -e "
+check_diff ${SHBASH}
+
+COMMAND=" echo \"No dollar character\" 1>&2 | cat -e"
+check_diff ${SHBASH}
+
+COMMAND=" ls && pwd"
+check_diff ${SHBASH}
+
+COMMAND=" ls -z && pwd"
+check_diff ${SHBASH}
+
+COMMAND=" history -p COCO && pwd"
+check_diff ${SHBASH}
+
+COMMAND=" setenv -z COCO && pwd"
+check_diff ${SHCSH}
+
+COMMAND=" ls || pwd"
+check_diff ${SHBASH}
+
+COMMAND=" ls -z || pwd"
+check_diff ${SHBASH}
+
+COMMAND=" history -p COCO || pwd"
+check_diff ${SHBASH}
+
+COMMAND=" setenv -z COCO || pwd"
+check_diff ${SHCSH}
+
+COMMAND="  ls > file | cat -e ; cat file"
+check_diff ${SHBASH}
+
+COMMAND="  ls > file -l ; cat file"
+check_diff ${SHBASH}
+
+COMMAND="  ls < auteur auteur"
+check_diff ${SHBASH}
+
+COMMAND="   ls > out | echo HELLO"
+check_diff ${SHBASH}
+
+COMMAND="   ls > out | echo HELLO ; cat out"
+check_diff ${SHBASH}
+
+#race condition
+COMMAND="ls > file | cat < file"
+check_diff ${SHBASH}
+
+COMMAND="ls > file | cat < file ; cat file"
+check_diff ${SHBASH}
+
+COMMAND=" echo \ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+check_diff ${SHBASH}
+
+COMMAND=" echo \abcdefghijklmnopqrstuvwxyz"
+check_diff ${SHBASH}
+
+COMMAND="echo $PWD > pop ; cat pop"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 fake > lolo 2>&1"
+check_diff ${SHBASH}
+
+echo "Fabrice,18 / 20,Excellent travail
+Mathieu,3 / 20,Nul comme d'hab
+Sophie,14 / 20,En nette progression
+Mélanie,9 / 20,Allez presque la moyenne !
+Corentin,11 / 20,Pas mal mais peut mieux faire
+Albert,20 / 20,Toujours parfait
+Benoît,5 / 20,En grave chute" > notes.csv
+
+COMMAND="cat < notes.csv"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 notes.csv"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 notes.csv > eleves.txt;cat eleves.txt"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 fichier_inexistant.csv > eleves.txt"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 fichier_inexistant.csv > eleves.txt 2> erreurs.log ; cat  erreurs.log"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 fichier_inexistant.csv > eleves.txt 2>&1 ; cat eleves.txt"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 notes.csv | sort"
+check_diff ${SHBASH}
+
+COMMAND="cut -d , -f 1 notes.csv | sort > noms_tries.txt;cat noms_tries.txt "
+check_diff ${SHBASH}
+
+COMMAND="du | sort -nr"
+check_diff ${SHBASH}
+
+COMMAND="du | sort -nr | head"
+check_diff ${SHBASH}
+
+COMMAND="du | sort -nr | less"
+check_diff ${SHBASH}
+
+printf "\n\n"
+
+echo "Nombre total de tests = " $COUNTER
+echo "Nombre de tests qui fail = " $FAIL
+SUCCESS=$((COUNTER - FAIL))
+echo "Nombre de tests OK = " $SUCCESS
+
 #===CLEAN===#
 chmod 777 test_noperm_dir
 rm -rf test_noperm_dir
 rm -rf test_dir
 rm test_reg_file
 rm tmp tmp2 tmp3
+rm notes.csv eleves.txt file erreurs.log lolo out pop noms_tries.txt
+rm -rf TOKEN201611041723 mkdir test

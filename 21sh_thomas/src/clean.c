@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/25 09:27:30 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/07 05:46:56 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/08 16:51:02 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	free_tree(t_list *root)
 	{
 		free(tmp->content);
 		free_double_tab(tmp->argv);
+		ft_memdel((void**)&tmp->fullcontent);
 		tobefree = tmp;
 		tmp = tmp->next;
 		free(tobefree);
