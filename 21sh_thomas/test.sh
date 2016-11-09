@@ -118,13 +118,14 @@ check_diff ${SHCSH}
 
 COMMAND="mkdir \"Salut ca va ?\""
 COMMAND="mkdir \"YOO\""
+COMMAND="mkdir OLA"
 
 COMMAND="ls"
 check_diff ${SHCSH}
 
 COMMAND="rm -rf  \"Salut ca va ?\""
 COMMAND="rm -rf  \"YOO\""
-
+COMMAND="rm -rf  OLA"
 
 COMMAND="pwd"
 check_diff ${SHCSH}
@@ -147,7 +148,7 @@ check_diff ${SHCSH}
 COMMAND="ls ~"
 check_diff ${SHCSH}
 
-COMMAND="invalid_command"
+COMMAND="ls $HOME"
 check_diff ${SHCSH}
 
 COMMAND="invalid_command"
@@ -164,6 +165,24 @@ check_diff ${SHCSH}
 
 COMMAND="\n"
 check_diff ${SHCSH}
+
+COMMAND=""
+check_diff ${SHCSH}
+
+COMMAND="        "
+check_diff ${SHCSH}
+
+COMMAND="       		 	 		 	 			     						"
+check_diff ${SHCSH}
+
+printf "\n"
+
+#===TESTS SÉPARATEURS===#
+printf "séparateurs: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
 
 COMMAND="ls ; ls"
 check_diff ${SHCSH}
@@ -183,15 +202,6 @@ check_diff ${SHCSH}
 COMMAND="ls;truc;ls;"
 check_diff ${SHCSH}
 
-COMMAND=""
-check_diff ${SHCSH}
-
-COMMAND="        "
-check_diff ${SHCSH}
-
-COMMAND="       		 	 		 	 			     						"
-check_diff ${SHCSH}
-
 printf "\n"
 
 #===TESTS BUILTIN ECHO===#
@@ -206,7 +216,6 @@ check_diff ${SHCSH}
 
 COMMAND="echo \"It works\""
 check_diff ${SHCSH}
-
 
 COMMAND="echo -n"
 check_diff ${SHCSH}
@@ -235,9 +244,6 @@ check_diff ${SHBASH}
 COMMAND="echo -n -n -n -n -n -nnnn -n -n -- tata"
 check_diff ${SHBASH}
 
-COMMAND="echo \"$?\""
-check_diff ${SHCSH}
-
 COMMAND="echo ~"
 check_diff ${SHCSH}
 
@@ -258,6 +264,30 @@ check_diff ${SHCSH}
 
 COMMAND="echo $HOME > file ; cat file"
 check_diff ${SHCSH}
+
+printf "\n"
+
+#===TESTS VALEURS DE RETOUR===#
+printf "valeurs de retour: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+COMMAND="		ls  ;echo \$?"
+check_diff ${SHBASH}
+
+COMMAND="ls -z; echo \$?"
+check_diff ${SHBASH}
+
+COMMAND="ls -z | cat ;  echo \$?"
+check_diff ${SHBASH}
+
+COMMAND="ls -z || cat ;  echo \$?"
+check_diff ${SHBASH}
+
+COMMAND="ls -z && cat ;  echo \$?"
+check_diff ${SHBASH}
 
 printf "\n"
 
@@ -369,7 +399,6 @@ check_diff ${SHBASH}
 COMMAND="cd -p"
 check_diff ${SHBASH}
 
-#printf "\033[1;31;33m?\033[0m"
 printf "\n"
 
 #===TESTS BUILTIN SETENV===#
@@ -489,20 +518,16 @@ COMMAND="env pwd"
 check_diff ${SHCSH}
 
 COMMAND="env PATH=fake ls"
-BEHAVIOR="ls: Command not found."
-check_good_behavior
+check_diff ${SHBASH}
 
 COMMAND="env -i pwd"
-BEHAVIOR="pwd: Command not found."
-check_good_behavior
+check_diff ${SHBASH}
 
 COMMAND="env -i PWD=plop pwd"
-BEHAVIOR="pwd: Command not found."
-check_good_behavior
+check_diff ${SHBASH}
 
 COMMAND="env -i a=apwd ls"
-BEHAVIOR="ls: Command not found."
-check_good_behavior
+check_diff ${SHBASH}
 
 COMMAND="env pwd ls"
 check_diff ${SHCSH}
@@ -540,12 +565,10 @@ BEHAVIOR=""
 check_good_behavior "-n"
 
 COMMAND="env -i -u PWD a=a PWD=plop pwd ls"
-BEHAVIOR="pwd: Command not found."
-check_good_behavior
+check_diff ${SHBASH}
 
 COMMAND="env -i -u PWD PWD=plop pwd"
-BEHAVIOR="pwd: Command not found."
-check_good_behavior
+check_diff ${SHBASH}
 
 COMMAND="env -z"
 BEHAVIOR="env: illegal option -- z"
@@ -564,88 +587,25 @@ COMMAND="env - - - - -      "
 check_diff ${SHCSH}
 
 COMMAND="env qwerty"
-BEHAVIOR="qwerty: Command not found."
-check_good_behavior
+check_diff ${SHBASH}
+
 
 COMMAND="env -i PATH=/bin pwd"
 check_diff ${SHCSH}
-# ENV
-# env a=a b=b
-# env PWD=plop
-# env -u -i
-# env -u -i PWD=a pwd
-# env -u -z
+
 printf "\n"
-#===TESTS BUILTIN EXIT===#
-printf "builtin_exit: "
+
+#===TESTS HISTORY et !===#
+printf "builtin_history et !: "
 if [ $V == 1 ]
 then
 	printf "\n"
 fi
-
-#COMMAND="exit"
-#diff_exit ${SHCSH}
-
-
-#exit
-#EXIT
-#exit 42
-# exit -1
-# exit plop
-# exit 123abc456
-#exit 123a
-#exit EXIT
-# exit a b c
-printf "\n"
-
-#===TESTS HISTORY===#
-printf "builtin_history: "
-if [ $V == 1 ]
-then
-	printf "\n"
-fi
-
-COMMAND="history"
-check_diff ${SHBASH}
-
-COMMAND="history 10"
-check_diff ${SHBASH}
-
-COMMAND="history 1"
-check_diff ${SHBASH}
-
-COMMAND="history -d 1"
-check_diff ${SHBASH}
-
-COMMAND="history"
-check_diff ${SHBASH}
-
-COMMAND="history -s YOYOY \"salut ca va $USER\""
-check_diff ${SHBASH}
-
-COMMAND="history"
-check_diff ${SHBASH}
-
-COMMAND="history -s YOYOY SAlut ca va"
-check_diff ${SHBASH}
-
-COMMAND="history"
-check_diff ${SHBASH}
 
 COMMAND="history -p YOYOY \"salut ca va $USER\""
 check_diff ${SHBASH}
 
 COMMAND="history -p YOYOY SALUT CA VA"
-check_diff ${SHBASH}
-
-COMMAND="history -d 10f"
-BEHAVIOR="42sh: history: 10f: history position out of range"
-check_good_behavior
-
-COMMAND="history -c"
-check_diff ${SHBASH}
-
-COMMAND="history"
 check_diff ${SHBASH}
 
 COMMAND="history -an"
@@ -668,6 +628,24 @@ COMMAND="history -c ; history ; history -s YOYO ; history -d 1"
 check_diff ${SHBASH}
 
 COMMAND="history -s -s -s -s -s -- --\"dsfdsf sdf sdf sdf dsfdsf\"      sdfdsf       sdf ; history > file ; cat file"
+check_diff ${SHBASH}
+
+COMMAND="history -an"
+BEHAVIOR="42sh: history: cannot use more than one of -anrw"
+check_good_behavior
+
+COMMAND="history -an"
+BEHAVIOR="42sh: history: cannot use more than one of -anrw"
+check_good_behavior
+
+COMMAND="history -an"
+BEHAVIOR="42sh: history: cannot use more than one of -anrw"
+check_good_behavior
+
+COMMAND="ls -a ; !1"
+check_diff ${SHBASH}
+
+COMMAND="echo \"cat -e << salut\nplop\n  salut\nsalut\nls\" | ./42sh"
 check_diff ${SHBASH}
 
 printf "\n"
@@ -721,6 +699,9 @@ COMMAND=" echo \"Testing redirections\" > /tmp/test.txt ;echo \"with multiple li
 check_diff ${SHBASH}
 
 COMMAND=" read < auteur auteur"
+check_diff ${SHBASH}
+
+COMMAND="  ls > file -l ; cat file"
 check_diff ${SHBASH}
 
 printf "\n"
@@ -819,39 +800,12 @@ check_good_behavior
 
 printf "\n"
 
-#===TESTS en vrac===#
-printf "en vrac: "
+#===TESTS OPÉRATEURS LOGIQUES===#
+printf "opérateurs logiques: "
 if [ $V == 1 ]
 then
 	printf "\n"
 fi
-
-COMMAND="mkdir TOKEN201611041723 ; cd TOKEN201611041723 ; touch TOKEN201611041723_FILE ; ls -1 ; ls | cat | wc -c > TOKEN201611041723_STDOUT ; cat TOKEN201611041723_STDOUT"
-check_diff ${SHBASH}
-
-COMMAND=" mkdir test 2> /dev/null ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi"
-check_diff ${SHBASH}
-
-COMMAND=" rm nosuchfile 2>&-"
-check_diff ${SHBASH}
-
-COMMAND=" rm nosuchfile 2>&1 | cat -e "
-check_diff ${SHBASH}
-
-COMMAND=" echo \"No dollar character\" 1>&2 | cat -e"
-check_diff ${SHBASH}
-
-COMMAND=" ls && pwd"
-check_diff ${SHBASH}
-
-COMMAND=" ls -z && pwd"
-check_diff ${SHBASH}
-
-COMMAND=" history -p COCO && pwd"
-check_diff ${SHBASH}
-
-COMMAND=" setenv -z COCO && pwd"
-check_diff ${SHCSH}
 
 COMMAND=" ls || pwd"
 check_diff ${SHBASH}
@@ -865,13 +819,74 @@ check_diff ${SHBASH}
 COMMAND=" setenv -z COCO || pwd"
 check_diff ${SHCSH}
 
+COMMAND=" ls && pwd"
+check_diff ${SHBASH}
+
+COMMAND=" ls -z && pwd"
+check_diff ${SHBASH}
+
+COMMAND=" history -p COCO && pwd"
+check_diff ${SHBASH}
+
+COMMAND=" setenv -z COCO && pwd"
+check_diff ${SHCSH}
+
+printf "\n"
+
+#===TESTS INHIBITEURS===#
+printf "inhibiteurs: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+printf "\n"
+
+#===TESTS GLOBING===#
+printf "globing: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+printf "\n"
+
+#===TESTS BACK QUOTES===#
+printf "back quotes: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+printf "\n"
+
+#===TESTS SOUS SHELL===#
+printf "sous shell: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+printf "\n"
+
+
+#===TESTS en vrac===#
+printf "en vrac: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+COMMAND=" rm nosuchfile 2>&-"
+check_diff ${SHBASH}
+
+COMMAND=" rm nosuchfile 2>&1 | cat -e "
+check_diff ${SHBASH}
+
+COMMAND=" echo \"No dollar character\" 1>&2 | cat -e"
+check_diff ${SHBASH}
+
 COMMAND="  ls > file | cat -e ; cat file"
-check_diff ${SHBASH}
-
-COMMAND="  ls > file -l ; cat file"
-check_diff ${SHBASH}
-
-COMMAND="  ls < auteur auteur"
 check_diff ${SHBASH}
 
 COMMAND="   ls > out | echo HELLO"
@@ -888,9 +903,6 @@ COMMAND="ls > file | cat < file ; cat file"
 check_diff ${SHBASH}
 
 COMMAND=" echo \ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-check_diff ${SHBASH}
-
-COMMAND=" echo \abcdefghijklmnopqrstuvwxyz"
 check_diff ${SHBASH}
 
 COMMAND="echo $PWD > pop ; cat pop"
@@ -954,4 +966,4 @@ rm -rf test_dir
 rm test_reg_file
 rm tmp tmp2 tmp3
 rm notes.csv eleves.txt file erreurs.log lolo out pop noms_tries.txt
-rm -rf TOKEN201611041723 mkdir test
+rm -rf YO mkdir test
