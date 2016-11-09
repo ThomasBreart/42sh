@@ -6,26 +6,44 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 11:00:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 12:13:42 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/09 16:44:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static int	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
+int		redir_llc_read_loop_gnl(t_historic *termcaps, t_list *elem, int fd)
 {
 	char	*s;
-	int		fd;
 	int		ret;
-	int		fd_tmp;
 
 	ret = -1;
-	if ((fd = open("/tmp/.buf_21sh", O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
+	while ((ret = get_next_line(STDIN_FILENO, &s)) != 0)
 	{
-		ft_putendl_fd("can't open buffer file for the heredoc", STDERR_FILENO);
-		return (-1);
+		if (termcaps->llr_eof == 1 || ret == -1)
+			break ;
+		if (s != NULL && ft_strcmp(s, elem->content) == 0)
+		{
+			free(s);
+			break ;
+		}
+		if (s != NULL)
+		{
+			ft_putendl_fd(s, fd);
+			free(s);
+		}
+		else
+			ft_putchar_fd('\n', fd);
 	}
-	fd_tmp = fcntl(STDIN_FILENO, F_DUPFD, 10);
+	return (ret);
+}
+
+int		redir_llc_read_loop_tty(t_historic *termcaps, t_list *elem, int fd)
+{
+	char	*s;
+	int		ret;
+
+	ret = -1;
 	termcaps->prompt_current = termcaps->prompt_in_llr;
 	ft_putstr(termcaps->prompt_in_llr);
 	while ((ret = get_command(termcaps, &s)) != 0)
@@ -46,6 +64,26 @@ static int	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
 			ft_putchar_fd('\n', fd);
 		ft_putstr(termcaps->prompt_in_llr);
 	}
+	return (ret);
+}
+
+static int	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
+{
+	int		fd;
+	int		ret;
+	int		fd_tmp;
+
+	ret = -1;
+	if ((fd = open("/tmp/.buf_21sh", O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
+	{
+		ft_putendl_fd("can't open buffer file for the heredoc", STDERR_FILENO);
+		return (-1);
+	}
+	fd_tmp = fcntl(STDIN_FILENO, F_DUPFD, 10);
+	if (termcaps->istty == 1)
+		ret = redir_llc_read_loop_tty(termcaps, elem, fd);
+	else
+		ret = redir_llc_read_loop_gnl(termcaps, elem, fd);
 	dup2(fd_tmp, STDIN_FILENO);
 	close(fd_tmp);
 	return (ret);
