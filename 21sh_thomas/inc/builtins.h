@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 18:30:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/09 16:21:10 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int		builtin_cd(char **argv, char ***env);
 **	builtin_env.c
 */
 int		builtin_env(char **argv, char **env);
+
+/*
+**	builtin_env_exec_bin.c
+*/
+int		env_exec_bin(char **argv, char **cpenv, char **env);
 
 /*
 **	builtin_env_options.c

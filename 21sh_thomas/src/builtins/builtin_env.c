@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/01 08:04:22 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 19:33:26 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/09 16:19:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,6 @@ static int	show_env(char **cpenv)
 	return (1);
 }
 
-static int	env_exec_bin(char **argv, char **cpenv, char **env)
-{
-	int			ret;
-	t_save_fd	save;
-	t_list		*fake_elem;
-
-	save_fd(&save);
-	fake_elem = s_lstnew(NULL, __FILE__);
-	fake_elem->type = -1;
-	fake_elem->aggr_fd = -1;
-	fake_elem->content = s_strdup(*argv, __FILE__);
-	fake_elem->argv = s_tabdup(argv, __FILE__);
-	find_fullpath_bin(fake_elem, env);
-	ret = cmd_simple_prog(fake_elem, cpenv, &save);
-	free_double_tab(fake_elem->argv);
-	free(fake_elem->content);
-	free(fake_elem);
-	restore_fd(&save);
-	close_fd(&save);
-	return (ret);
-}
 
 /*
 **	Built-in de la commande env
