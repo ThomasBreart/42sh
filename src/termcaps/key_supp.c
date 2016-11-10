@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/11 02:04:45 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/27 18:22:18 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 18:58:18 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ int			ft_key_supp(t_historic *termcaps, char **entry)
 	{
 		remove_one_char_supp(entry, termcaps->cur_x);
 		show_entry_supp(termcaps, *entry);
+	}
+	if (termcaps->hist == 1)
+	{
+		ft_strdel(&termcaps->cur->content);
+		termcaps->cur->content = s_strdup(*entry, __FILE__);
+		termcaps->cur->content_modified = 1;
 	}
 	return (1);
 }
