@@ -12,21 +12,21 @@
 
 #include "ft_21sh.h"
 
-static int	print_error_cd(char *s)
+int	print_error_cd(char *s)
 {
 	struct stat	buf;
 	int			i;
 
-	if (s == NULL)
-	{
-		ft_putendl_fd("OLDPWD not set", STDERR_FILENO);
-		return (-1);
-	}
-	else if (ft_strcmp(s, "HOME") == 0)
-	{
-		ft_putendl_fd("cd: No home directory.", STDERR_FILENO);
-		return (-1);
-	}
+	/* if (s == NULL) */
+	/* { */
+	/* 	ft_putendl_fd("OLDPWD not set", STDERR_FILENO); */
+	/* 	return (-1); */
+	/* } */
+	/* else if (ft_strcmp(s, "HOME") == 0) */
+	/* { */
+	/* 	ft_putendl_fd("cd: No home directory.", STDERR_FILENO); */
+	/* 	return (-1); */
+	/* } */
 	ft_putstr_fd(s, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	i = stat(s, &buf);
@@ -36,21 +36,11 @@ static int	print_error_cd(char *s)
 		ft_putendl_fd("Not a directory.", STDERR_FILENO);
 	else
 		ft_putendl_fd("Permission denied.", STDERR_FILENO);
-	free(s);
+	/* free(s); */
 	return (-1);
 }
 
-static int	cd_check_errors(char **argv)
-{
-	if (ft_tablen(argv) > 2)
-	{
-		ft_putendl_fd("cd: Too many arguments.", STDERR_FILENO);
-		return (-1);
-	}
-	return (1);
-}
-
-static void	change_var_oldpwd(char ***env)
+void	update_oldpwd(char ***env)
 {
 	char	**tmp;
 	char	*s;
@@ -73,7 +63,7 @@ static void	change_var_oldpwd(char ***env)
 **	Modidife la variable PWD de l'environnement
 */
 
-static void	change_var_pwd(char ***env)
+void	update_pwd(char ***env)
 {
 	char	**tmp;
 	char	*s;
@@ -93,31 +83,40 @@ static void	change_var_pwd(char ***env)
 **	affiche erreur si fail du changement de dossier
 **	Modifie variables env PWD et OLDPWD
 */
+static int			check_arg(char **argv, char *option)
+{
+	if (ft_tablen(argv) > 3)
+	{
+		ft_putendl_fd("cd: Too many arguments.", STDERR_FILENO);
+		return (1);
+	}
+	else if (option && (option[0] == '-')
+	&& ft_strcmp(option, "-L")
+	&& ft_strcmp(option, "-P"))
+	{
+		ft_putstr_fd("cd: ", STDERR_FILENO);
+		ft_putstr_fd(option, STDERR_FILENO);
+		ft_putendl_fd(": invalid option", STDERR_FILENO);
+		ft_putendl_fd("cd: usage: cd [-L|-P] [dir]", STDERR_FILENO);
+		return (1);
+	}
+	return (0);
+}
 
 int			builtin_cd(char **argv, char ***env)
 {
-	int		i;
-	char	*s;
+	char	*option;
+	char	*path;
 
-	if (cd_check_errors(argv) == -1)
+	path = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[2] : argv[1];
+	option = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[1] : NULL;
+	if (check_arg(argv, option))
 		return (-1);
-	if (argv[1] == NULL)
-	{
-		if ((s = ft_getenv("HOME", *env)) == NULL)
-			return (print_error_cd("HOME"));
-	}
-	else if (ft_strcmp("-", argv[1]) == 0)
-	{
-		if ((s = ft_getenv("OLDPWD", *env)) == NULL)
-			return (print_error_cd(NULL));
-	}
+	if (!path
+	|| (!option && (!ft_strcmp(path, "-L") || !ft_strcmp(path, "-P"))))
+		return (go_home(env));
+	else if (!option && !ft_strcmp(path, "-"))
+		return (go_oldpwd(env));
 	else
-		s = s_strdup(argv[1], __FILE__);
-	i = chdir(s);
-	if (i < 0)
-		return (print_error_cd(s));
-	change_var_oldpwd(env);
-	change_var_pwd(env);
-	free(s);
-	return (1);
+		return (ft_chdir(argv, env));
 }

@@ -58,6 +58,12 @@ void	make_copies(char *argv, char ***env, int flag);
 **	builtin_cd.c
 */
 int		builtin_cd(char **argv, char ***env);
+int		go_home(char ***env);
+int		go_oldpwd(char ***env);
+int		ft_chdir(char **av, char ***env);
+int		print_error_cd(char *str);
+void	update_oldpwd(char ***env);
+void	update_pwd(char ***env);
 
 /*
 **	builtin_env.c
