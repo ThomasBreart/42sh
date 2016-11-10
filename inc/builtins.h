@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/09 16:21:10 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 11:14:18 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		append_flag(char **args, t_flags *flags);
 char	*reverse_split(char **argv, int i);
 
 /*
-**	builtin_cd.c
+**	builtin_echo.c
 */
 int		builtin_echo(char **argv);
 

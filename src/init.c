@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 20:00:21 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 17:55:00 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 11:14:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	set_vars(t_historic *termcaps)
 
 static void	set_prompt(t_historic *termcaps)
 {
-	termcaps->prompt = s_strdup("21sh> ", __FILE__);
+	termcaps->prompt = s_strdup("42sh> ", __FILE__);
 	termcaps->len_prompt = ft_strlen(termcaps->prompt);
 	termcaps->prompt_open = s_strdup("> ", __FILE__);
 	termcaps->prompt_in_llr = s_strdup("heredoc> ", __FILE__);

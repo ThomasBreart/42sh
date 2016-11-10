@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 08:19:48 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/17 16:48:43 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 11:15:31 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ int			cmd_add_char(t_historic *tcaps, char **entry)
 				(tcaps->cur_x + tcaps->len_prompt) % tcaps->ws.ws_col == 0)
 		tputs(tgoto(tgetstr("do", NULL), 0, 0), 1, ft_outc);
 	if (tcaps->hist == 0)
-	{
-		ft_strdel(&tcaps->cmd_inprogress);
 		tcaps->cmd_inprogress = s_strdup(*entry, __FILE__);
-	}
 	else if (tcaps->hist == 1)
 	{
 		ft_strdel(&tcaps->cur->content);

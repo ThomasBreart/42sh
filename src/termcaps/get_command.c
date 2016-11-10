@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/10 11:50:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 19:06:54 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 11:15:22 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int			get_command(t_historic *termcaps, char **entry)
 		if (exec_key(funcs, x, termcaps, entry) == 0)
 			return (1);
 		r = 0;
+		ft_strdel(&termcaps->cmd_inprogress);
 	}
 	return (0);
 }
