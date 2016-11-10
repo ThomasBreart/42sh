@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 17:58:14 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/13 08:58:27 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 17:37:21 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 	maxlen_tab = 10;
 	new_tab = (char**)s_memalloc((sizeof(char*) * (maxlen_tab + 1)), filename);
 	index_tab = 0;
+	if (*s == '\0')
+		new_tab[index_tab++] = s_strdup("", filename);
 	while (*s != '\0')
 	{
 		if (*s != c)

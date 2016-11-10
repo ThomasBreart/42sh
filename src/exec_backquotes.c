@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 07:36:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/03 07:37:51 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 17:41:23 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,13 @@ int		exec_backquotes(char **str)
 		waitpid(child_pid, NULL, 0);
 		close(pdes[PIPE_ENTRY]);
 		new_entry = format_cmd(pdes[PIPE_EXIT]);
+//		printf("new_entry: %s\n", new_entry);
 		close(pdes[PIPE_EXIT]);
 		ft_strdel(str);
-		*str = new_entry;
+		if (new_entry == NULL)
+			*str = s_strdup("", __FILE__);
+		else
+			*str = new_entry;
 	}
 	return (1);
 }
