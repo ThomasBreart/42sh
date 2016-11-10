@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/09 18:09:05 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 11:55:36 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	find_subcmd(char **cur_argv)
 //	fprintf(stderr, "subcmd3: %s\n", sub_cmd);
 			if (ft_strlen(sub_cmd) != 0)// pas lieu d intervenir
 				exec_backquotes(&sub_cmd);
-		//	fprintf(stderr, "subcmd: %s\n", sub_cmd);
-
 //	fprintf(stderr, "subcmd4: %s\n", sub_cmd);
 			if (sub_cmd != NULL)
 			{
