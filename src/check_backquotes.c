@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 11:55:36 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/10 17:41:03 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,18 @@ void	find_subcmd(char **cur_argv)
 			if (ft_strlen(sub_cmd) != 0)// pas lieu d intervenir
 				exec_backquotes(&sub_cmd);
 //	fprintf(stderr, "subcmd4: %s\n", sub_cmd);
-			if (sub_cmd != NULL)
-			{
-				tmp = add_str_in_str(*cur_argv, sub_cmd, start_subcmd);
+			if (sub_cmd == NULL)
+				sub_cmd = s_strdup("", __FILE__);
+			tmp = add_str_in_str(*cur_argv, sub_cmd, start_subcmd);
 //	fprintf(stderr, "tmp: %s\n", tmp);
-				ft_strdel(cur_argv);
-				*cur_argv = tmp;
-				start_analysis = start_subcmd + ft_strlen(sub_cmd);
-				ft_strdel(&sub_cmd);
-			}
+			ft_strdel(cur_argv);
+			*cur_argv = tmp;
+			start_analysis = start_subcmd + ft_strlen(sub_cmd);
+			ft_strdel(&sub_cmd);
 		}
 	}
+//	if (ft_strlen(*cur_argv) == 0)
+//		fprintf(stderr, "cur_argv: %s\n", *cur_argv);
 }
 
 /*
@@ -82,11 +83,33 @@ void	check_backquotes(t_list **first)
 			while (elem->argv[i] != NULL)
 			{
 				find_subcmd(&elem->argv[i]);
+				ft_strlen(elem->argv[i]);
 				++i;
 			}
 			update_elem(elem, 1);
+	//		fprintf(stderr, "argv[0]: %s\n", elem->argv[0]);
 		//	show_elem(elem);
 		}
 		elem = elem->next;
 	}
+/*	elem = *first;
+	int		ret;
+	while (elem != NULL)
+	{
+			//fprintf(stderr, "argv[0]: %s\n", elem->argv[0]);
+		if (elem->type == LEX_WORD)
+		{
+			fprintf(stderr, "is_a_word\n");
+			ret = ft_strlen(elem->argv[0]);
+			fprintf(stderr, "ret: %d\n", ret);
+			if (ret == 0)
+			{
+				fprintf(stderr, "yeep\n");
+				del_elem_list(elem);
+				elem = *first;
+			}
+		}
+		elem = elem->next;
+	}*/
+//	show_list(*first);
 }
