@@ -61,7 +61,7 @@ static void	add_keys_to_env(char **keys, char **values, char ***env)
 		else
 			ret = fake_argv(keys[i], NULL);
 		if (ret)
-			builtin_setenv(ret, env);
+			builtin_setenv(ret, env, 0);
 		i++;
 	}
 	free_double_tab(ret);

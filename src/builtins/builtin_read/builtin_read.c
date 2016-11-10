@@ -60,7 +60,7 @@ static void	put_on_reply(char ***env, int flag)
 	if ((str = return_one_line(flag)) == NULL)
 		return ;
 	ret = fake_argv("REPLY", str);
-	builtin_setenv(ret, env);
+	builtin_setenv(ret, env, 0);
 	ft_memdel((void**)&str);
 	free_double_tab(ret);
 }

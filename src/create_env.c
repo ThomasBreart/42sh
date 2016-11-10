@@ -26,19 +26,19 @@ static void	edit_env(char ***newenv)
 
 	tmp1 = getcwd(NULL, 0);
 	tmptab = fake_argv("PWD", tmp1);
-	builtin_setenv(tmptab, newenv);
+	builtin_setenv(tmptab, newenv, 0);
 	free_double_tab(tmptab);
 	tmp2 = s_strdup("/minishell", __FILE__);
 	tmp3 = s_strjoin(tmp1, tmp2, __FILE__);
 	tmptab = fake_argv("SHELL", tmp3);
-	builtin_setenv(tmptab, newenv);
+	builtin_setenv(tmptab, newenv, 0);
 	free_double_tab(tmptab);
 	free(tmp1);
 	free(tmp2);
 	free(tmp3);
 	tmp1 = find_shlvl(*newenv);
 	tmptab = fake_argv("SHLVL", tmp1);
-	builtin_setenv(tmptab, newenv);
+	builtin_setenv(tmptab, newenv, 0);
 	free_double_tab(tmptab);
 	free(tmp1);
 }

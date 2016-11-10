@@ -14,7 +14,7 @@ static void		symlink_handler(char ***env, char *pwd, char *path)
 	tmp = pwd;
 	pwd = ft_strjoin(pwd, path);
 	fake_arg = fake_argv("PWD", pwd);
-	builtin_setenv(fake_arg, env);
+	builtin_setenv(fake_arg, env, 0);
 	free_double_tab(fake_arg);
 	ft_strdel(&tmp);
 	ft_strdel(&pwd);

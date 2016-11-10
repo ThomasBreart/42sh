@@ -17,16 +17,6 @@ int	print_error_cd(char *s)
 	struct stat	buf;
 	int			i;
 
-	/* if (s == NULL) */
-	/* { */
-	/* 	ft_putendl_fd("OLDPWD not set", STDERR_FILENO); */
-	/* 	return (-1); */
-	/* } */
-	/* else if (ft_strcmp(s, "HOME") == 0) */
-	/* { */
-	/* 	ft_putendl_fd("cd: No home directory.", STDERR_FILENO); */
-	/* 	return (-1); */
-	/* } */
 	ft_putstr_fd(s, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	i = stat(s, &buf);
@@ -53,7 +43,7 @@ void	update_oldpwd(char ***env)
 	else
 	{
 		tmp = fake_argv("OLDPWD", s);
-		builtin_setenv(tmp, env);
+		builtin_setenv(tmp, env, 0);
 		free(s);
 	}
 	free_double_tab(tmp);
@@ -71,7 +61,7 @@ void	update_pwd(char ***env)
 	if ((s = getcwd(NULL, 0)) == NULL)
 		s = s_strdup(".", __FILE__);
 	tmp = fake_argv("PWD", s);
-	builtin_setenv(tmp, env);
+	builtin_setenv(tmp, env, 0);
 	free(s);
 	free_double_tab(tmp);
 }

@@ -12,31 +12,32 @@
 
 #include "ft_21sh.h"
 
-static int	setenv_check_errors(char **argv)
+static int	setenv_check_errors(char **argv, int forced)
 {
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (ft_tablen(argv) > 3)
 	{
 		ft_putendl_fd("setenv: Too many arguments.", STDERR_FILENO);
 		return (-1);
 	}
-	if (argv[1] != NULL && !ft_isalpha(argv[1][0]))
+	while (argv[1][++i])
 	{
-		ft_putstr_fd("setenv: Variable name must begin with ", STDERR_FILENO);
-		ft_putendl_fd("a letter.", STDERR_FILENO);
-		return (-1);
-	}
-	if (argv[1] != NULL)
-		while (argv[1][i++] != '\0')
-			if (!ft_isalnum(argv[1][i - 1]))
+		if (!ft_isalnum(argv[1][i]) && !forced)
+		{
+			if (0 == i)
+			ft_putendl_fd("setenv: Variable name must begin with a letter.",
+				STDERR_FILENO);
+			else
 			{
 				ft_putstr_fd("setenv: Variable name must ", STDERR_FILENO);
-				ft_putstr_fd("contain ", STDERR_FILENO);
-				ft_putendl_fd("alphanumeric characters.", STDERR_FILENO);
-				return (-1);
+				ft_putendl_fd("contain alphanumeric characters.",
+					STDERR_FILENO);
 			}
+			return (-1);
+		}
+	}
 	return (0);
 }
 
@@ -72,16 +73,17 @@ static char	*construct_env_var(char *key, char *value)
 **	SI pas d'arguments : affichage de env
 **	SINON modification de env en fonction des arguments,
 **	'realloc' si besoin
+** the forced arg, forces var's writting for the '?' case
 */
 
-int			builtin_setenv(char **argv, char ***env)
+int			builtin_setenv(char **argv, char ***env, int forced)
 {
 	char		**tkey;
 	char		*key;
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();
-	if (setenv_check_errors(argv) == -1)
+	if (setenv_check_errors(argv, forced) == -1)
 		return (-1);
 	if (argv[1] == NULL)
 		ft_print_tab(*env);

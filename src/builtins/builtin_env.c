@@ -30,7 +30,7 @@ static int	modify_newenv(char ***argv, char ***cpenv)
 		key = s_strndup(**argv, len_before_thischar(**argv, '='), __FILE__);
 		value = s_strdup(**argv + len_after_thischar(**argv, '='), __FILE__);
 		fake_tab = fake_argv(key, value);
-		ret = builtin_setenv(fake_tab, cpenv);
+		ret = builtin_setenv(fake_tab, cpenv, 0);
 		free(key);
 		free(value);
 		free_double_tab(fake_tab);

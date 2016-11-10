@@ -69,7 +69,7 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 	else if (ft_strcmp("env", elem->content) == 0)
 		ret = builtin_env(elem->argv, *env);
 	else if (ft_strcmp("setenv", elem->content) == 0)
-		ret = builtin_setenv(elem->argv, env);
+		ret = builtin_setenv(elem->argv, env, 0);
 	else if (ft_strcmp("unsetenv", elem->content) == 0)
 		ret = builtin_unsetenv(elem->argv, env);
 	else if (ft_strcmp("bonus", elem->content) == 0)

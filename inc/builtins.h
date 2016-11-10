@@ -93,7 +93,7 @@ void	free_historic(t_historic *termcaps);
 /*
 **	builtin_setenv.c
 */
-int		builtin_setenv(char **argv, char ***env);
+int		builtin_setenv(char **argv, char ***env, int forced);
 
 /*
 **	builtin_unsetenv.c
