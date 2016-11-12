@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   create_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 21:44:56 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/24 16:36:40 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 12:24:07 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+
+static void create_ret_val(char ***newenv)
+{
+	char	**tmptab;
+
+	tmptab = fake_argv("?", "0");
+	builtin_setenv(tmptab, newenv, 1);
+	free_double_tab(tmptab);
+}
 
 /*
 **	remet a jour les variables pwd, shell et shlvl de l'env
@@ -41,6 +51,7 @@ static void	edit_env(char ***newenv)
 	builtin_setenv(tmptab, newenv, 0);
 	free_double_tab(tmptab);
 	free(tmp1);
+	create_ret_val(newenv);
 }
 
 /*

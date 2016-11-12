@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 11:01:08 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 07:19:08 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 11:43:01 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ int			exec_cmd(t_list *first, char ***env)
 {
 	t_save_fd	save;
 	int			ret;
-	char		**varenv;
-	char		*tmp;
 
 	ret = -1;
 	save_fd(&save);
@@ -133,10 +131,6 @@ int			exec_cmd(t_list *first, char ***env)
 		ret = exec_subshell(first);
 	else if (first->type == LEX_WORD)
 		ret = exec_simple(first, env, &save);
-	tmp = ft_itoa(ret);
-	varenv = fake_argv("?", tmp);
-	builtin_setenv(varenv, env, 1);
-	ft_strdel(&tmp);
 	close_fd(&save);
 	return (ret);
 }

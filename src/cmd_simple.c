@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 17:55:06 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 12:17:49 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,20 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 	return (ret);
 }
 
+static void stock_ret_val_in_env(int ret, char ***env)
+{
+	char		**varenv;
+	char		*tmp;
+	int		ret_val;
+
+	ret_val = (ret == 1) ? 0 : 1;
+	tmp = ft_itoa(ret_val);
+	varenv = fake_argv("?", tmp);
+	builtin_setenv(varenv, env, 1);
+	ft_strdel(&tmp);
+	free_double_tab(varenv);
+}
+
 int			exec_simple(t_list *elem, char ***env, t_save_fd *save)
 {
 	int		ret;
@@ -111,5 +125,6 @@ int			exec_simple(t_list *elem, char ***env, t_save_fd *save)
 		find_fullpath_bin(elem, *env);
 		ret = cmd_simple_prog(elem, *env, save);
 	}
+	stock_ret_val_in_env(ret, env);
 	return (ret);
 }
