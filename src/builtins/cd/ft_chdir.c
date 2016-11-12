@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_chdir.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/12 13:28:57 by mfamilar          #+#    #+#             */
+/*   Updated: 2016/11/12 13:31:58 by mfamilar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_21sh.h"
 
-static void		symlink_handler(char ***env, char *pwd, char *path)
+static void	symlink_handler(char ***env, char *pwd, char *path)
 {
 	char	**fake_arg;
 	char	*tmp;
@@ -28,7 +40,7 @@ int			ft_chdir(char **argv, char ***env)
 
 	path = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[2] : argv[1];
 	option = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[1] : NULL;
-	update_pwd(env); // set it if is not done yet
+	update_pwd(env);
 	pwd = ft_getenv("PWD", *env);
 	if (0 != chdir(path))
 		return (print_error_cd(path));

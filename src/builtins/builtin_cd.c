@@ -6,13 +6,13 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 16:35:00 by tbreart           #+#    #+#             */
-/*   Updated: 2016/08/14 12:40:36 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:23:03 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int	print_error_cd(char *s)
+int			print_error_cd(char *s)
 {
 	struct stat	buf;
 	int			i;
@@ -26,11 +26,10 @@ int	print_error_cd(char *s)
 		ft_putendl_fd("Not a directory.", STDERR_FILENO);
 	else
 		ft_putendl_fd("Permission denied.", STDERR_FILENO);
-	/* free(s); */
 	return (-1);
 }
 
-void	update_oldpwd(char ***env)
+void		update_oldpwd(char ***env)
 {
 	char	**tmp;
 	char	*s;
@@ -53,7 +52,7 @@ void	update_oldpwd(char ***env)
 **	Modidife la variable PWD de l'environnement
 */
 
-void	update_pwd(char ***env)
+void		update_pwd(char ***env)
 {
 	char	**tmp;
 	char	*s;
@@ -73,7 +72,8 @@ void	update_pwd(char ***env)
 **	affiche erreur si fail du changement de dossier
 **	Modifie variables env PWD et OLDPWD
 */
-static int			check_arg(char **argv, char *option)
+
+static int	check_arg(char **argv, char *option)
 {
 	if (ft_tablen(argv) > 3)
 	{
@@ -81,8 +81,8 @@ static int			check_arg(char **argv, char *option)
 		return (1);
 	}
 	else if (option && (option[0] == '-')
-	&& ft_strcmp(option, "-L")
-	&& ft_strcmp(option, "-P"))
+			&& ft_strcmp(option, "-L")
+			&& ft_strcmp(option, "-P"))
 	{
 		ft_putstr_fd("cd: ", STDERR_FILENO);
 		ft_putstr_fd(option, STDERR_FILENO);
@@ -103,7 +103,7 @@ int			builtin_cd(char **argv, char ***env)
 	if (check_arg(argv, option))
 		return (-1);
 	if (!path
-	|| (!option && (!ft_strcmp(path, "-L") || !ft_strcmp(path, "-P"))))
+			|| (!option && (!ft_strcmp(path, "-L") || !ft_strcmp(path, "-P"))))
 		return (go_home(env));
 	else if (!option && !ft_strcmp(path, "-"))
 		return (go_oldpwd(env));

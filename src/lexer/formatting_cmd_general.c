@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/03 22:46:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/12 11:34:40 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/12 13:46:13 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ static int	formatting_file(t_list *first)
 					del_tlist(first);
 					first = first->next;
 				}
-
 				return (-1);
 			}
 		}

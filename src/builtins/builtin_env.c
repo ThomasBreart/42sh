@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/01 08:04:22 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/09 16:19:01 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:20:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static int	show_env(char **cpenv)
 	}
 	return (1);
 }
-
 
 /*
 **	Built-in de la commande env

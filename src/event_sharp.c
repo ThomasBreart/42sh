@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 16:41:52 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 16:44:33 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:40:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int		is_event_sharp(char *str)
 	return (0);
 }
 
-int		event_sharp(char *sub_cmd, char *entry, int start_subcmd, char **new_str)
+int		event_sharp(char *sub_cmd, char *entry, int start_subcmd,
+		char **new_str)
 {
 	char *tmp;
 

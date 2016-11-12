@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 11:53:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 08:34:10 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:48:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ static int	cmd_pipe_father(int pdes[2], t_list *elem, char ***env,
 	close(pdes[PIPE_ENTRY]);
 	dup2(pdes[PIPE_EXIT], STDIN_FILENO);
 	close(pdes[PIPE_EXIT]);
-
 	dup2(save->save_stdout, STDOUT_FILENO);// restore original stdout
-
 	if (elem->right->type == LEX_PIPE)
 		ret = cmd_pipe(elem->right, env, NULL, save);
 	else

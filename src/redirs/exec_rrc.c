@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 10:39:16 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 05:14:39 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:49:02 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		redir_file_rrc(t_list *elem, t_save_fd *save)
 {
-	int		fd;
-	int		fd_tmp;
+	int			fd;
+	int			fd_tmp;
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();

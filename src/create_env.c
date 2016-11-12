@@ -6,14 +6,13 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 21:44:56 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/12 12:24:07 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/12 13:34:02 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-
-static void create_ret_val(char ***newenv)
+static void	create_ret_val(char ***newenv)
 {
 	char	**tmptab;
 

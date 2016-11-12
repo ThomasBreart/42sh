@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 17:29:43 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 17:30:14 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:41:10 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int		event_string(char *sub_cmd, char **new_str)
 {
-	t_historic *termcaps;
-	t_list	*tmp;
-	int		len;
+	t_historic	*termcaps;
+	t_list		*tmp;
+	int			len;
 
 	termcaps = get_termcaps();
 	len = ft_strlen(sub_cmd + 1);
-	tmp = termcaps->end->prev;///
+	tmp = termcaps->end->prev;
 	while (tmp != NULL)
 	{
 		if (ft_strncmp(tmp->content, sub_cmd + 1, len) == 0)

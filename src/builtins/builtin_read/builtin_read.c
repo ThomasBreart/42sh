@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 16:15:00 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/08 17:57:15 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:24:48 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	put_raw_mode(t_save_fd *save)
 
 char		*return_one_line(int flag)
 {
-	char	*str;
-	int		fd_tmp;
+	char		*str;
+	int			fd_tmp;
 	t_historic	*termcaps;
 
 	str = NULL;
@@ -72,14 +72,13 @@ static void	put_on_reply(char ***env, int flag)
 ** 	empêche les backslashes d'agir comme des caractères d'échappement.
 */
 
-#include <stdio.h>
-
 int			builtin_read(char **ar, t_save_fd *save, char ***env)
 {
 	char	*begin;
 	char	*argv;
 	int		flag;
 	int		ret;
+
 	ret = 0;
 	flag = 0;
 	argv = reverse_split(ar, 1);

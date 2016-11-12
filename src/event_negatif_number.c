@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 17:26:56 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 17:37:57 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:35:34 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int		is_event_negatif_number(char *str)
 int		event_negatif_number(char *sub_cmd, char **new_str)
 {
 	t_historic	*termcaps;
-	int		cmd_number;
-	t_list	*cmd_histo;
+	int			cmd_number;
+	t_list		*cmd_histo;
 
 	termcaps = get_termcaps();
 	cmd_number = ft_atoi(sub_cmd + 1);

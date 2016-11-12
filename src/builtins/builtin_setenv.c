@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:13:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 16:26:25 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:29:40 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static int	setenv_check_errors(char **argv, int forced)
 		if (!ft_isalnum(argv[1][i]) && !forced)
 		{
 			if (0 == i)
-			ft_putendl_fd("setenv: Variable name must begin with a letter.",
-				STDERR_FILENO);
+				ft_putendl_fd("setenv: Variable name must begin with a letter.",
+						STDERR_FILENO);
 			else
 			{
 				ft_putstr_fd("setenv: Variable name must ", STDERR_FILENO);
 				ft_putendl_fd("contain alphanumeric characters.",
-					STDERR_FILENO);
+						STDERR_FILENO);
 			}
 			return (-1);
 		}
