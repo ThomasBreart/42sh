@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_supp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/11 02:04:45 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 18:58:18 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:11:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ int			ft_key_supp(t_historic *termcaps, char **entry)
 	if (termcaps->hist == 1)
 	{
 		ft_strdel(&termcaps->cur->content);
-		termcaps->cur->content = s_strdup(*entry, __FILE__);
+		if (!*entry)
+			termcaps->cur->content = s_strdup("", __FILE__);
+		else
+			termcaps->cur->content = s_strdup(*entry, __FILE__);
 		termcaps->cur->content_modified = 1;
 	}
 	return (1);

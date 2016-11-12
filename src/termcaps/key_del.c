@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_del.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/11 00:54:54 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 18:28:50 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 13:11:34 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int			ft_key_del(t_historic *termcaps, char **entry)
 	if (termcaps->hist == 1)
 	{
 		ft_strdel(&termcaps->cur->content);
-		termcaps->cur->content = s_strdup(*entry, __FILE__);
+		if (!*entry)
+			termcaps->cur->content = s_strdup("", __FILE__);
+		else
+			termcaps->cur->content = s_strdup(*entry, __FILE__);
 		termcaps->cur->content_modified = 1;
 	}
 	ft_strdel(&termcaps->cmd_inprogress);

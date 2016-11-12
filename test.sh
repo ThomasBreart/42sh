@@ -855,6 +855,9 @@ fi
 COMMAND="ls `ls`"
 check_diff ${SHBASH}
 
+COMMAND="ls `cd $HOME ; pwd`"
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS SOUS SHELL===#
