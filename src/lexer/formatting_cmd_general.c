@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/03 22:46:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 06:23:36 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/12 11:34:40 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			is_a_redir(int type)
 {
 	if (type == LEX_L_R || type == LEX_LL_R || type == LEX_R_R ||
-													type == LEX_RR_R)
+			type == LEX_RR_R)
 		return (1);
 	return (0);
 }
@@ -60,7 +60,7 @@ static int	useless_comas(t_list **first)
 		if (elem->type == LEX_COMA)
 		{
 			if (elem->prev == NULL || elem->prev->type == LEX_COMA ||
-							elem->next == NULL || elem->next->type == LEX_COMA)
+					elem->next == NULL || elem->next->type == LEX_COMA)
 				tmp = elem;
 		}
 		elem = elem->next;
@@ -88,6 +88,12 @@ static int	formatting_file(t_list *first)
 			if (ft_tablen(elem->next->argv) > 1)
 			{
 				ft_putendl_fd("file bad formatted", STDERR_FILENO);
+				while (first)
+				{
+					del_tlist(first);
+					first = first->next;
+				}
+
 				return (-1);
 			}
 		}

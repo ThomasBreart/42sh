@@ -240,7 +240,7 @@ check_diff ${SHCSH}
 
 COMMAND="echo -n -n -n -n -nnnn -n-n -- toto"
 check_diff ${SHBASH}
-#exit
+
 COMMAND="echo -n -n -n -n -n -nnnn -n -n -- tata"
 check_diff ${SHBASH}
 
@@ -314,7 +314,7 @@ COMMAND="cd / ; /bin/pwd"
 check_diff ${SHCSH}
 
 COMMAND="cd ; cd / ; cd - ; /bin/pwd"
-check_diff ${SHCSH}
+check_diff ${SHBASH}
 
 COMMAND="cd;pwd ; echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
@@ -347,7 +347,7 @@ COMMAND="unsetenv HOME;cd"
 check_diff ${SHCSH} "unset home;unsetenv HOME;cd"
 
 COMMAND="cd test_dir;pwd;cd -;pwd;cd -;pwd"
-check_diff ${SHCSH}
+check_diff ${SHBASH}
 
 COMMAND="unsetenv OLDPWD;cd -"
 BEHAVIOR="OLDPWD not set"
@@ -371,10 +371,6 @@ check_diff ${SHCSH}
 COMMAND="cd ../../;echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
 
-COMMAND="unsetenv PWD ; cd .. ;echo \$OLDPWD"
-BEHAVIOR=""
-check_good_behavior
-
 COMMAND="unsetenv PWD;echo \$PWD;cd ..;echo \$PWD"
 check_diff ${SHBASH} "unset PWD;echo \$PWD;cd ..;echo \$PWD"
 
@@ -396,8 +392,9 @@ check_diff ${SHBASH}
 COMMAND="cd ../../../../../../../../../ ; echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
 
-COMMAND="cd -p"
+COMMAND="cd -P"
 check_diff ${SHBASH}
+
 
 printf "\n"
 
@@ -451,7 +448,8 @@ COMMAND="setenv coucou=\"test\""
 check_diff ${SHCSH}
 
 COMMAND="setenv 0=\"test\""
-check_diff ${SHCSH}
+BEHAVIOR="setenv: Variable name must contain alphanumeric characters."
+check_good_behavior
 
 printf "\n"
 
@@ -642,12 +640,6 @@ COMMAND="history -an"
 BEHAVIOR="42sh: history: cannot use more than one of -anrw"
 check_good_behavior
 
-COMMAND="ls -a ; !1"
-check_diff ${SHBASH}
-
-COMMAND="echo \"cat -e << salut\nplop\n  salut\nsalut\nls\" | ./42sh"
-check_diff ${SHBASH}
-
 printf "\n"
 
 #===TESTS GESTION PATH===#
@@ -699,10 +691,12 @@ COMMAND=" echo \"Testing redirections\" > /tmp/test.txt ;echo \"with multiple li
 check_diff ${SHBASH}
 
 COMMAND=" read < auteur auteur"
-check_diff ${SHBASH}
+BEHAVIOR="file bad formatted"
+check_good_behavior
 
 COMMAND="  ls > file -l ; cat file"
-check_diff ${SHBASH}
+BEHAVIOR="file bad formatted"
+check_good_behavior
 
 printf "\n"
 
@@ -858,6 +852,9 @@ then
 	printf "\n"
 fi
 
+COMMAND="ls `ls`"
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS SOUS SHELL===#
@@ -869,6 +866,26 @@ fi
 
 printf "\n"
 
+#===TESTS sur l'entrée du shell===#
+printf "sur entrée du shell: "
+if [ $V == 1 ]
+then
+	printf "\n"
+fi
+
+COMMAND="ls << salut | ./42sh "
+check_diff ${SHBASH}
+
+COMMAND="cat -e << salut | ./42sh"
+check_diff ${SHBASH}
+
+COMMAND="cat -e << salut\nplop \n\n | ./42sh"
+check_diff ${SHBASH}
+
+COMMAND="cat -e << salut\nplop\n salut\nsalut\nls | ./42sh"
+check_diff ${SHBASH}
+
+printf "\n"
 
 #===TESTS en vrac===#
 printf "en vrac: "
@@ -947,9 +964,6 @@ COMMAND="du | sort -nr"
 check_diff ${SHBASH}
 
 COMMAND="du | sort -nr | head"
-check_diff ${SHBASH}
-
-COMMAND="du | sort -nr | less"
 check_diff ${SHBASH}
 
 printf "\n\n"
