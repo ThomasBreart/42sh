@@ -53,7 +53,7 @@ int						ft_glob2(char *pattern, t_globinfo gi, t_list **res)
 		free(ps);
 		ps = next;
 	}
-	if (p != -1)
+	if (p == 0)
 		p = ft_lstcpt(*res);
 	return (p);
 }
@@ -77,7 +77,7 @@ static int				need_globbing(char *arg)
 	while (*arg)
 	{
 		if (*arg == '*' || *arg == '{' || *arg == '[' ||
-			*arg == '\\' || *arg == '?')
+			*arg == '?')
 			return (1);
 		else if (*arg == '\'' || *arg == '"')
 		{

@@ -65,22 +65,3 @@ void			print_at(int fd, int n)
 		write(fd, "\033[B", 3);
 	write(fd, "|>", 2);
 }
-
-void			print_choose(int fd, int cur, int mode)
-{
-	write(fd, "\033[u", 3);
-	if (S_IFDIR == (mode & S_IFMT) || S_IFLNK == (mode & S_IFMT))
-	{
-		if (cur % 2)
-			write(fd, "\033[7m[list]\033[0m [out]", 20);
-		else
-			write(fd, "[list] \033[7m[out]\033[0m", 20);
-	}
-	else
-	{
-		if (cur % 2)
-			write(fd, "\033[7m[read]\033[0m [out]", 20);
-		else
-			write(fd, "[read] \033[7m[out]\033[0m", 20);
-	}
-}

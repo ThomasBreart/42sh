@@ -22,11 +22,9 @@ int				setoutput(int fd, int x_max, char *path, t_file *f)
 	write(fd, "\033[u", 3);
 	print_at(fd, x_max);
 	write(fd, "\033[s", 3);
-	print_choose(fd, 1, f->s.st_mode);
 	while (in != '\n' && in != '\e' && read(0, &in, 4))
 	{
 		cur += (in == KEY_RIGHT || in == KEY_LEFT);
-		print_choose(fd, cur, f->s.st_mode);
 		if (in != '\n' && in != '\e')
 			in = 0;
 	}

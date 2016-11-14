@@ -12,7 +12,7 @@
 
 #include <explorer.h>
 
-void		print_offset(int offset, int c, int fd)
+void			print_offset(int offset, int c, int fd)
 {
 	char	str[offset + 1];
 	int		index;
@@ -27,7 +27,7 @@ void		print_offset(int offset, int c, int fd)
 	write(fd, str, offset);
 }
 
-char		*set_filename(char *s1, char *s2, int add_sep)
+char			*set_filename(char *s1, char *s2, int add_sep)
 {
 	int		i;
 	int		j;
@@ -69,7 +69,7 @@ static void		build_offset(int *off, t_print *p)
 		off[5] = offset;
 }
 
-static int			prepare(t_args *a, t_file *root)
+static int		prepare(t_args *a, t_file *root)
 {
 	int		*off;
 	int		cmpt;
@@ -86,7 +86,7 @@ static int			prepare(t_args *a, t_file *root)
 	return (cmpt);
 }
 
-void		parcours(int fd, struct winsize *ws, t_args *a, t_file *f)
+void			parcours(int fd, struct winsize *ws, t_args *a, t_file *f)
 {
 	int		blks;
 	int		cur;
@@ -100,7 +100,7 @@ void		parcours(int fd, struct winsize *ws, t_args *a, t_file *f)
 		write(fd, "  total ", 8);
 		ft_putnbr_fd(blks, fd);
 		write(fd, "  page[", 7);
-		ft_putnbr_fd(page + 1, fd);
+		ft_putnbr_fd(page, fd);
 		write(fd, "/", 1);
 		ft_putnbr_fd(a->pages, fd);
 		write(fd, "]\n", 2);

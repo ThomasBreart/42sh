@@ -62,9 +62,5 @@ t_file		*ft_open(t_args *a, char *dn)
 			addfile(&file, new_file(a, dn, e->d_name), 1);
 		closedir(d);
 	}
-	else
-	{
-		ft_putstr_fd(strerror(errno), 2);
-	}
 	return (file);
 }

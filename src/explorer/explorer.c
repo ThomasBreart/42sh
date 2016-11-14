@@ -12,12 +12,7 @@
 
 #include <explorer.h>
 
-void		explorer_signal(int signum)
-{
-	(void)signum;
-}
-
-void		no_name(int fd, t_args *arg, t_historic *t, t_file *f)
+void			no_name(int fd, t_args *arg, t_historic *t, t_file *f)
 {
 	if (arg->new_page != arg->page)
 	{
@@ -38,7 +33,7 @@ static void		set_rawmode(struct termios *termios_p)
 	termios_p->c_cc[VTIME] = 0;
 }
 
-void		start(t_historic *t)
+void			start(t_historic *t)
 {
 	tcgetattr(0, &t->save);
 	tcgetattr(0, &t->term);
@@ -49,7 +44,7 @@ void		start(t_historic *t)
 	tcsetattr(0, 0, &t->term);
 }
 
-int			builtin_explorer(t_historic *t)
+int				builtin_explorer(t_historic *t)
 {
 	t_args	a;
 	char	tabl[1024];
