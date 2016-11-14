@@ -14,9 +14,9 @@
 
 int			sig_child_func(int status)
 {
-	t_historic	*termcaps;
+//	t_historic	*termcaps;
 
-	termcaps = get_termcaps();
+//	termcaps = get_termcaps();
 	if (WTERMSIG(status) == SIGSEGV)
 		ft_putendl_fd("Child - Segmentation fault", STDERR_FILENO);
 	return (-1);
@@ -54,6 +54,7 @@ static void	handler_sigint(int numsig)
 		ft_putstr(termcaps->prompt);
 		termcaps->prompt_current = termcaps->prompt;
 	}
+	(void)numsig;
 }
 
 void		resize_win(int numsig)
@@ -81,6 +82,7 @@ void	handler_sigtstp(int numsig)
 	signal(SIGTSTP, SIG_DFL);
 	pid = getpid();
 	kill(pid, SIGTSTP);
+	(void)numsig;
 }
 
 static void	handler_sigcont(int numsig)
@@ -95,6 +97,7 @@ static void	handler_sigcont(int numsig)
 	if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
 		internal_error("handler_sigcont", "set_termcaps", 1);
 	ft_putstr(termcaps->prompt);
+	(void)numsig;
 }
 
 void		signals_management(void)

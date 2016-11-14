@@ -41,10 +41,10 @@ static int	is_end_word(char *s)
 
 int			is_a_word(char *s)
 {
-	int		i;
+//	int		i;
 	char	*start;
 
-	i = 0;
+//	i = 0;
 	start = s;
 	while (*s != '\0' && is_end_word(s) == 0)
 	{

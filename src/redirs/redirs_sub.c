@@ -33,9 +33,9 @@ int			exec_redir_sub(t_list *elem, t_save_fd *save, t_list **current)
 	int			ret;
 	int			fd_sub;
 	t_list		*tmp;
-	int			fd_not_standard;
+//	int			fd_not_standard;
 
-	fd_not_standard = -1;
+//	fd_not_standard = -1;
 	*current = elem->right;
 	ret = 42;
 	fd_sub = -1;

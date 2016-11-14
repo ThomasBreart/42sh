@@ -312,4 +312,9 @@ int					is_just_spaces(char *cmd);
 void				show_binary_tree(t_list *root);
 void				show_binary_tree_lr(t_list *root);
 
+/*
+**	glob/glob.c
+*/
+void				do_globbing(char ***elem);
+
 #endif

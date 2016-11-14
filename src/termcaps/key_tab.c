@@ -85,10 +85,10 @@ static int	check_bins_or_path(char **word, char **part_match)
 {
 	DIR			*dir;
 	char		**tab_path;
-	t_historic	*termcaps;
+//	t_historic	*termcaps;
 	char		**tmp;
 
-	termcaps = get_termcaps();
+//	termcaps = get_termcaps();
 	if (ft_strchr(*word, '/') != NULL)
 		return (check_files(word, part_match));
 	else

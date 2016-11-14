@@ -12,7 +12,16 @@
 
 #include "ft_21sh.h"
 
-int		is_a_builtin(char *s)
+static int		bonus(char *s)
+{
+	if (ft_strcmp("explorer", s) == 0)
+		return (1);
+	else if (ft_strcmp("glob", s) == 0)
+		return (1);
+	return (0);
+}
+
+int				is_a_builtin(char *s)
 {
 	if (ft_strcmp("exit", s) == 0)
 		return (1);
@@ -37,5 +46,5 @@ int		is_a_builtin(char *s)
 	else if (ft_strcmp("read", s) == 0)
 		return (1);
 	else
-		return (0);
+		return (bonus(s));
 }

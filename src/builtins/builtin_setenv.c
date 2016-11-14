@@ -80,9 +80,9 @@ int			builtin_setenv(char **argv, char ***env, int forced)
 {
 	char		**tkey;
 	char		*key;
-	t_historic	*termcaps;
+//	t_historic	*termcaps;
 
-	termcaps = get_termcaps();
+//	termcaps = get_termcaps();
 	if (setenv_check_errors(argv, forced) == -1)
 		return (-1);
 	if (argv[1] == NULL)

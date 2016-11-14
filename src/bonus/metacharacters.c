@@ -15,7 +15,7 @@
 void		edit_line_meta(char **entry, char *value, int pos_key, int len_key)
 {
 	char	*new_s;
-	char	*tmp;
+//	char	*tmp;
 	int		len_value;
 
 	if (value == NULL)
@@ -23,7 +23,7 @@ void		edit_line_meta(char **entry, char *value, int pos_key, int len_key)
 	else
 		len_value = ft_strlen(value);
 	new_s = s_strnew(ft_strlen(*entry) + len_value - len_key, __FILE__);
-	tmp = *entry;
+//	tmp = *entry;
 	ft_strncpy(new_s, *entry, pos_key);
 	if (value != NULL)
 		ft_strcpy(new_s + pos_key, value);
@@ -93,6 +93,8 @@ int			convert_metacharacters(t_list *elem, char **env)
 		check_tild(tmp);
 		tmp++;
 	}
+	do_globbing(&elem->argv);
+//	printf("= end =\n");
 	free(elem->content);
 	if (tab_del_empty_index(elem, 1) == 0)
 	{

@@ -100,4 +100,10 @@ int		builtin_setenv(char **argv, char ***env, int forced);
 */
 int		builtin_unsetenv(char **argv, char ***env);
 
+/*
+**	builtin_explorer
+*/
+int		builtin_explorer(t_historic *t);
+int		builtin_glob(char **argv);
+
 #endif

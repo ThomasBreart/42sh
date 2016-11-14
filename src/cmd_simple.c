@@ -25,12 +25,12 @@ static void	cmd_simple_prog_child(t_historic *termcaps, t_list *elem,
 
 int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 {
-	pid_t		z;
+//	pid_t		z;
 	int			ret;
 	t_historic	*termcaps;
 	int			father;
 
-	z = 42;
+//	z = 42;
 	termcaps = get_termcaps();
 	ret = 31;
 	termcaps->in_child = 1;
@@ -57,11 +57,11 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 
 static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 {
-	t_historic	*termcaps;
+//	t_historic	*termcaps;
 	int			ret;
 
 	ret = 42;
-	termcaps = get_termcaps();
+//	termcaps = get_termcaps();
 	if (ft_strcmp("exit", elem->content) == 0)
 		ret = builtin_exit(elem, *env, save);
 	else if (ft_strcmp("cd", elem->content) == 0)
@@ -84,6 +84,10 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 		ret = builtin_echo(elem->argv);
 	else if (ft_strcmp("read", elem->content) == 0)
 		ret = builtin_read(elem->argv, save, env);
+	else if (ft_strcmp("glob", elem->content) == 0)
+		ret = builtin_glob(elem->argv);
+	else if (ft_strcmp("explorer", elem->content) == 0)
+		ret = builtin_explorer(get_termcaps());
 	else
 		return (-1);
 	return (ret);

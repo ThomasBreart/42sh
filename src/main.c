@@ -68,4 +68,5 @@ int		main(int ac, char **av_entry, char **env)
 			break ;
 	}
 	return (clean_exit((*get_env()), NULL));
+	(void)av_entry;
 }
