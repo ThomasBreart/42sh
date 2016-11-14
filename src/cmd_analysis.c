@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/12 13:32:44 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/14 17:56:59 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_list		*cmd_analysis(char **entry)
 	//	show_list(first);
 	if (formatting_cmd_general(&first) == 1)
 	{
-		//		show_elem(first);
+				show_elem(first);
 		check_backquotes(&first);
-		//		show_elem(first);
+				show_elem(first);
 		if (ft_strlen(first->content) == 0)// cas "`` | pwd"
 		{
 			del_tlist(first);

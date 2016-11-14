@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 09:58:48 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 16:17:15 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/14 18:12:52 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int			is_a_word(char *s)
 			++s;
 		else if (*s == '"' || *s == '\'')
 			s = goto_next_quote(s);
+		else if (*s == '`')
+			s = goto_next_backquote(s);
 		if (*s != '\0')
 			++s;
 	}
