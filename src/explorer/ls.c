@@ -11,22 +11,7 @@
 /* ************************************************************************** */
 
 #include <explorer.h>
-/*
-void			print_maps(t_args *a, t_print *f, int fd)
-{
-	char	*ret;
 
-	if (a->mask & COLOR)
-		print_color(a->typemap, f->mode, fd);
-	if (a->colormap)
-	{
-		ret = ft_strrchr(f->name, '.');
-		ret = ft_mapget(a->colormap, ret ? ret : f->name, &ft_strcmp);
-		if (ret)
-			ft_putansi_str(ret, fd);
-	}
-}
-*/
 int				setoutput(int fd, int x_max, char *path, t_file *f)
 {
 	int			in;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   glob_config.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/14 10:53:55 by fjacquem          #+#    #+#             */
+/*   Updated: 2016/11/14 10:53:57 by fjacquem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_glob.h>
 
 int		builtin_glob(char **argv)
@@ -27,4 +39,10 @@ int		builtin_glob(char **argv)
 		argv++;
 	}
 	return (flag);
+}
+
+int		can_continue(int flags, char *name, char *pattern)
+{
+	return ((flags & GLOB_HIDE) || (*name != '.' ||
+	*pattern == '.'));
 }

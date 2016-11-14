@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   glob_brace2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/14 10:53:44 by fjacquem          #+#    #+#             */
+/*   Updated: 2016/11/14 10:53:46 by fjacquem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_glob.h>
 
 static char		*get_end(char *pattern)
@@ -18,7 +30,7 @@ static char		*get_end(char *pattern)
 	return (i ? NULL : pattern + 1);
 }
 
-static void		get_brackets(char **pattern, int *i)
+static void		get_braces(char **pattern, int *i)
 {
 	int			o;
 
@@ -26,7 +38,7 @@ static void		get_brackets(char **pattern, int *i)
 	while (**pattern)
 	{
 		if (**pattern == '{')
-			o++;		
+			o++;
 		else if (**pattern == '}')
 			o--;
 		(*i)++;
@@ -36,7 +48,7 @@ static void		get_brackets(char **pattern, int *i)
 	}
 }
 
-static char		*_match_brackets_(char **format, int *err)
+static char		*match_braces(char **format, int *err)
 {
 	char		*mat;
 	char		*s;
@@ -48,7 +60,7 @@ static char		*_match_brackets_(char **format, int *err)
 	while (**format && **format != ',' && **format != '}')
 	{
 		if (**format == '{')
-			get_brackets(format, &i);
+			get_braces(format, &i);
 		else
 		{
 			i++;
@@ -76,7 +88,7 @@ int				get_patterns(t_list **patterns, char *pattern)
 	err = -1;
 	if (!(end = get_end(pattern)))
 		return (0);
-	while ((occur = _match_brackets_(&pattern, &err))
+	while ((occur = match_braces(&pattern, &err))
 			&& err && *pattern)
 	{
 		join = ft_strjoin(occur, end);
@@ -86,7 +98,7 @@ int				get_patterns(t_list **patterns, char *pattern)
 		pattern++;
 	}
 	free(occur);
-	if (!err)	
+	if (!err)
 		return (-1);
 	return (ret);
 }

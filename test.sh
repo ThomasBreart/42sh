@@ -843,6 +843,9 @@ then
 	printf "\n"
 fi
 
+COMMAND="echo {/*,./*}"
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS BACK QUOTES===#

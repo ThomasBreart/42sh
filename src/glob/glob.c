@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   glob.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/14 10:53:16 by fjacquem          #+#    #+#             */
+/*   Updated: 2016/11/14 10:53:18 by fjacquem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_glob.h>
 
 char					**glob__create_tab(t_list *results)
@@ -13,7 +25,6 @@ char					**glob__create_tab(t_list *results)
 	while (results)
 	{
 		tmp = results->next;
-//		printf("<res>%s\n", (char*)results->content);
 		ret[len] = results->content;
 		free(results);
 		len++;
@@ -22,7 +33,6 @@ char					**glob__create_tab(t_list *results)
 	ret[len] = NULL;
 	return (ret);
 }
-
 
 int						ft_glob2(char *pattern, t_globinfo gi, t_list **res)
 {
@@ -45,13 +55,11 @@ int						ft_glob2(char *pattern, t_globinfo gi, t_list **res)
 	}
 	if (p != -1)
 		p = ft_lstcpt(*res);
-//	printf("<ret>%d\n", p);
 	return (p);
 }
 
 int						ft_glob(const char *pattern, t_glob *gl)
 {
-//	printf("%s\n", pattern);
 	t_globinfo	g;
 
 	g.local = NULL;
@@ -68,7 +76,8 @@ static int				need_globbing(char *arg)
 	quote = 0;
 	while (*arg)
 	{
-		if (*arg == '*' || *arg == '{' || *arg == '[' || *arg == '\\' || *arg == '?')
+		if (*arg == '*' || *arg == '{' || *arg == '[' ||
+			*arg == '\\' || *arg == '?')
 			return (1);
 		else if (*arg == '\'' || *arg == '"')
 		{
@@ -97,7 +106,8 @@ void					do_globbing(char ***elem)
 	{
 		n = need_globbing(argv[index]);
 		if (!n || ft_glob(argv[index], &g) < 1)
-			ft_lstadd_end(&g.results, ft_lstnew(argv[index], ft_strlen(argv[index]) + 1));
+			ft_lstadd_end(&g.results,
+				ft_lstnew(argv[index], ft_strlen(argv[index]) + 1));
 		free(argv[index]);
 		index++;
 	}

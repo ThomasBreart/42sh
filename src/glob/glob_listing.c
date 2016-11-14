@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   glob_listing.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/14 10:54:30 by fjacquem          #+#    #+#             */
+/*   Updated: 2016/11/14 10:54:31 by fjacquem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_glob.h>
 
-static void				glob__list_adding(t_list **lst, char *s, int (*cmp)())
+static void			glob__list_adding(t_list **lst, char *s, int (*cmp)())
 {
 	t_list				*tmp;
 	t_list				*add;
@@ -64,10 +76,9 @@ static char			*glob__get_path(char *local, char *name)
 		fullpath = ft_strnew(j + 1);
 		ft_strncpy(fullpath, name, j);
 		ft_strcat(fullpath, "/");
+		return (fullpath);
 	}
-	else
-		return (create_fullpath2(local, name, j));
-	return (fullpath);
+	return (create_fullpath2(local, name, j));
 }
 
 static void			glob__correct_pattern(char **name)
@@ -86,7 +97,8 @@ static void			glob__correct_pattern(char **name)
 	}
 }
 
-int					glob__open_directory(t_globinfo g, char *pattern, t_list **results)
+int					glob__open_directory(t_globinfo g, char *pattern,
+					t_list **results)
 {
 	DIR				*rep;
 	t_list			*matches;
@@ -101,11 +113,10 @@ int					glob__open_directory(t_globinfo g, char *pattern, t_list **results)
 		{
 			g.name = ft_strjoin(g.path, entry->d_name);
 			g.local = g.name;
-			if (((g.flags & GLOB_HIDE) || (*entry->d_name != '.' || *pattern == '.')) &&
+			if (can_continue(g.flags, entry->d_name, pattern) &&
 				glob__match(&g, entry->d_name, pattern, &matches))
-				glob__list_adding(&matches
-					, g.name
-					, !g.flags & GLOB_CASE ? &ft_strcmp : &ft_strcasecmp);
+				glob__list_adding(&matches, g.name,
+				!g.flags & GLOB_CASE ? &ft_strcmp : &ft_strcasecmp);
 			else
 				free(g.name);
 		}
