@@ -26,6 +26,7 @@ char					**glob__create_tab(t_list *results)
 	{
 		tmp = results->next;
 		ret[len] = results->content;
+//		printf("res <%s>\n", ret[len]);
 		free(results);
 		len++;
 		results = tmp;
@@ -38,35 +39,41 @@ int						ft_glob2(char *pattern, t_globinfo gi, t_list **res)
 {
 	t_list		*ps;
 	t_list		*next;
-	int			p;
+	t_list		*b;
 
-	p = 0;
+	b = 0;
 	ps = ft_lstnew(pattern, ft_strlen(pattern) + 2);
-	if (glob_brace(ps) == -1)
-		p = -1;
-	while (ps)
+	if (glob_brace(ps) != -1)
 	{
-		next = ps->next;
-		if (!p && !ft_strchr(ps->content, '{'))
-			glob__open_directory(gi, ps->content, res);
-		free(ps->content);
-		free(ps);
-		ps = next;
+		while (ps)
+		{
+			next = ps->next;
+			if (!ft_strchr(ps->content, '{'))
+			{
+				b = *res;
+				glob__open_directory(gi, ps->content, res);
+			}
+			free(ps->content);
+			free(ps);
+			ps = next;
+		}
+		return (b != *res);
 	}
-	if (p == 0)
-		p = ft_lstcpt(*res);
-	return (p);
+	return (-1);
 }
 
 int						ft_glob(const char *pattern, t_glob *gl)
 {
 	t_globinfo	g;
+	int			ret;
 
 	g.local = NULL;
 	g.path = NULL;
 	g.name = NULL;
 	g.flags = gl->flags;
-	return (ft_glob2((char*)pattern, g, &gl->results));
+	ret = ft_glob2((char*)pattern, g, &gl->results);
+//	printf("ret <%d>\n", ret);
+	return (ret);
 }
 
 static int				need_globbing(char *arg)

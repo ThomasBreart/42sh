@@ -846,6 +846,18 @@ fi
 COMMAND="echo {/*,./*}"
 check_diff ${SHBASH}
 
+COMMAND="echo \* \[ \\"
+check_diff ${SHBASH}
+
+COMMAND="{} []"
+check_diff ${SHBASH}
+
+COMMAND='setenv E ./\*; echo $E'
+check_diff ${SHCSH}
+
+COMMAND='setenv E "*"; echo $E'
+check_diff ${SHCSH}
+
 printf "\n"
 
 #===TESTS BACK QUOTES===#
