@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:48:06 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 08:09:21 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/15 15:28:03 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int		swap_argv_with_redir(t_list **first);
 **	lexical_analysis_general.c
 */
 int		lexical_analysis(char *cmd, t_list **first);
+
+/*
+**	is_token.c
+*/
+int		is_token_llr(t_list *elem);
 
 /*
 **lexical_analysis_ope_others.c
