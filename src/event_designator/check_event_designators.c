@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 18:07:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/03 05:53:30 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/16 22:20:31 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void		modif_last_elem_history(char *str)
 	termcaps = get_termcaps();
 	ft_strdel(&termcaps->end->content);
 	termcaps->end->content = s_strdup(str, __FILE__);
-	printf("new_cmd_in_history: -%s-\n", str);
 }
 
 int				check_event_designators(char **entry)
@@ -73,14 +72,9 @@ int				check_event_designators(char **entry)
 	sub_cmd = NULL;
 	while (extract_event(entry, start_analysis, &start_event, &sub_cmd) == 1)
 	{
-		fprintf(stderr, "start_event1: %d\n", start_event);
-		fprintf(stderr, "subcmd1: %s\n", sub_cmd);
 		if (exec_event(&sub_cmd, *entry, &start_event) == -1)
 			return (-1);
-		fprintf(stderr, "subcmd2: %s\n", sub_cmd);
-		fprintf(stderr, "subcmd4: %s\n", sub_cmd);
 		tmp = add_str_in_str(*entry, sub_cmd, start_event);
-		fprintf(stderr, "tmp: %s\n", tmp);
 		ft_strdel(entry);
 		*entry = tmp;
 		start_analysis = start_event + ft_strlen(sub_cmd);

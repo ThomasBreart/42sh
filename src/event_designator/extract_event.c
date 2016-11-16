@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 05:10:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/03 05:37:54 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/16 22:24:50 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,25 @@ static int	quick_sub_find(char **str, int i, char **sub_cmd, int *start_subcmd)
 	}
 	else
 		len_subcmd = tmp - (*str + i);
-	printf("len_subcmd: %d\n", len_subcmd);
 	*sub_cmd = s_strsub(*str, i, len_subcmd, __FILE__);
 	new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
 	ft_strncat(new_str, *str, *start_subcmd);
 	ft_strcat(new_str, *str + (*start_subcmd + len_subcmd));
 	ft_strdel(str);
 	*str = new_str;
-	printf("str: %s\n", *str);
 	return (1);
 }
+
+/*
+**	check si c est un event
+*/
 
 static int	is_an_event(char *s)
 {
 	if (*s == '!')
 	{
 		++s;
-		if (*s != '\0' && *s != ' ' && *s != 9 && *s != '=')//man dit qui yen a dautre mais ca se verifie po sur le bash
+		if (*s != '\0' && *s != ' ' && *s != 9 && *s != '=')
 			return (1);
 	}
 	return (0);

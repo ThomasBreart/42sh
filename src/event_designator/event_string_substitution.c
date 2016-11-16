@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 17:31:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/03 05:06:01 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/16 22:22:59 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int				event_string_substitution(char *sub_cmd, char **new_str)
 	extract_data_substitution(sub_cmd, &new_subcmd, &replace);
 	if (ft_strlen(new_subcmd) == 0)
 		return (E_NO_PREVSUB);
-	tmplist = termcaps->end->prev;///
+	tmplist = termcaps->end->prev;
 	if ((pos = ft_strstr(tmplist->content, new_subcmd)) != NULL)
 		*new_str = str_substitution(tmplist->content, pos, new_subcmd, replace);
 	free(new_subcmd);

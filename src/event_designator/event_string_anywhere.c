@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 16:20:48 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/20 16:34:06 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/16 22:22:12 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int		is_event_string_anywhere(char *str)
 int		event_string_anywhere(char *sub_cmd, char **new_str)
 {
 	t_historic *termcaps;
-	t_list	*tmp;
-	int		len;
-	char	*new_subcmd;
+	t_list		*tmp;
+	int			len;
+	char		*new_subcmd;
 
 	termcaps = get_termcaps();
 	len = ft_strlen(sub_cmd);
@@ -33,7 +33,7 @@ int		event_string_anywhere(char *sub_cmd, char **new_str)
 		new_subcmd = s_strsub(sub_cmd, 2, (len - 3), __FILE__);
 	else
 		new_subcmd = s_strdup(sub_cmd + 2, __FILE__);
-	tmp = termcaps->end->prev;///
+	tmp = termcaps->end->prev;
 	while (tmp != NULL)
 	{
 		if (ft_strstr(tmp->content, new_subcmd) != NULL)

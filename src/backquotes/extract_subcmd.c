@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 07:04:51 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/03 07:10:58 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/16 22:18:42 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	subcmd_find(char **str, int i, char **sub_cmd, int *start_subcmd)
 
 	*start_subcmd = i;
 	tmp = goto_next_backquote((*str + i));
-	len_subcmd = tmp - (*str + i) + 1;// prend en compte le 2e '`'
+	len_subcmd = tmp - (*str + i) + 1;
 	*sub_cmd = s_strsub(*str, i, len_subcmd, __FILE__);
 	new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
 	ft_strncat(new_str, *str, *start_subcmd);

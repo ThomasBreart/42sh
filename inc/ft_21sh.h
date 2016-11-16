@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 16:31:47 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/15 16:47:24 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void		remove_onelvl_escape_backslash(char **str);
 int		exec_backquotes(char **str);
 t_save_fd	*get_set_save_fd(t_save_fd *save);
 void		show_list(t_list *first);
+void		handler_sigint(int numsig);
 
 /*
 **	check_backquotes.c

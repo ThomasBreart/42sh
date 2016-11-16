@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/15 15:26:10 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/16 22:17:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	dernier charactere)
 */
 
-void	del_subcmd_indicator(char **str)
+static void	del_subcmd_indicator(char **str)
 {
 	int		len;
 	char	*new_str;
@@ -30,12 +30,12 @@ void	del_subcmd_indicator(char **str)
 	*str = new_str;
 }
 
-void	find_subcmd(char **cur_argv)
+static void	find_subcmd(char **cur_argv)
 {
 	char	*tmp;
 	int		start_subcmd;
 	int		start_analysis;
-	char		*sub_cmd;
+	char	*sub_cmd;
 
 	start_analysis = 0;
 	sub_cmd = NULL;
@@ -62,10 +62,10 @@ void	find_subcmd(char **cur_argv)
 **	cherche et execute les sous-commandes entre backquotes
 */
 
-void	check_backquotes(t_list **first)
+void		check_backquotes(t_list **first)
 {
-	t_list		*elem;
-	int			i;
+	t_list	*elem;
+	int		i;
 
 	elem = *first;
 	while (elem != NULL)

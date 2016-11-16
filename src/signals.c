@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/22 02:40:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/12 13:12:57 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/16 21:54:46 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 int			sig_child_func(int status)
 {
-//	t_historic	*termcaps;
+	t_historic	*termcaps;
 
-//	termcaps = get_termcaps();
+	termcaps = get_termcaps();
+	if (WTERMSIG(status) == SIGCHLD)
+		return (1);
+	termcaps->child_end_sig = 1;
 	if (WTERMSIG(status) == SIGSEGV)
 		ft_putendl_fd("Child - Segmentation fault", STDERR_FILENO);
 	return (-1);
 }
 
-static void	handler_sigint(int numsig)
+void	handler_sigint(int numsig)
 {
 	t_historic *termcaps;
 
@@ -114,7 +117,7 @@ void		signals_management(void)
 	signal(SIGTSTP, handler_sigtstp);
 	signal(SIGINT, handler_sigint);
 	signal(SIGCONT, handler_sigcont);
-	signal(SIGCHLD, SIG_DFL);
+	signal(SIGCHLD, SIG_DFL);//?
 	signal(SIGWINCH, resize_win);
 }
 

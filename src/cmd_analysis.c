@@ -6,20 +6,11 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/15 15:22:55 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/15 15:36:24 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-void	show_list(t_list *first)
-{
-	while (first != NULL)
-	{
-		printf("->%s\n", first->content);
-		first = first->next;
-	}
-}
 
 void	free_list(t_list *first)
 {
@@ -34,7 +25,6 @@ void	free_list(t_list *first)
 }
 
 /*
-**
 **		show_list(first);
 **		show_elem(first);
 **		show_binary_tree(root);
