@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 11:53:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/12 13:48:27 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/17 05:45:40 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	cmd_pipe_child(int pdes[2], t_list *prog, char ***env,
 	close(pdes[PIPE_EXIT]);
 	master_dup2(pdes[PIPE_ENTRY]);
 	if (prog->type == LEX_WORD)
-		exec_simple(prog, env, save);// pas svg ret ?
+		exec_simple(prog, env, save);
 	else if (prog->type == LEX_SUBSH)
 		exec_subshell(prog);
 	close(pdes[PIPE_ENTRY]);
@@ -70,7 +70,7 @@ static int	cmd_pipe_father(int pdes[2], t_list *elem, char ***env,
 	close(pdes[PIPE_ENTRY]);
 	dup2(pdes[PIPE_EXIT], STDIN_FILENO);
 	close(pdes[PIPE_EXIT]);
-	dup2(save->save_stdout, STDOUT_FILENO);// restore original stdout
+	dup2(save->save_stdout, STDOUT_FILENO);
 	if (elem->right->type == LEX_PIPE)
 		ret = cmd_pipe(elem->right, env, NULL, save);
 	else

@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_elem.c                                        :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/11 04:34:22 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/11 04:36:31 by tbreart          ###   ########.fr       */
+/*   Created: 2016/11/15 15:35:44 by tbreart           #+#    #+#             */
+/*   Updated: 2016/11/17 02:00:23 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+void	show_list(t_list *first)
+{
+	while (first != NULL)
+	{
+		printf("->%s\n", first->content);
+		first = first->next;
+	}
+}
 
 /*
 **	affiche les informations d'un maillon

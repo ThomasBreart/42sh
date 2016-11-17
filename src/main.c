@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/17 01:38:32 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/07 18:09:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/17 02:08:04 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,11 @@ int		main(int ac, char **av_entry, char **env)
 	t_list		*root;
 	int			ret;
 
-	av_entry = NULL;
 	if (ac != 1)
 		errors(ERR_ARGV);
 	init(&termcaps, &env, &entry);
 	while (1)
 	{
-		root = NULL;
 		if (termcaps->istty == 1)
 			ret = get_command(termcaps, &entry);
 		else

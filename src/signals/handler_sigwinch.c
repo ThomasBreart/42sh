@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_token.c                                         :+:      :+:    :+:   */
+/*   handler_sigwinch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/15 15:26:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:33:35 by tbreart          ###   ########.fr       */
+/*   Created: 2016/11/17 01:56:19 by tbreart           #+#    #+#             */
+/*   Updated: 2016/11/17 02:10:41 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		is_token_llr(t_list *elem)
+void		handler_sigwinch(int numsig)
 {
-	if (elem != NULL && elem->type == LEX_LL_R)
-		return (1);
-	return (0);
+	t_historic *termcaps;
+
+	termcaps = get_termcaps();
+	ioctl(0, TIOCGWINSZ, &termcaps->ws);
+	if (termcaps->in_getcmd == 1)
+		show_entry(termcaps, *termcaps->entry);
+	(void)numsig;
 }

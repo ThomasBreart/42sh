@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 10:59:15 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 17:37:41 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 01:59:42 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,4 @@ void	update_elem(t_list *elem, int change_argv)
 		elem->content = s_strdup(elem->fullcontent, __FILE__);
 	else
 		elem->content = s_strdup(elem->argv[0], __FILE__);
-//	fprintf(stderr, "econttent: %s\n", elem->content);
 }

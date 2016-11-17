@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_token.c                                         :+:      :+:    :+:   */
+/*   check_word_and_subsh.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/15 15:26:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:33:35 by tbreart          ###   ########.fr       */
+/*   Created: 2016/11/17 05:43:23 by tbreart           #+#    #+#             */
+/*   Updated: 2016/11/17 05:44:30 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		is_token_llr(t_list *elem)
+int		check_word_and_subsh(t_list *first)
 {
-	if (elem != NULL && elem->type == LEX_LL_R)
-		return (1);
-	return (0);
+	while (first != NULL)
+	{
+		if (first->type == LEX_WORD)
+		{
+			if (first->next != NULL && first->next->type == LEX_SUBSH)
+			{
+				ft_putendl_fd("Invalid command.", STDERR_FILENO);
+				return (-1);
+			}
+		}
+		first = first->next;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 16:20:48 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/16 22:22:12 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 00:28:30 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		is_event_string_anywhere(char *str)
 
 int		event_string_anywhere(char *sub_cmd, char **new_str)
 {
-	t_historic *termcaps;
+	t_historic	*termcaps;
 	t_list		*tmp;
 	int			len;
 	char		*new_subcmd;

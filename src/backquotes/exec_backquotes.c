@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 07:36:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/16 22:17:16 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 00:21:34 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*format_cmd(int fd_buf)
 	char	*buf;
 	char	*tmp;
 	char	*new_entry;
-	int		ret = -1;
+	int		ret;
 
 	new_entry = NULL;
 	while ((ret = get_next_line(fd_buf, &buf)) >= 0)

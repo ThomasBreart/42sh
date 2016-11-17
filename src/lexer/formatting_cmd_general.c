@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/03 22:46:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/14 19:10:19 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 05:43:12 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,23 +97,6 @@ static int	formatting_file(t_list *first)
 			}
 		}
 		elem = elem->next;
-	}
-	return (1);
-}
-
-int			check_word_and_subsh(t_list *first)
-{
-	while (first != NULL)
-	{
-		if (first->type == LEX_WORD)
-		{
-			if (first->next != NULL && first->next->type == LEX_SUBSH)
-			{
-				ft_putendl_fd("Invalid command.", STDERR_FILENO);
-				return (-1);
-			}
-		}
-		first = first->next;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 10:39:20 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 08:06:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 05:41:14 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		is_ope_subshell(char *s)
 {
 	char	*tmp;
 
-	if (*s == '(')// etre sur que ce char ne peut pas etre echapay
+	if (*s == '(')
 		tmp = goto_next_parenthesis(s);
 	else
 		return (0);

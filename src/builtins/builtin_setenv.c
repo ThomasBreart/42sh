@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:13:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/12 13:29:40 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/17 05:32:32 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int			builtin_setenv(char **argv, char ***env, int forced)
 {
 	char		**tkey;
 	char		*key;
-//	t_historic	*termcaps;
 
-//	termcaps = get_termcaps();
 	if (setenv_check_errors(argv, forced) == -1)
 		return (-1);
 	if (argv[1] == NULL)

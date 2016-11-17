@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/15 18:33:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 02:44:29 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@ static void	cmd_simple_prog_child(t_historic *termcaps, t_list *elem,
 
 int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 {
-//	pid_t		z;
 	int			ret;
 	t_historic	*termcaps;
 	int			father;
 
-//	z = 42;
 	termcaps = get_termcaps();
-	ret = 31;
+	ret = 42;
 	termcaps->child_end_sig = 0;
 	termcaps->in_child = 1;
 	father = fork();
@@ -58,11 +56,9 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 
 static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 {
-//	t_historic	*termcaps;
 	int			ret;
 
 	ret = 42;
-//	termcaps = get_termcaps();
 	if (ft_strcmp("exit", elem->content) == 0)
 		ret = builtin_exit(elem, *env, save);
 	else if (ft_strcmp("cd", elem->content) == 0)
@@ -94,11 +90,11 @@ static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
 	return (ret);
 }
 
-static void stock_ret_val_in_env(int ret, char ***env)
+static void	stock_ret_val_in_env(int ret, char ***env)
 {
 	char		**varenv;
 	char		*tmp;
-	int		ret_val;
+	int			ret_val;
 
 	ret_val = (ret == 1) ? 0 : 1;
 	tmp = ft_itoa(ret_val);
@@ -110,13 +106,12 @@ static void stock_ret_val_in_env(int ret, char ***env)
 
 int			exec_simple(t_list *elem, char ***env, t_save_fd *save)
 {
-	int		ret;
+	int			ret;
 	t_historic	*termcaps;
 
 	ret = 42;
 	termcaps = get_termcaps();
-//	fprintf(stderr, "fullcontent: %s\n", elem->fullcontent);
-	if (convert_metacharacters(elem, *env) == 0) //modif avec quoting
+	if (convert_metacharacters(elem, *env) == 0)
 		return (1);
 	remove_quoting_chars(elem);
 	if (is_a_builtin(elem->content))

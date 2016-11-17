@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 20:00:21 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/15 18:28:42 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 02:12:10 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		init(t_historic **termcaps, char ***env, char **e)
 	(*termcaps)->fd_tty = -1;
 	set_vars(*termcaps);
 	set_prompt(*termcaps);
-	resize_win(42);
+	handler_sigwinch(42);
 	signals_management();
 	*e = NULL;
 	init_historic(*termcaps, *my_env);

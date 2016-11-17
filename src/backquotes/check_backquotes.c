@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 05:09:25 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/16 22:17:38 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 00:21:07 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	find_subcmd(char **cur_argv)
 
 	start_analysis = 0;
 	sub_cmd = NULL;
-	while (extract_subcmd(cur_argv, start_analysis, &start_subcmd, &sub_cmd) == 1)
+	while (extract_subcmd(cur_argv, start_analysis, &start_subcmd, &sub_cmd)
+																		== 1)
 	{
 		del_subcmd_indicator(&sub_cmd);
 		if (sub_cmd != NULL)

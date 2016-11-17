@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 10:06:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 08:27:39 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 05:39:42 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			lexical_analysis(char *cmd, t_list **first)
 	int		type_lex;
 
 	prev = NULL;
-	if (ft_strlen(cmd) == 0)///pas lieu d etre
+	if (ft_strlen(cmd) == 0)
 		return (-1);
 	while (*cmd != '\0')
 	{

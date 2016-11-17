@@ -6,13 +6,13 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 15:08:05 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/15 15:36:24 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 02:18:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void	free_list(t_list *first)
+void		free_list(t_list *first)
 {
 	t_list	*elem;
 
@@ -32,7 +32,7 @@ void	free_list(t_list *first)
 
 t_list		*cmd_analysis(char **entry)
 {
-	t_list *first;
+	t_list	*first;
 	t_list	*root;
 
 	first = NULL;

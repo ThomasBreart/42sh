@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/20 10:18:46 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 20:26:40 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 05:48:54 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ int			exec_redir_sub(t_list *elem, t_save_fd *save, t_list **current)
 	int			ret;
 	int			fd_sub;
 	t_list		*tmp;
-//	int			fd_not_standard;
 
-//	fd_not_standard = -1;
 	*current = elem->right;
 	ret = 42;
 	fd_sub = -1;

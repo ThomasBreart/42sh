@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 17:58:14 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 17:37:21 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 05:38:37 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@ char			**s_strsplit_with_quote(char *s, char c, const char *filename)
 			new_tab = realloc_tab(new_tab, &maxlen_tab, filename);
 	}
 	new_tab[index_tab] = NULL;
-//	ft_print_tab(taab);
 	return (new_tab);
 }

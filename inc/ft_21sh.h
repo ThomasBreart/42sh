@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/15 16:47:24 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/17 05:44:22 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ int		exec_backquotes(char **str);
 t_save_fd	*get_set_save_fd(t_save_fd *save);
 void		show_list(t_list *first);
 void		handler_sigint(int numsig);
+void	handler_sigcont(int numsig);
+void	handler_sigtstp(int numsig);
+void	handler_sigwinch(int numsig);
+int		exec_token(t_list *elem, char ***env, t_save_fd *save);
+int		check_word_and_subsh(t_list *first);
 
 /*
 **	check_backquotes.c
