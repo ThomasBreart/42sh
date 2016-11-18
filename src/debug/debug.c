@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 15:35:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 02:00:23 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 02:02:31 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	show_elem(t_list *elem)
 	fprintf(stderr, "------ func show_elem -------\n");
 	fprintf(stderr, "elem->content: %s\n", elem->content);
 	fprintf(stderr, "elem->fulllcontent: %s\n", elem->fullcontent);
-	ft_print_tab(elem->argv); ///
+	ft_print_tab(elem->argv);
 	fprintf(stderr, "elem->type: %d\n", elem->type);
 	fprintf(stderr, "elem->aggr_fd: %d\n", elem->aggr_fd);
 	fprintf(stderr, "elem->parent (pointeur): %p\n", elem->parent);

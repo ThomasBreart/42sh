@@ -6,12 +6,11 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/18 01:09:07 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 01:09:21 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:59:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
 
 int			char_is_escape(char *str, int index)
 {
