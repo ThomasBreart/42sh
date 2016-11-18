@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 15:30:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/18 15:33:53 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
+
+#include <stdio.h>
 
 # define SUBCMD_BACKQUOTE	1
 # define SUBCMD_DOLLAR		2
