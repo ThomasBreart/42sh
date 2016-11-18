@@ -6,13 +6,13 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 01:55:53 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 01:55:54 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:37:26 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static void	sigint_getcmd(t_historic *termcaps)
+static void		sigint_getcmd(t_historic *termcaps)
 {
 	ft_memdel((void**)&termcaps->cmd_inprogress);
 	ft_memdel((void**)&termcaps->bslash_split);
@@ -25,7 +25,7 @@ static void	sigint_getcmd(t_historic *termcaps)
 	}
 }
 
-void	handler_sigint(int numsig)
+void			handler_sigint(int numsig)
 {
 	t_historic *termcaps;
 

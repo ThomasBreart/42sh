@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:44:22 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:05:10 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,9 +243,11 @@ void				create_historic_list(t_historic *termcaps, char **taab);
 void				set_path_historic_file(t_historic *termcaps, char **env);
 
 /*
-**	is_a_builtin.c
+**	cmd_simple_builtin.c
 */
 int					is_a_builtin(char *s);
+int					cmd_simple_builtin(t_list *elem, char ***env,
+															t_save_fd *save);
 
 /*
 **	main.c

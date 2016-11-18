@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:56:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/11 19:48:57 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:56:52 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ int				calculation_parenthesis(t_historic *tcaps, char *s, char open,
 **	check_backslash.c
 */
 int				check_backslash(t_historic *termcaps, char *entry);
+
+/*
+**	cmd_still_open.c
+*/
+int				cmd_still_open(t_historic *termcaps, char **entry);
 
 /*
 **	continue_cmd.c

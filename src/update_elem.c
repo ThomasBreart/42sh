@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 10:59:15 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 01:59:42 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:23:15 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	update_elem(t_list *elem, int change_argv)
 	elem->fullcontent = ft_implode(elem->argv);
 	if (change_argv == 1)
 	{
-		tmp = s_strsplit_with_quote(elem->fullcontent, ' ', __FILE__);
+		tmp = s_strsplit_with_quote(elem->fullcontent, ' ');
 		free_double_tab(elem->argv);
 		elem->argv = tmp;
 	}

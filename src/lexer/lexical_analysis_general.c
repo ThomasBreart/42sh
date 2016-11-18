@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 10:06:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:39:42 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:22:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	edit_lexeme(t_list *current, char **s, int len_lexeme, int type)
 	current->fullcontent = s_strdup(current->content, __FILE__);
 	if (type == LEX_WORD)
 	{
-		current->argv = s_strsplit_with_quote(current->content, ' ', __FILE__);
+		current->argv = s_strsplit_with_quote(current->content, ' ');
 		ft_strdel(&current->content);
 		if (current->argv[0] == NULL)
 		{

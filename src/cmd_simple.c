@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 02:44:29 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 00:59:10 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,46 +48,6 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 	if (WIFSIGNALED(ret))
 		return (sig_child_func(ret));
 	return (1);
-}
-
-/*
-**	Return -1 si ya pas de builtin
-*/
-
-static int	cmd_simple_builtin(t_list *elem, char ***env, t_save_fd *save)
-{
-	int			ret;
-
-	ret = 42;
-	if (ft_strcmp("exit", elem->content) == 0)
-		ret = builtin_exit(elem, *env, save);
-	else if (ft_strcmp("cd", elem->content) == 0)
-		ret = builtin_cd(elem->argv, env);
-	else if (ft_strcmp("env", elem->content) == 0)
-		ret = builtin_env(elem->argv, *env);
-	else if (ft_strcmp("setenv", elem->content) == 0)
-		ret = builtin_setenv(elem->argv, env, 0);
-	else if (ft_strcmp("unsetenv", elem->content) == 0)
-		ret = builtin_unsetenv(elem->argv, env);
-	else if (ft_strcmp("bonus", elem->content) == 0)
-		ret = builtin_bonus();
-	else if (ft_strcmp("goto", elem->content) == 0)
-		ret = builtin_goto(elem, env);
-	else if (ft_strcmp("change_prompt", elem->content) == 0)
-		ret = builtin_change_prompt(elem);
-	else if (ft_strcmp("history", elem->content) == 0)
-		ret = builtin_history(elem->argv);
-	else if (ft_strcmp("echo", elem->content) == 0)
-		ret = builtin_echo(elem->argv);
-	else if (ft_strcmp("read", elem->content) == 0)
-		ret = builtin_read(elem->argv, save, env);
-	else if (ft_strcmp("glob", elem->content) == 0)
-		ret = builtin_glob(elem->argv);
-	else if (ft_strcmp("explorer", elem->content) == 0)
-		ret = builtin_explorer(get_termcaps());
-	else
-		return (-1);
-	return (ret);
 }
 
 static void	stock_ret_val_in_env(int ret, char ***env)

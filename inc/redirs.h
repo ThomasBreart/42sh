@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:52:08 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 21:09:08 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:36:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ int		exec_lc(t_list *elem, char ***env, t_list *prog, t_save_fd *save);
 */
 int		exec_llc(t_list *elem, char ***env, t_list *prog, t_save_fd *save);
 int		redir_file_llc(t_list *elem, t_save_fd *save);
+
+/*
+**	exec_llc.c
+*/
+int		redir_llc_read_loop_gnl(t_historic *termcaps, t_list *elem, int fd);
+int		redir_llc_read_loop_tty(t_historic *termcaps, t_list *elem, int fd);
 
 /*
 **exec_rc.c

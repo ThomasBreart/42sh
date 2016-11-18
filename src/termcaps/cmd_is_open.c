@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 19:39:06 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/08 16:09:56 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:39:41 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		cmd_is_open(char *str, int *end_backslash)
 		else if (*str == '(' || *str == '{' || *str == '[')
 			str = goto_next_parenthesis(str);
 		else if (*str == ')' || *str == '}' || *str == ']')
-			return (cmd_is_open_error(*str));///
+			return (cmd_is_open_error(*str));
 		else if (*str == '"' || *str == '\'' || *str == '`')
 			str = goto_next_quote(str);
 		if (*str == '\0')

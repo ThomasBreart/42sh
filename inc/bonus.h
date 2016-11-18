@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 08:37:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/25 23:30:15 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:22:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void	edit_line_meta(char **entry, char *value, int pos_key, int len_key);
 /*
 **	s_strsplit_with_quote.c
 */
-char	**s_strsplit_with_quote(char *s, char c, const char *filename);
+char	**s_strsplit_with_quote(char *s, char c);
 
 #endif

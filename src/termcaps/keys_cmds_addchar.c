@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/21 08:19:48 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/12 11:35:05 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/18 01:45:27 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			cmd_add_char(t_historic *tcaps, char **entry)
 	if (tcaps->hist == 0)
 	{
 		ft_strdel(&tcaps->cmd_inprogress);
-		tcaps->cmd_inprogress = s_strdup(*entry, __FILE__);//pas de leaks ?
+		tcaps->cmd_inprogress = s_strdup(*entry, __FILE__);
 	}
 	else if (tcaps->hist == 1)
 	{

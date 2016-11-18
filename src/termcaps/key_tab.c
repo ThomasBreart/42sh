@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/22 16:42:20 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/27 19:09:22 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:44:48 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,8 @@ static int	check_bins_or_path(char **word, char **part_match)
 {
 	DIR			*dir;
 	char		**tab_path;
-//	t_historic	*termcaps;
 	char		**tmp;
 
-//	termcaps = get_termcaps();
 	if (ft_strchr(*word, '/') != NULL)
 		return (check_files(word, part_match));
 	else

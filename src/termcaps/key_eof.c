@@ -6,26 +6,29 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 18:42:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:54:34 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 01:44:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		ft_key_eof(t_historic *termcaps, char **entry)
+static int	key_eof_llr(t_historic *termcaps, char **entry)
+{
+	if (*entry == NULL)
+	{
+		termcaps->llr_eof = 1;
+		return (0);
+	}
+	else
+		return (1);
+}
+
+int			ft_key_eof(t_historic *termcaps, char **entry)
 {
 	if (termcaps->select_mode == 1)
 		return (1);
 	if (termcaps->in_llr == 1)
-	{
-		if (*entry == NULL)
-		{
-			termcaps->llr_eof = 1;
-			return (0);
-		}
-		else
-			return (1);
-	}
+		return (key_eof_llr(termcaps, entry));
 	if (*entry == NULL && termcaps->bslash_split == NULL)
 		builtin_exit(NULL, NULL, NULL);
 	else if (*entry == NULL)
