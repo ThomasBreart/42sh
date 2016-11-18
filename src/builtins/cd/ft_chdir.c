@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 13:28:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/12 13:31:58 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/18 16:24:58 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int			ft_chdir(char **argv, char ***env)
 	update_pwd(env);
 	pwd = ft_getenv("PWD", *env);
 	if (0 != chdir(path))
+	{
+		ft_strdel(&pwd);
 		return (print_error_cd(path));
+	}
 	update_oldpwd(env);
 	if (option && !ft_strcmp(option, "-L"))
 	{
@@ -52,5 +55,6 @@ int			ft_chdir(char **argv, char ***env)
 		return (1);
 	}
 	update_pwd(env);
+	ft_strdel(&pwd);
 	return (1);
 }
