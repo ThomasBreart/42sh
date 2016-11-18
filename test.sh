@@ -441,6 +441,9 @@ check_diff ${SHCSH}
 COMMAND="setenv 1 2 3 4"
 check_diff ${SHCSH}
 
+COMMAND="setenv 1plop coco"
+check_diff ${SHCSH}
+
 COMMAND="setenv coucou=truc USER=truc truc=bidule"
 check_diff ${SHCSH}
 
@@ -448,8 +451,10 @@ COMMAND="setenv coucou=\"test\""
 check_diff ${SHCSH}
 
 COMMAND="setenv 0=\"test\""
-BEHAVIOR="setenv: Variable name must contain alphanumeric characters."
-check_good_behavior
+check_diff ${SHCSH}
+
+# BEHAVIOR="setenv: Variable name must contain alphanumeric characters."
+# check_good_behavior
 
 printf "\n"
 

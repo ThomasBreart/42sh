@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 04:26:43 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/11 04:26:47 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 14:59:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	**s_tabjoin(char **tab1, char **tab2, const char *filename)
 
 	tab1_len = ft_tablen(tab1);
 	tab2_len = ft_tablen(tab2);
-	new_tab = (char**)s_memalloc(sizeof(char*) * (tab1_len + tab2_len + 1), filename);
+	new_tab = (char**)s_memalloc(sizeof(char*) *
+			(tab1_len + tab2_len + 1), filename);
 	i = 0;
 	while (i < tab1_len)
 	{

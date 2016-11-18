@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 01:05:10 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 15:30:41 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
-
-#include <stdio.h>
-
 
 # define SUBCMD_BACKQUOTE	1
 # define SUBCMD_DOLLAR		2
@@ -66,37 +63,40 @@
 # include "termcaps.h"
 # include "redirs.h"
 
-char	*goto_next_char(char *str, char c);
-char		*add_str_in_str(char *dest, char *src, int position);
-int		check_event_designators(char **entryr);
-int		cmd_is_open(char *str, int *end_backslash);
-int		open_chars_error(t_historic *tcaps, char error);
-char	*find_full_cmd(char *s, t_historic *termcaps);
-char	*goto_next_quote(char *str);
-char	*goto_next_backquote(char *str);
-char	*goto_next_parenthesis(char *str);
-char	*goto_next_word(char *str, char c);
-char	**realloc_tab(char **oldtab, int *maxlen, const char *filename);
-void	remove_quoting_chars(t_list *elem);
-void	update_elem(t_list *elem, int change_argv);
-int		exec_subshell(t_list *elem);
-int		extract_event(char **str, int start_analysis, int *start_subcmd, char **sub_cmd);
-int		extract_subcmd(char **str, int start_analysis, int *start_subcmd, char **sub_cmd);
-void		remove_onelvl_escape_backslash(char **str);
-int		exec_backquotes(char **str);
-t_save_fd	*get_set_save_fd(t_save_fd *save);
-void		show_list(t_list *first);
-void		handler_sigint(int numsig);
-void	handler_sigcont(int numsig);
-void	handler_sigtstp(int numsig);
-void	handler_sigwinch(int numsig);
-int		exec_token(t_list *elem, char ***env, t_save_fd *save);
-int		check_word_and_subsh(t_list *first);
+char				*goto_next_char(char *str, char c);
+char				*add_str_in_str(char *dest, char *src, int position);
+int					check_event_designators(char **entryr);
+int					cmd_is_open(char *str, int *end_backslash);
+int					open_chars_error(t_historic *tcaps, char error);
+char				*find_full_cmd(char *s, t_historic *termcaps);
+char				*goto_next_quote(char *str);
+char				*goto_next_backquote(char *str);
+char				*goto_next_parenthesis(char *str);
+char				*goto_next_word(char *str, char c);
+char				**realloc_tab(char **oldtab, int *maxlen,
+					const char *filename);
+void				remove_quoting_chars(t_list *elem);
+void				update_elem(t_list *elem, int change_argv);
+int					exec_subshell(t_list *elem);
+int					extract_event(char **str, int start_analysis,
+					int *start_subcmd, char **sub_cmd);
+int					extract_subcmd(char **str, int start_analysis,
+					int *start_subcmd, char **sub_cmd);
+void				remove_onelvl_escape_backslash(char **str);
+int					exec_backquotes(char **str);
+t_save_fd			*get_set_save_fd(t_save_fd *save);
+void				show_list(t_list *first);
+void				handler_sigint(int numsig);
+void				handler_sigcont(int numsig);
+void				handler_sigtstp(int numsig);
+void				handler_sigwinch(int numsig);
+int					exec_token(t_list *elem, char ***env, t_save_fd *save);
+int					check_word_and_subsh(t_list *first);
 
 /*
 **	check_backquotes.c
 */
-void	check_backquotes(t_list **first);
+void				check_backquotes(t_list **first);
 
 /*
 **	clean.c
@@ -259,7 +259,7 @@ void				free_memory(char **entry, t_historic *termcaps,
 **	manage_historic.c
 */
 void				add_historic(t_historic *termcaps, char **entry,
-																int check_max, int new);
+					int check_max, int new);
 void				save_historic_file(t_historic *termcaps, int flag_a);
 
 /*

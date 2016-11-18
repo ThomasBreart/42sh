@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_setenv.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:13:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:32:32 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 14:51:51 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,18 @@ static int	setenv_check_errors(char **argv, int forced)
 		ft_putendl_fd("setenv: Too many arguments.", STDERR_FILENO);
 		return (-1);
 	}
-	while (argv[1][++i])
+	while (argv[1] && argv[1][++i])
 	{
-		if (!ft_isalnum(argv[1][i]) && !forced)
+		if (0 == i && !ft_isalpha(argv[1][i]) && !forced)
 		{
-			if (0 == i)
-				ft_putendl_fd("setenv: Variable name must begin with a letter.",
-						STDERR_FILENO);
-			else
-			{
-				ft_putstr_fd("setenv: Variable name must ", STDERR_FILENO);
-				ft_putendl_fd("contain alphanumeric characters.",
-						STDERR_FILENO);
-			}
+			ft_putendl_fd("setenv: Variable name must begin with a letter.",
+				STDERR_FILENO);
+			return (-1);
+		}
+		else if (!ft_isalnum(argv[1][i]) && !forced)
+		{
+			ft_putstr_fd("setenv: Variable name must ", STDERR_FILENO);
+			ft_putendl_fd("contain alphanumeric characters.", STDERR_FILENO);
 			return (-1);
 		}
 	}

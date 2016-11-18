@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:56:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 01:56:52 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/18 15:25:33 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_func_tab
 	int			(*f)(t_historic *hist, char **entry);
 }				t_func_tab;
 
-int		cmd_is_open_error(char error);
+int				cmd_is_open_error(char error);
 
 /*
 **	calculation_parenthesis.c
