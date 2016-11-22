@@ -863,6 +863,15 @@ check_diff ${SHCSH}
 COMMAND='setenv E "*"; echo $E'
 check_diff ${SHCSH}
 
+COMMAND='/bin/*ls'
+check_diff ${SHBASH}
+
+COMMAND='/bin/*ash'
+check_diff ${SHBASH}
+
+COMMAND='/bin/ech* this is an echo and * test'
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS BACK QUOTES===#

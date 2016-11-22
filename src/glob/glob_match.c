@@ -20,7 +20,7 @@ static int		match_wildcard2(char **s, char **pattern, char **tmp)
 		(*pattern)++;
 	if (!**pattern)
 		return (1);
-	*tmp = (char*)s;
+	*tmp = *s;
 	return (0);
 }
 
@@ -36,7 +36,7 @@ static int		match_wildcard(t_globinfo *g, char *s, char *pattern,
 		return (glob__open_directory(*g, pattern + 1, results));
 	else if (*pattern != '[' && *pattern != ']' && *pattern != '?')
 	{
-		while ((occur = strchr(tmp, *pattern)))
+		while ((occur = ft_strchr(tmp, *pattern)))
 		{
 			if (glob__match(g, occur, pattern, results))
 				return (1);

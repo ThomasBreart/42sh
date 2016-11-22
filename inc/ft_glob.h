@@ -2,14 +2,12 @@
 # define FT_GLOB_H
 # include "../lib/libft/includes/libft.h"
 # include <ft_21sh.h>
-//# include <structs.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <dirent.h>
 # include <unistd.h>
 
-# define DEBUG
 # define GLOB_CASE 1
 # define GLOB_HIDE 2
 
