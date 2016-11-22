@@ -41,23 +41,19 @@ static int		match_bracket_types2(char *pattern, int c)
 
 static int		match_bracket_types(char **pattern, int c)
 {
-	int		ret;
 	int		ok;
 
 	*pattern += 2;
 	ok = match_bracket_types2(*pattern, c);
-	ret = 1;
 	if (ok == -1 &&
 		!ft_strncmp("xdigit:]", *pattern, 8))
 	{
-		ret = ft_isxdigit(c);
+		ok = ft_isxdigit(c);
 		(*pattern)++;
 	}
-	else
-		ret = ok;
-	if (ret)
-		*pattern += 7;
-	return (ret);
+	if (ok != -1)
+		*pattern += 6;
+	return (ok);
 }
 
 int				match_bracket(t_globinfo *g, char *s, char *pattern,
