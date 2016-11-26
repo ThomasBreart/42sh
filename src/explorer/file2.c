@@ -12,33 +12,6 @@
 
 #include <explorer.h>
 
-int				navig_input(int *page, int *y, int n)
-{
-	int	in;
-
-	in = 0;
-	read(0, &in, 4);
-	if (in == KEY_UP)
-	{
-		write(1, "\033[2D  \033[2D", 10);
-		(*y)--;
-	}
-	else if (in == KEY_DOWN)
-	{
-		write(1, "\033[2D  \033[2D", 10);
-		(*y)++;
-	}
-	else if (in == KEY_LEFT)
-		(*page)--;
-	else if (in == KEY_RIGHT)
-		(*page)++;
-	if (*y >= n)
-		*y = 0;
-	else if (*y < 0)
-		*y = n - 1;
-	return (in);
-}
-
 int				get_nbfile(t_file *root)
 {
 	int	n;
@@ -52,11 +25,38 @@ int				get_nbfile(t_file *root)
 	return (n);
 }
 
-t_file			*get_file(t_file *root, int n)
+t_file			*go_page(t_file *root, int n_page, int row)
 {
-	while (root && n--)
+	int			cur;
+	int			page;
+
+	cur = 0;
+	page = 0;
+	while (root && page < n_page)
+	{
+		if (cur >= row - 2)
+		{
+			cur = 0;
+			page++;
+		}
+		printf("%s\n", root->p.name);
+		root = root->next;
+		cur++;
+	}
+	sleep(1);
+	return (root);
+}
+
+t_file			*get_file(t_file *root, t_args *a, t_historic *t)
+{
+	int			cur;
+
+	cur = a->y;
+	root = go_page(root, a->page, t->ws.ws_row);
+	while (root && cur--)
 		root = root->next;
 	return (root);
+	(void)t;
 }
 
 void			print_at(int fd, int n)

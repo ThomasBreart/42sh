@@ -103,7 +103,7 @@ int		builtin_unsetenv(char **argv, char ***env);
 /*
 **	builtin_explorer
 */
-int		builtin_explorer(t_historic *t);
+int		builtin_explorer(t_historic *t, char ***env);
 int		builtin_glob(char **argv);
 
 #endif

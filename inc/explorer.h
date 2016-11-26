@@ -118,17 +118,13 @@ typedef struct			s_file
 typedef struct			s_args
 {
 	int					page;
-	int					new_page;
+	int					n_pages;
 	int					n;
-	int					in;
 	int					y;
-	int					pages;
-	char				*path;
-	int					mask;
+	int					n_item;
 	int					offset[6];
-	t_map				*colormap;
-	char				**typemap;
-	int					ret;
+	char				***env;
+	int					mask;
 }						t_args;
 
 /*
@@ -144,25 +140,23 @@ void		addfile(t_file **f, t_file *add, int rev);
 /*
 **			explorer.c
 */
-void		start(t_historic *t);
-int			builtin_explorer(t_historic *t_historic);
-void		no_name(int fd, t_args *arg, t_historic *t, t_file *f);
+int			builtin_explorer(t_historic *t, char ***env);
+void		set_args(t_file *root, t_args *arg, t_historic *t);
+
 
 /*
 **			file.c
 */
-t_file		*new_file(t_args *a, char *path, char *name);
+t_file		*new_file(t_args *a, char *name);
 t_file		*ft_open(t_args *a, char *dn);
 void		del(t_file **f);
 
 /*
 **			file2.c
 */
-int			navig_input(int *page, int *y, int n);
 int			get_nbfile(t_file *root);
 void		print_at(int fd, int n);
-t_file		*get_file(t_file *root, int n);
-void		print_choose(int fd, int cur, int mode);
+t_file		*get_file(t_file *root, t_args *a, t_historic *t);
 
 /*
 **			initialize.c
@@ -178,10 +172,7 @@ int			ls(t_historic *t, t_args *arg);
 /*
 **			opts.c
 */
-int			reset_pages(int y, t_historic *t, t_args *arg);
-t_file		*do_input(t_historic *t, t_file *f, t_args *arg, char **path);
 int			skip_pages(struct winsize *ws, int *cur, t_file **ptr, t_args *a);
-
 
 /*
 **			print.c
@@ -195,12 +186,33 @@ void		print_type(mode_t mode, int fd);
 void		print_spec(mode_t mode, int fd);
 
 /*
-**			tools.c
-*/
-char		*set_filename(char *s1, char *s2, int add_sep);	
-void		parcours(int fd, struct winsize *ws, t_args *a, t_file *f);
+**			print_files.c
+*/	
+void		print_files(int fd, struct winsize *ws, t_args *a, t_file *f);
 void		print_offset(int offset, int c, int fd);
+char		*set_filename(char *s1, char *s2, int add_sep);
+int			prepare(t_args *a, t_file *root);
 
+/*
+**			extern
+*/
+int			builtin_cd(char **args, char ***env);
+int			recalc_need_size(void *na, void *nf);
+int			can_drawing(struct winsize *ws);
 
+/*
+**			inputs.c
+*/
+void		mykey_up(t_historic *t, t_args *arg);
+void		mykey_down(t_historic *t, t_args *arg);
+void		mykey_left(t_args *arg);
+void		mykey_right(t_args *arg);
+void		mykey_cd(int in, t_historic *t, t_args *arg, t_file **root);
 
+/*
+**			Change directory
+*/
+void		call_cd(char *path, char ***env);
+int			open_folder(t_historic *t, t_file **root, t_args *arg);
+void		open_parent_folder(t_file **root, t_args *arg);
 #endif

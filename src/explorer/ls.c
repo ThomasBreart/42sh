@@ -12,84 +12,90 @@
 
 #include <explorer.h>
 
-int				setoutput(int fd, int x_max, char *path, t_file *f)
+static void			print_cursor(t_args *arg, struct winsize ws)
 {
-	int			in;
-	int			cur;
+	int			n;
 
-	cur = 1;
-	in = 0;
-	write(fd, "\033[u", 3);
-	print_at(fd, x_max);
-	write(fd, "\033[s", 3);
-	while (in != '\n' && in != '\e' && read(0, &in, 4))
+	if (!can_drawing(&ws))
+		return ;
+	n = 0;
+	write(1, "\033[u", 3);
+	write(1, "\033[B", 3);
+	while (n < arg->y)
 	{
-		cur += (in == KEY_RIGHT || in == KEY_LEFT);
-		if (in != '\n' && in != '\e')
-			in = 0;
+		write(1, "  ", 2);
+		write(1, "\033[B", 3);
+		write(1, "\033[2D", 4);
+		n++;
 	}
-	if (in == '\n')
+	write(1, "(>", 2);
+	write(1, "\033[B", 3);
+	write(1, "\033[2D", 4);
+	while (n < ws.ws_row)
 	{
-		write(fd, "\033c", 2);
-		write(fd, path, ft_strlen(path));
-		write(fd, f->p.name, f->p.len_name);
-		write(fd, "\n", 1);
-		return (1);
+		write(1, "  ", 2);
+		write(1, "\033[B", 3);
+		write(1, "\033[2D", 4);
+		n++;
 	}
-	return (0);
+	write(1, "\033[u", 3);
 }
 
-t_file			*navigation(t_historic *t, char **path, t_args *arg, t_file *f)
+static void			inputs(int in, t_historic *t, t_args *arg, t_file **root)
 {
-	int		in;
-	int		fd;
+	if (in == KEY_DOWN)
+		mykey_down(t, arg);
+	else if (in == KEY_UP)
+		mykey_up(t, arg);
+	else if (in == 127 || in == '\n')
+		mykey_cd(in, t, arg, root);
+	else if (in == KEY_LEFT)
+		mykey_left(arg);
+	else if (in == KEY_RIGHT)
+		mykey_right(arg);
+}
 
-	fd = 1;
-	while ((in = navig_input(&arg->page, &arg->y, arg->n)) != '\e')
+static void			navigation(t_historic *t, t_args *arg, t_file *root)
+{
+	int			in;
+
+	in = 0;
+	while (t->in_explorer)
 	{
-		arg->y = reset_pages(arg->y, t, arg);
-		arg->in = in;
-		if (in == '\n' || in == 127)
-			f = do_input(t, f, arg, path);
-		else if (in == ' ')
+		read(0, &in, 4);
+		if (in == '\e')
+			t->in_explorer = 0;
+		if (can_drawing(&t->ws))
 		{
-			if (setoutput(fd, t->ws.ws_row - 1, *path, get_file(f, arg->y)))
-			{
-				del(&f);
-				ft_memdel((void**)path);
-				return (NULL);
-			}
-			arg->new_page = -1;
+			arg->n_pages = arg->n / (t->ws.ws_row - 2);
+			if (arg->n_pages == 0)
+				arg->n_pages = 1;
+			inputs(in, t, arg, &root);
+			print_files(1, &t->ws, arg, root);
+			print_cursor(arg, t->ws);
 		}
-		no_name(fd, arg, t, f);
+		in = 0;
 	}
-	return (f);
+	del(&root);
 }
 
 int				ls(t_historic *t, t_args *arg)
 {
-	char	*path;
-	char	*new_path;
-	t_file	*root;
 	int		fd;
+	t_file	*root;
 
 	fd = 1;
-	path = ft_strdup(arg->path);
-	new_path = set_filename("\0", path, 1);
-	root = ft_open(arg, new_path);
+	root = ft_open(arg, ".");
+	while (t->in_explorer && t->ws.ws_row <= 2)
+	{
+		can_drawing(&t->ws);
+	}	
+	set_args(root, arg, t);
 	write(fd, "\033c", 2);
 	write(fd, "\033[s", 3);
-	arg->page = 0;
-	arg->n = get_nbfile(root);
-	arg->pages = arg->n / (t->ws.ws_row - 2);
-	parcours(fd, &t->ws, arg, root);
-	write(fd, "\033[u", 3);
-	print_at(fd, 1);
-	arg->new_page = 0;
-	root = navigation(t, &new_path, arg, root);
-	del(&root);
-	free(path);
-	free(new_path);
+	print_files(fd, &t->ws, arg, root);
+	print_cursor(arg, t->ws);
+	navigation(t, arg, root);
 	write(fd, "\033c", 2);
 	return (0);
 }

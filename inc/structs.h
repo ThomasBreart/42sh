@@ -70,6 +70,8 @@ typedef struct		s_historic
 	int				hist;
 	char			**entry;
 	int				in_getcmd;
+	int				in_explorer: 1;
+	int				need_size;
 	struct winsize	ws;
 	char			*name_term;
 	struct termios	term;

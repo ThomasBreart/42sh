@@ -12,52 +12,38 @@
 
 #include <explorer.h>
 
-void			no_name(int fd, t_args *arg, t_historic *t, t_file *f)
+void			set_args(t_file *root, t_args *arg, t_historic *t)
 {
-	if (arg->new_page != arg->page)
-	{
-		arg->new_page = arg->page;
-		write(fd, "\033c", 2);
-		write(fd, "\033[s", 3);
-		parcours(fd, &t->ws, arg, f);
-	}
-	write(fd, "\033[u", 3);
-	print_at(fd, arg->y + 1);
+	arg->page = 0;
+	arg->n = get_nbfile(root);
+	if (t->ws.ws_row >= 3)
+		arg->n_pages = arg->n / (t->ws.ws_row - 2);
+	if (arg->n_pages == 0)
+		arg->n_pages = 1;
+	arg->y = 0;
 }
 
-static void		set_rawmode(struct termios *termios_p)
+static void		start(void)
 {
-	termios_p->c_lflag &= ~(ECHO | ICANON);
-	termios_p->c_cflag |= CS8;
-	termios_p->c_cc[VMIN] = 1;
-	termios_p->c_cc[VTIME] = 0;
-}
-
-void			start(t_historic *t)
-{
-	tcgetattr(0, &t->save);
-	tcgetattr(0, &t->term);
-	set_rawmode(&t->term);
 	tputs(tgetstr("cl", NULL), 1, ft_outc);
 	tputs(tgetstr("ti", NULL), 1, ft_outc);
 	tputs(tgetstr("vi", NULL), 1, ft_outc);
-	tcsetattr(0, 0, &t->term);
 }
 
-int				builtin_explorer(t_historic *t)
+int				builtin_explorer(t_historic *t, char ***env)
 {
 	t_args	a;
 	char	tabl[1024];
 
+	t->in_explorer = 1;
+	write(1, "\033[s", 3);
 	ft_bzero(&a, sizeof(t_args));
 	getcwd(tabl, sizeof(char) * 1024);
-	a.path = ft_strdup(tabl);
-	start(t);
+	a.env = env;
+	start();
 	ls(t, &a);
 	tputs(tgetstr("te", NULL), 1, ft_outc);
 	tputs(tgetstr("ve", NULL), 1, ft_outc);
-	tcsetattr(0, 0, &t->save);
-	chdir(a.path);
-	free(a.path);
+	t->in_explorer = 0;
 	return (1);
 }

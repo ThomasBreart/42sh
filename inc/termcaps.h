@@ -209,4 +209,9 @@ void			erase_cmd(int col_sup, t_historic *termcaps);
 int				ft_outc(int c);
 void			set_cur_end(t_historic *termcaps, char *entry);
 
+/*
+**	explorer debug
+*/
+int				recalc_need_size(void *na, void *nf);
+
 #endif

@@ -12,19 +12,16 @@
 
 #include <explorer.h>
 
-t_file		*new_file(t_args *a, char *path, char *name)
+t_file		*new_file(t_args *a, char *filename)
 {
 	t_file	*file;
-	char	*tmp;
 
-	tmp = set_filename(path, name, 0);
-	if ((file = (t_file*)malloc(sizeof(t_file))))
+	if ((file = (t_file*)ft_memalloc(sizeof(t_file))))
 	{
 		file->next = NULL;
-		lstat(tmp, &file->s);
-		init_print(name, &file->s, a->mask, &file->p);
+		lstat(filename, &file->s);
+		init_print(filename, &file->s, a->mask, &file->p);
 	}
-	free(tmp);
 	return (file);
 }
 
@@ -59,8 +56,9 @@ t_file		*ft_open(t_args *a, char *dn)
 	if ((d = opendir(dn)))
 	{
 		while ((e = readdir(d)))
-			addfile(&file, new_file(a, dn, e->d_name), 1);
+			addfile(&file, new_file(a, e->d_name), 1);
 		closedir(d);
+		recalc_need_size(a, file);
 	}
 	return (file);
 }

@@ -69,7 +69,7 @@ static void		build_offset(int *off, t_print *p)
 		off[5] = offset;
 }
 
-static int		prepare(t_args *a, t_file *root)
+int				prepare(t_args *a, t_file *root)
 {
 	int		*off;
 	int		cmpt;
@@ -86,23 +86,28 @@ static int		prepare(t_args *a, t_file *root)
 	return (cmpt);
 }
 
-void			parcours(int fd, struct winsize *ws, t_args *a, t_file *f)
+void			print_files(int fd, struct winsize *ws, t_args *a, t_file *f)
 {
 	int		blks;
 	int		cur;
 	int		page;
 
+	if (!can_drawing(ws))
+		return ;
 	cur = 0;
 	blks = prepare(a, f);
+	write(1, "\033c", 2);
+	write(1, "\033[u", 3);
 	page = skip_pages(ws, &cur, &f, a);
+	cur = 0;
 	if (f)
 	{
 		write(fd, "  total ", 8);
 		ft_putnbr_fd(blks, fd);
 		write(fd, "  page[", 7);
-		ft_putnbr_fd(page, fd);
+		ft_putnbr_fd(page + 1, fd);
 		write(fd, "/", 1);
-		ft_putnbr_fd(a->pages, fd);
+		ft_putnbr_fd(a->n_pages, fd);
 		write(fd, "]\n", 2);
 	}
 	while (f && cur < ws->ws_row - 2)

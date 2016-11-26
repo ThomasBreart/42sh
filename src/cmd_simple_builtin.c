@@ -61,7 +61,7 @@ static int	cmd_simple_builtin2(t_list *elem, char ***env, t_save_fd *save)
 	else if (ft_strcmp("glob", elem->content) == 0)
 		ret = builtin_glob(elem->argv);
 	else if (ft_strcmp("explorer", elem->content) == 0)
-		ret = builtin_explorer(get_termcaps());
+		ret = builtin_explorer(get_termcaps(), env);
 	else
 		return (-1);
 	return (ret);

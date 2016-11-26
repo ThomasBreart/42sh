@@ -15,28 +15,31 @@
 int		builtin_glob(char **argv)
 {
 	static int	flag = 0;
+	int			i;
+	int			j;
 
+	i = 1;
 	if (!argv)
 		return (flag);
-	while (*argv)
+	while (argv[i])
 	{
-		if (**argv == '-')
+		if (argv[i][0] == '-')
 		{
-			(*argv)++;
-			while (**argv)
+			j = 1;
+			while (argv[i][j])
 			{
-				if (**argv == 'c')
+				if (argv[i][j] == 'c')
 					flag |= GLOB_CASE;
-				else if (**argv == 'h')
+				else if (argv[i][j] == 'h')
 					flag |= GLOB_HIDE;
-				else if (**argv == 'r')
+				else if (argv[i][j] == 'r')
 					flag = 0;
 				else
 					return (0);
-				(*argv)++;
+				j++;
 			}
 		}
-		argv++;
+		i++;
 	}
 	return (flag);
 }
