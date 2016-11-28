@@ -53,6 +53,8 @@ int						ft_glob2(char *pattern, t_globinfo gi, t_list **res)
 		}
 		return (0);
 	}
+	free(ps->content);
+	free(ps);
 	return (-1);
 }
 
