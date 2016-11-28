@@ -86,6 +86,8 @@ int				ls(t_historic *t, t_args *arg)
 
 	fd = 1;
 	root = ft_open(arg, ".");
+	if (!root)
+		return (1);
 	while (t->in_explorer && t->ws.ws_row <= 2)
 	{
 		can_drawing(&t->ws);

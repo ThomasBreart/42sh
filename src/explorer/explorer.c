@@ -34,6 +34,7 @@ int				builtin_explorer(t_historic *t, char ***env)
 {
 	t_args	a;
 	char	tabl[1024];
+	int		ret;
 
 	t->in_explorer = 1;
 	write(1, "\033[s", 3);
@@ -41,9 +42,11 @@ int				builtin_explorer(t_historic *t, char ***env)
 	getcwd(tabl, sizeof(char) * 1024);
 	a.env = env;
 	start();
-	ls(t, &a);
+	ret = ls(t, &a);
 	tputs(tgetstr("te", NULL), 1, ft_outc);
 	tputs(tgetstr("ve", NULL), 1, ft_outc);
+	if (ret)
+		write(2, ".: Permission denied.\n", 22);
 	t->in_explorer = 0;
-	return (1);
+	return (ret);
 }
