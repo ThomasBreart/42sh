@@ -101,15 +101,7 @@ void			print_files(int fd, struct winsize *ws, t_args *a, t_file *f)
 	page = skip_pages(ws, &cur, &f, a);
 	cur = 0;
 	if (f)
-	{
-		write(fd, "  total ", 8);
-		ft_putnbr_fd(blks, fd);
-		write(fd, "  page[", 7);
-		ft_putnbr_fd(page + 1, fd);
-		write(fd, "/", 1);
-		ft_putnbr_fd(a->n_pages, fd);
-		write(fd, "]\n", 2);
-	}
+		print_header(blks, page, a, 1);
 	while (f && cur < ws->ws_row - 2)
 	{
 		write(fd, "   ", 3);

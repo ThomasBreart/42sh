@@ -27,7 +27,7 @@ int				get_offset(int offsets[6], t_file *f)
 {
 	int			offset;
 
-	offset = 3 + 10 + 6 + 12;
+	offset = 3 + 10 + 1 + 1 + 2 + 2 + 1 + 12 + 1;
 	offset += offsets[0] + offsets[1] + offsets[2] +
 			offsets[3] + offsets[4] + offsets[5];
 	offset += f->p.len_name + f->p.len_nlink + f->p.len_usr + f->p.len_grp;
@@ -49,7 +49,7 @@ int				get_need_size(t_args *a, t_file *root)
 			max = offset;
 		root = root->next;
 	}
-	return (offset);
+	return (max);
 }
 
 int				recalc_need_size(void *na, void *nf)

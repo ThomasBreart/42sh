@@ -184,6 +184,7 @@ void		print_stat(t_args *a, t_print *f, int fd);
 */
 void		print_type(mode_t mode, int fd);
 void		print_spec(mode_t mode, int fd);
+void		print_header(int blks, int page, t_args *a, int fd);
 
 /*
 **			print_files.c

@@ -74,19 +74,9 @@ void	print_map(t_print *f, t_args *a, int fd)
 
 void	print_stat_bis(int offset, t_args *a, t_print *f, int fd)
 {
-	char	*buf;
-
-	buf = f->lnk;
 	print_offset(offset, ' ', fd);
 	print_map(f, a, fd);
-	if ((f->mode & S_IFMT) == S_IFLNK)
-	{
-		write(fd, f->name, f->len_name);
-		write(fd, "\033[m -> ", 7);
-		write(fd, buf, ft_strlen(buf));
-	}
-	else
-		write(fd, f->name, f->len_name);
+	write(fd, f->name, f->len_name);
 	write(fd, "\033[m\n", 4);
 }
 

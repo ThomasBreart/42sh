@@ -41,3 +41,14 @@ void	print_spec(mode_t mode, int fd)
 	else
 		write(fd, "-", 1);
 }
+
+void	print_header(int blks, int page, t_args *a, int fd)
+{
+	write(fd, "  total ", 8);
+	ft_putnbr_fd(blks, fd);
+	write(fd, "  page[", 7);
+	ft_putnbr_fd(page + 1, fd);
+	write(fd, "/", 1);
+	ft_putnbr_fd(a->n_pages, fd);
+	write(fd, "]\n", 2);
+}
