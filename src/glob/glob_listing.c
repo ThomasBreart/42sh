@@ -12,33 +12,6 @@
 
 #include <ft_glob.h>
 
-static void			glob__list_adding(t_list **lst, char *s, int (*cmp)())
-{
-	t_list				*tmp;
-	t_list				*add;
-	t_list				*last;
-
-	add = NULL;
-	last = NULL;
-	tmp = *lst;
-	if (tmp)
-	{
-		while (tmp && !((*cmp)(s, tmp->content) <= 0))
-		{
-			last = tmp;
-			tmp = tmp->next;
-		}
-		add = ft_lstnew_noalloc(s, ft_strlen(s) + 1);
-		add->next = tmp;
-		if (last)
-			last->next = add;
-		else
-			*lst = add;
-	}
-	else
-		*lst = ft_lstnew_noalloc(s, ft_strlen(s) + 1);
-}
-
 static char			*create_fullpath2(char *local, char *name, int j)
 {
 	char			*path;
@@ -97,6 +70,20 @@ static void			glob__correct_pattern(char **name)
 	}
 }
 
+static void			glob__process(char *name, t_list **matches, t_globinfo g, 
+									char *pattern)
+{
+	g.name = ft_strjoin(g.path, name);
+	g.local = g.name;
+	if (can_continue(g.flags, name, pattern) &&
+		glob__match(&g, name, pattern, matches))
+		glob__list_adding(matches, g.name,
+			!g.flags & GLOB_CASE ? &ft_strcmp : &ft_strcasecmp,
+			g.origin_pattern);
+	else
+		free(g.name);
+}
+
 int					glob__open_directory(t_globinfo g, char *pattern,
 					t_list **results)
 {
@@ -105,21 +92,13 @@ int					glob__open_directory(t_globinfo g, char *pattern,
 	struct dirent	*entry;
 
 	matches = NULL;
+	g.origin_pattern = pattern;
 	g.path = glob__get_path(g.local, pattern);
 	glob__correct_pattern(&pattern);
 	if ((rep = opendir(g.path)))
 	{
 		while ((entry = readdir(rep)))
-		{
-			g.name = ft_strjoin(g.path, entry->d_name);
-			g.local = g.name;
-			if (can_continue(g.flags, entry->d_name, pattern) &&
-				glob__match(&g, entry->d_name, pattern, &matches))
-				glob__list_adding(&matches, g.name,
-				!g.flags & GLOB_CASE ? &ft_strcmp : &ft_strcasecmp);
-			else
-				free(g.name);
-		}
+			glob__process(entry->d_name, &matches, g, pattern);
 		closedir(rep);
 	}
 	free(g.path);

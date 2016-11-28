@@ -16,6 +16,7 @@ typedef struct		s_globinfo
 	char			*local;
 	char			*name;
 	char			*path;
+	char			*origin_pattern;
 	int				flags;
 }					t_globinfo;
 
@@ -53,6 +54,8 @@ int					match_bracket(t_globinfo *g, char *s, char *pattern,
 					t_list **results);
 int					glob__match(t_globinfo *g, char *filename, char *pattern, t_list **results);
 int					get_patterns(t_list **patterns, char *pattern);
+void				glob__list_adding(t_list **lst, char *s, int (*cmp)(),
+										char *pattern);
 int					glob_brace(t_list *first);
 
 /*
