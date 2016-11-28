@@ -860,7 +860,7 @@ check_diff ${SHBASH}
 COMMAND='setenv E ./\*; echo $E'
 check_diff ${SHCSH}
 
-COMMAND='setenv E "*"; echo $E'
+COMMAND='setenv E "./*"; echo $E'
 check_diff ${SHCSH}
 
 COMMAND='/bin/*ls'

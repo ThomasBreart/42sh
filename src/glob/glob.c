@@ -85,9 +85,11 @@ static int				need_globbing(char *arg)
 	quote = 0;
 	while (*arg)
 	{
-		if (*arg == '*' || *arg == '{' || *arg == '[' ||
-			*arg == '?')
-			return (1);
+		if (*arg == '\\')
+			arg++;
+		else if (*arg == '*' || *arg == '{' || *arg == '[' ||
+				*arg == '?')
+			return (1);	
 		else if (*arg == '\'' || *arg == '"')
 		{
 			quote = *arg;
@@ -95,7 +97,7 @@ static int				need_globbing(char *arg)
 			while (*arg != quote)
 				arg++;
 		}
-		arg++;
+		arg += !!*arg;
 	}
 	return (0);
 }
