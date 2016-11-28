@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 09:06:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/10/14 15:53:40 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/28 17:34:41 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		exec_subshell(t_list *elem)
 	}
 	else
 	{
+		ft_strdel(&new_entry);
 		waitpid(child_pid, &ret, 0);
 		if (WEXITSTATUS(ret) == 1)
 			return (1);
