@@ -81,23 +81,29 @@ static void			navigation(t_historic *t, t_args *arg, t_file *root)
 
 int				ls(t_historic *t, t_args *arg)
 {
-	int		fd;
 	t_file	*root;
+	int		input;
 
-	fd = 1;
 	root = ft_open(arg, ".");
 	if (!root)
 		return (1);
 	while (t->in_explorer && t->ws.ws_row <= 2)
 	{
 		can_drawing(&t->ws);
+		read(0, &input, 4);
+		if (input == '\e')
+		{
+			write(1, "\033c", 2);
+			return (0);
+		}
+		input = 0;
 	}	
 	set_args(root, arg, t);
-	write(fd, "\033c", 2);
-	write(fd, "\033[s", 3);
-	print_files(fd, &t->ws, arg, root);
+	write(1, "\033c", 2);
+	write(1, "\033[s", 3);
+	print_files(1, &t->ws, arg, root);
 	print_cursor(arg, t->ws);
 	navigation(t, arg, root);
-	write(fd, "\033c", 2);
+	write(1, "\033c", 2);
 	return (0);
 }
