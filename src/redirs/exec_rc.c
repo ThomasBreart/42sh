@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 03:26:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 01:32:28 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/30 19:42:38 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static	int	rc_file(t_list *elem, t_save_fd *save)
 	return (fd_tmp);
 }
 
-int			redir_file_rc(t_list *elem, t_save_fd *save)
+int			redir_file_rc(t_list *elem, t_save_fd *save, char **env)
 {
 	int		fd;
 
@@ -46,7 +46,15 @@ int			redir_file_rc(t_list *elem, t_save_fd *save)
 	if (elem->aggr_fd == 1)
 		fd = exec_aggregator_fd(elem->argv[0], save);
 	else
+	{
+		if (convert_metacharacters(elem, env) == 0)
+		{
+			ft_putendl_fd("42sh: ambiguous redirect", STDERR_FILENO);
+			return (-1);
+		}
+		remove_quoting_chars(elem);
 		fd = rc_file(elem, save);
+	}
 	return (fd);
 }
 
@@ -63,10 +71,10 @@ int			exec_rc(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 	check_fd_parent(elem->content, save);
 	if (elem->right->type == LEX_WORD)
 	{
-		if ((vars.fd_file = redir_file_rc(elem->right, save)) != -1)
+		if ((vars.fd_file = redir_file_rc(elem->right, save, *env)) != -1)
 			vars.ret = exec_simple(prog, env, save);
 	}
-	else if ((vars.fd_file = redir_file_rc(elem->right->left, save)) != -1)
+	else if ((vars.fd_file = redir_file_rc(elem->right->left, save, *env)) != -1)
 	{
 		if (is_a_redir(elem->right->type))
 		{
@@ -80,5 +88,5 @@ int			exec_rc(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 	if (elem->right->type != LEX_PIPE && vars.current->type == LEX_PIPE &&
 										vars.fd_file != -1 && vars.ret != -1)
 		vars.ret = cmd_pipe(vars.current, env, prog, save);
-	return (check_return_redirs(&vars));
+	return (check_return_redirs(&vars, env));
 }

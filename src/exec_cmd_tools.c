@@ -6,16 +6,19 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/03 13:43:56 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/05 05:54:07 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/30 19:42:35 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		check_return_redirs(t_vars_redirs *vars)
+int		check_return_redirs(t_vars_redirs *vars, char ***env)
 {
 	if (vars->fd_file == -1)
+	{
+		stock_ret_val_in_env(-1, env);
 		return (-1);
+	}
 	return (vars->ret);
 }
 

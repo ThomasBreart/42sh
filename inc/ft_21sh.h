@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 15:33:53 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/30 19:45:25 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void				handler_sigtstp(int numsig);
 void				handler_sigwinch(int numsig);
 int					exec_token(t_list *elem, char ***env, t_save_fd *save);
 int					check_word_and_subsh(t_list *first);
+void				stock_ret_val_in_env(int ret, char ***env);
 
 /*
 **	check_backquotes.c
@@ -190,7 +191,7 @@ int					exec_cmd(t_list *first, char ***env);
 /*
 **	exec_cmd_tools.c
 */
-int					check_return_redirs(t_vars_redirs *vars);
+int					check_return_redirs(t_vars_redirs *vars, char ***env);
 void				redirs_init(t_vars_redirs *vars, t_list *elem,
 																t_list **prog);
 int					save_fd(t_save_fd *save);

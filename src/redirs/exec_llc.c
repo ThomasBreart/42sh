@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 11:00:04 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 01:34:25 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/30 20:25:24 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ int			exec_llc(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 	if (elem->right->type != LEX_PIPE && vars.current->type == LEX_PIPE &&
 										vars.fd_file != -1 && vars.ret != -1)
 		vars.ret = cmd_pipe(vars.current, env, prog, save);
-	return (check_return_redirs(&vars));
+	return (check_return_redirs(&vars, env));
 }
