@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unsetenv.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 21:37:11 by tbreart           #+#    #+#             */
-/*   Updated: 2016/06/23 22:53:16 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/11/30 18:33:08 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static int	argv_env_match(char *name, char **argv)
+static int	argv_env_match(char *name, char **argv, int error)
 {
 	if (name == NULL)
 		return (-1);
@@ -20,7 +20,16 @@ static int	argv_env_match(char *name, char **argv)
 	{
 		if (ft_strncmp_complete(name, *argv,
 					len_before_thischar(name, '=')) == 0)
-			return (1);
+		{
+			if (ft_strcmp(*argv, "?") == 0)
+			{
+				if (error)
+					ft_putstr("42sh: read-only variable: ?\n");
+				return (-1);
+			}
+			else
+				return (1);
+		}
 		argv++;
 	}
 	return (-1);
@@ -34,7 +43,7 @@ static int	len_newenv(char **argv, char **env)
 	i = ft_tablen(env);
 	while (*env != NULL)
 	{
-		if (argv_env_match(*env, argv) == 1)
+		if (argv_env_match(*env, argv, 1) == 1)
 			i--;
 		env++;
 	}
@@ -50,7 +59,7 @@ static void	delete_vars(char **argv, char **env, char **newenv)
 	argv++;
 	while (*env != NULL)
 	{
-		if (argv_env_match(*env, argv) == -1)
+		if (argv_env_match(*env, argv, 0) == -1)
 		{
 			*newenv = s_strdup(*env, __FILE__);
 			newenv++;
