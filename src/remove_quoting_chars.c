@@ -38,9 +38,9 @@ static int		count_char_to_del(char *str)
 static char		*copy_in_quote(char *str, char *newstr, int *k)
 {
 	char	*tmp;
-	char	quote;
+//	char	quote;
 
-	quote = *str;
+//	quote = *str;
 	tmp = goto_next_quote(str);
 	++str;
 	while (str < tmp)

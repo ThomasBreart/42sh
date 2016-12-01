@@ -34,7 +34,7 @@ char					**glob__create_tab(t_list *results)
 	return (ret);
 }
 
-int						ft_glob2(char *pattern, t_globinfo gi, t_list **res)
+static int				ft_glob2(char *pattern, t_globinfo gi, t_list **res)
 {
 	t_list		*ps;
 	t_list		*next;
@@ -58,13 +58,29 @@ int						ft_glob2(char *pattern, t_globinfo gi, t_list **res)
 	return (-1);
 }
 
+static int				ft_glob0(const char *pattern, t_glob *gl)
+{
+	static int	cmpt = -1;
+
+	if (!gl)
+		cmpt = -1;
+	if (!pattern)
+		cmpt += (cmpt != -1);
+	return (cmpt);
+}
+
 int						ft_glob(const char *pattern, t_glob *gl)
 {
 	t_globinfo	g;
 	int			ret;
-	t_list		*lst;
+	int			tmp;
+	int			cmpt;
 
-	lst = gl->results;
+	cmpt = ft_glob0(pattern, gl);
+	if (!pattern || !gl)
+		return (0);
+	if (cmpt == -1)
+		cmpt = ft_lstcpt(gl->results);
 	g.local = NULL;
 	g.path = NULL;
 	g.name = NULL;
@@ -72,58 +88,9 @@ int						ft_glob(const char *pattern, t_glob *gl)
 	ret = ft_glob2((char*)pattern, g, &gl->results);
 	if (ret != -1)
 	{
-		if (lst == NULL)
-			ret = gl->results == NULL;
-		else
-			ret = (gl->results != lst);
+		tmp = ft_lstcpt(gl->results);
+		ret  = (cmpt != tmp);
+		cmpt = tmp;
 	}
 	return (ret);
-}
-
-static int				need_globbing(char *arg)
-{
-	int		quote;
-
-	quote = 0;
-	while (*arg)
-	{
-		if (*arg == '\\')
-			arg++;
-		else if (*arg == '*' || *arg == '{' || *arg == '[' ||
-				*arg == '?')
-			return (1);	
-		else if (*arg == '\'' || *arg == '"')
-		{
-			quote = *arg;
-			arg++;
-			while (*arg != quote)
-				arg++;
-		}
-		arg += !!*arg;
-	}
-	return (0);
-}
-
-void					do_globbing(char ***elem)
-{
-	char	**argv;
-	int		index;
-	t_glob	g;
-	int		n;
-
-	index = 0;
-	g.flags = builtin_glob(NULL);
-	g.results = NULL;
-	argv = *elem;
-	while (argv[index])
-	{
-		n = need_globbing(argv[index]);
-		if (!n || ft_glob(argv[index], &g))
-			ft_lstadd_end(&g.results,
-				ft_lstnew(argv[index], ft_strlen(argv[index]) + 1));
-		free(argv[index]);
-		index++;
-	}
-	free(*elem);
-	*elem = glob__create_tab(g.results);
 }
