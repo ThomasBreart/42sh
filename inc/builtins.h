@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 11:14:18 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/01 17:42:48 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		ft_chdir(char **av, char ***env);
 int		print_error_cd(char *str);
 void	update_oldpwd(char ***env);
 void	update_pwd(char ***env);
+char 	*get_symbolink_path(char ***env, char *path);
 
 /*
 **	builtin_env.c

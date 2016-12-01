@@ -370,7 +370,7 @@ check_diff ${SHCSH}
 
 COMMAND="cd ../../;echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
-
+# exit
 COMMAND="unsetenv PWD;echo \$PWD;cd ..;echo \$PWD"
 check_diff ${SHBASH} "unset PWD;echo \$PWD;cd ..;echo \$PWD"
 
@@ -386,15 +386,26 @@ check_diff ${SHBASH}
 COMMAND="cd ////; echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
 
-COMMAND="cd /../../../../../../ ; echo \$PWD; echo \$OLDPWD"
+COMMAND="cd /tmp/;pwd"
+check_diff ${SHBASH}
+
+COMMAND="cd -L /tmp/;pwd"
+check_diff ${SHBASH}
+
+COMMAND="cd -P /tmp/;pwd"
+check_diff ${SHBASH}
+
+COMMAND="cd ; cd goinfre ; pwd ; cd ..; pwd"
+check_diff ${SHBASH}
+
+COMMAND="cd ; cd -L goinfre ; pwd ; cd ..; pwd"
+check_diff ${SHBASH}
+
+COMMAND="cd ; cd -P goinfre ; pwd ; cd ..; pwd"
 check_diff ${SHBASH}
 
 COMMAND="cd ../../../../../../../../../ ; echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
-
-COMMAND="cd -P"
-check_diff ${SHBASH}
-
 
 printf "\n"
 
@@ -904,7 +915,7 @@ check_diff ${SHBASH}
 printf "\n"
 
 #===TESTS GLOBING===#
-printf "globbing: "
+printf "globing: "
 if [ $V == 1 ]
 then
 	printf "\n"
@@ -914,8 +925,7 @@ COMMAND="echo {/*,./*}"
 check_diff ${SHBASH}
 
 COMMAND="echo \* \[ \\"
-BEHAVIOR="\* \[ \\"
-check_good_behavior
+check_diff ${SHBASH}
 
 COMMAND="{} []"
 BEHAVIOR="{}: Command not found."
@@ -934,24 +944,6 @@ COMMAND='/bin/*ash'
 check_diff ${SHBASH}
 
 COMMAND='/bin/ech* this is an echo and * test'
-check_diff ${SHBASH}
-
-COMMAND='ls ? ? ? ? ? ?'
-check_diff ${SHBASH}
-
-COMMAND='echo a ? b * ./* c'
-check_diff ${SHBASH}
-
-COMMAND='touch a b c D E F ; echo [[:lower:]] ; rm a b c D E F'
-check_diff ${SHBASH}
-
-COMMAND='touch a b c D E F ; echo [[:upper:]] ; rm a b c D E F'
-check_diff ${SHBASH}
-
-COMMAND='touch ab Ab aB AB ; echo [[:lower:]][[:upper:]] ; rm ab Ab aB AB'
-check_diff ${SHBASH}
-
-COMMAND='touch ab Ab aB AB ; echo [[:lower:]]* ; rm ab Ab aB AB'
 check_diff ${SHBASH}
 
 printf "\n"
@@ -1092,6 +1084,9 @@ check_good_behavior
 COMMAND="<"
 BEHAVIOR="Invalid command."
 check_good_behavior
+
+COMMAND="ls \?"
+check_diff ${SHBASH}
 
 printf "\n\n"
 

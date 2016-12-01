@@ -6,55 +6,78 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 13:28:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/18 16:24:58 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/01 17:17:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-static void	symlink_handler(char ***env, char *pwd, char *path)
+static char		*get_pwd(void)
 {
-	char	**fake_arg;
-	char	*tmp;
+	char	*ret;
 
-	while (ft_strchr(path, '/'))
-	{
-		path = ft_strchr(path, '/');
-		path++;
-	}
-	pwd = ft_strjoin(pwd, "/");
-	tmp = pwd;
-	pwd = ft_strjoin(pwd, path);
-	fake_arg = fake_argv("PWD", pwd);
-	builtin_setenv(fake_arg, env, 0);
-	free_double_tab(fake_arg);
-	ft_strdel(&tmp);
+	if ((ret = getcwd(NULL, 0)) == NULL)
+		ret = s_strdup(".", __FILE__);
+	return (ret);
+}
+
+static void		update_pwd_and_oldpwd(char ***env, char *pwd)
+{
+	char	**tmp;
+	char	*oldpwd;
+
+	if (!pwd)
+		pwd = get_pwd();
+	oldpwd = ft_getenv("PWD", *env);
+	if (!oldpwd)
+		oldpwd = get_pwd();
+	tmp = fake_argv("PWD", pwd);
+	builtin_setenv(tmp, env, 0);
+	free_double_tab(tmp);
+	tmp = fake_argv("OLDPWD", oldpwd);
+	builtin_setenv(tmp, env, 0);
+	free_double_tab(tmp);
+	ft_strdel(&oldpwd);
 	ft_strdel(&pwd);
 }
 
-int			ft_chdir(char **argv, char ***env)
+static char		*get_path(char ***env, char *oldpath, char *option)
 {
-	char	*option;
 	char	*path;
-	char	*pwd;
 
-	path = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[2] : argv[1];
+	path = NULL;
+	if (!option || !ft_strcmp(option, "-L"))
+		path = get_symbolink_path(env, oldpath);
+	return (path);
+}
+
+static int		do_chdir(char *path, char *target)
+{
+	int		ret;
+
+	if (path)
+		ret = chdir(path);
+	else
+		ret = chdir(target);
+	if (ret != 0)
+	{
+		ft_strdel(&path);
+		return (print_error_cd(target));
+	}
+	return (0);
+}
+
+int				ft_chdir(char **argv, char ***env)
+{
+	char	*path;
+	char	*option;
+	char	*target;
+
+	target = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[2] : argv[1];
 	option = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[1] : NULL;
-	update_pwd(env);
-	pwd = ft_getenv("PWD", *env);
-	if (0 != chdir(path))
-	{
-		ft_strdel(&pwd);
-		return (print_error_cd(path));
-	}
-	update_oldpwd(env);
-	if (option && !ft_strcmp(option, "-L"))
-	{
-		symlink_handler(env, pwd, path);
-		ft_strdel(&pwd);
-		return (1);
-	}
-	update_pwd(env);
-	ft_strdel(&pwd);
+	path = get_path(env, target, option);
+	if (do_chdir(path, target) == -1)
+		return (-1);
+	update_pwd_and_oldpwd(env, path);
 	return (1);
 }
