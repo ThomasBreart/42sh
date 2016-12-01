@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/03 22:46:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:43:12 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 08:15:55 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,6 @@ static int	formatting_file(t_list *first)
 			if (ft_tablen(elem->next->argv) > 1)
 			{
 				ft_putendl_fd("file bad formatted", STDERR_FILENO);
-				while (first)
-				{
-					del_tlist(first);
-					first = first->next;
-				}
 				return (-1);
 			}
 		}
@@ -103,15 +98,27 @@ static int	formatting_file(t_list *first)
 
 int			formatting_cmd_general(t_list **first)
 {
-	if (find_aggregator_fd(*first) == -1)
-		return (-1);
-	if (useless_comas(first) == -1)
-		return (-1);
-	if (check_missing_word(*first) == -1)
-		return (-1);
-	if (check_word_and_subsh(*first) == -1)
-		return (-1);
-	if (formatting_file(*first) == -1)
-		return (-1);
-	return (1);
+	int		ret;
+	t_list	*tmp;
+
+	ret = -1;
+	ret = find_aggregator_fd(*first);
+	if (ret != -1)
+		ret = useless_comas(first);
+	if (ret != -1)
+		ret = check_missing_word(*first);
+	if (ret != -1)
+		ret = check_word_and_subsh(*first);
+	if (ret != -1)
+		ret = formatting_file(*first);
+	if (ret == -1)
+	{
+		while ((*first) != NULL)
+		{
+			tmp = *first;
+			*first = (*first)->next;
+			del_tlist(tmp);
+		}
+	}
+	return (ret);
 }

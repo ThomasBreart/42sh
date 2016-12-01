@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 14:25:11 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/10 17:49:18 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 08:19:18 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static	void	free_all(t_list *first)
 {
 	ft_memdel((void**)&first->content);
+	ft_strdel(&first->fullcontent);
 	free_double_tab(first->argv);
 	ft_memdel((void**)&first);
 }
