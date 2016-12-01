@@ -729,6 +729,12 @@ then
 		printf "\n"
 fi
 
+COMMAND="echo $a$PWD$b"
+check_diff ${SHBASH}
+
+COMMAND="echo $PWD$PWD"
+check_diff ${SHBASH}
+
 COMMAND="echo $"
 check_diff ${SHBASH}
 

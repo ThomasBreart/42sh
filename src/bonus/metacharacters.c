@@ -25,7 +25,7 @@ void		edit_line_meta(char **entry, char *value, int pos_key, int len_key)
 	ft_strncpy(new_s, *entry, pos_key);
 	if (value != NULL)
 		ft_strcpy(new_s + pos_key, value);
-	ft_strcpy(new_s + pos_key + len_value, *entry + pos_key + len_key);
+	ft_strcpy(new_s + pos_key + len_value, *entry + pos_key + len_key);		
 	free(*entry);
 	*entry = new_s;
 }

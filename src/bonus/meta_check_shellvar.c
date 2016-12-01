@@ -12,14 +12,14 @@
 
 #include "ft_42sh.h"
 
-int		convert_shell_var(char **linecur, int i, char **entry, char **env)
+int		convert_shell_var(char *linecur, int i, char **entry, char **env)
 {
 	int		j;
 	char	*key;
 	char	*value;
 	char	*tmp;
 
-	tmp = *linecur;
+	tmp = linecur;
 	j = i + 1;
 	while (tmp[j] != '\0' && tmp[j] != ' ' && tmp[j] != '$' && tmp[j] != '"'
 						&& tmp[j] != '\'' && tmp[j] != '\\' && tmp[j] != '/')
@@ -28,14 +28,14 @@ int		convert_shell_var(char **linecur, int i, char **entry, char **env)
 	value = ft_getenv(key, env);
 	edit_line_meta(entry, value, i, (j - i));
 	if (value != NULL)
-		*linecur = *entry + i + ft_strlen(value);
-	else
-		*linecur = *entry + i;
-	i = 0;
-	if (value != NULL)
+	{
+		j = ft_strlen(value);
 		free(value);
+	}
+	else
+		j = 0;
 	free(key);
-	return (i);
+	return (i + j);
 }
 
 /*
@@ -63,8 +63,12 @@ void	check_shell_variable(char **entry, char *tmp, char **env)
 		}
 		else if (tmp[i] == '$' && tmp[i + 1] != '\0' && tmp[i + 1] != ' ' &&
 															tmp[i + 1] != '$')
-			i = convert_shell_var(&tmp, i, entry, env);
+		{
+			i = convert_shell_var(tmp, i, entry, env);
+			tmp = *entry;
+		}
 		else if (tmp[i] != '\0')
 			++i;
+		printf("wtf=%s\n", &tmp[i]);
 	}
 }
