@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/30 19:45:25 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 19:06:15 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char				**realloc_tab(char **oldtab, int *maxlen,
 					const char *filename);
 void				remove_quoting_chars(t_list *elem);
 void				update_elem(t_list *elem, int change_argv);
-int					exec_subshell(t_list *elem);
+int					exec_subshell(t_list *elem, t_save_fd *save);
 int					extract_event(char **str, int start_analysis,
 					int *start_subcmd, char **sub_cmd);
 int					extract_subcmd(char **str, int start_analysis,
@@ -95,6 +95,7 @@ void				handler_sigwinch(int numsig);
 int					exec_token(t_list *elem, char ***env, t_save_fd *save);
 int					check_word_and_subsh(t_list *first);
 void				stock_ret_val_in_env(int ret, char ***env);
+void				handler_sigint2(int numsig);
 
 /*
 **	check_backquotes.c

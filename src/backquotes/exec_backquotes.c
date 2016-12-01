@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 07:36:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 00:21:34 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 20:00:00 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,20 @@ static char	*format_cmd(int fd_buf)
 	return (new_entry);
 }
 
-static void	launch_exec(int fd_buf, char *str)
+static void		backquotes_child(int pdes[2], char *str)
 {
-	char		*save_str;
-	t_list		*root;
-	t_save_fd	save;
+	char	*save_str;
+	t_list	*root;
 
-	save_fd(&save);
-	dup2(fd_buf, STDOUT_FILENO);
+	close(pdes[PIPE_EXIT]);
+	dup2(pdes[PIPE_ENTRY], STDOUT_FILENO);
+	signals_reset();
 	save_str = s_strdup(str, __FILE__);
 	root = cmd_analysis(&save_str);
 	free(save_str);
 	exec_cmd(root->left, get_env());
 	free_tree(root);
-	restore_fd(&save);
-	close_fd(&save);
-}
-
-static	int	error_open_buffer(char **str)
-{
-	internal_error("exec_backquotes", "fail open buf_backquotes", 0);
-	ft_strdel(str);
-	*str = s_strdup("", __FILE__);
-	return (-1);
+	exit(1);
 }
 
 /*
@@ -79,25 +70,38 @@ static	int	error_open_buffer(char **str)
 int			exec_backquotes(char **str)
 {
 	char		*new_entry;
-	int			fd_buf;
 	t_historic	*termcaps;
+	int			pdes[2];
+	int			child_pid;
+	t_save_fd	save;
+	int			ret;
 
+	save_fd(&save);
 	termcaps = get_termcaps();
-	if ((fd_buf = open("/tmp/.buf_backquotes", O_WRONLY | O_CREAT |
-														O_TRUNC, 0644)) == -1)
-		return (error_open_buffer(str));
-	launch_exec(fd_buf, *str);
-	close(fd_buf);
-	if ((fd_buf = open("/tmp/.buf_backquotes", O_RDONLY, 0644)) == -1)
-		return (error_open_buffer(str));
-	new_entry = NULL;
-	if (termcaps->child_end_sig != 1)
-		new_entry = format_cmd(fd_buf);
-	close(fd_buf);
-	ft_strdel(str);
-	if (new_entry == NULL)
-		*str = s_strdup("", __FILE__);
+	if (pipe(pdes) == -1)
+		return (internal_error("exec_backquotes", "create pipe", 0));
+	child_pid = fork();
+	if (child_pid == -1)
+		return (internal_error("exec_backquotes", "fork", 0));
+	termcaps->wordnofork = 1;
+	if (child_pid == 0)
+		backquotes_child(pdes, *str);
 	else
-		*str = new_entry;
+	{
+		waitpid(child_pid, &ret, 0);
+		termcaps->wordnofork = 0;
+		close(pdes[PIPE_ENTRY]);
+		if (termcaps->istty == 1 && set_termios(&termcaps->term, &save) == -1)
+			return (internal_error("exec_backquotes", "set_termcaps", 1));
+		new_entry = NULL;
+		if (!WIFSIGNALED(ret))
+			new_entry = format_cmd(pdes[PIPE_EXIT]);
+		close(pdes[PIPE_EXIT]);
+		ft_strdel(str);
+		if (new_entry == NULL)
+			*str = s_strdup("", __FILE__);
+		else
+			*str = new_entry;
+	}
 	return (1);
 }

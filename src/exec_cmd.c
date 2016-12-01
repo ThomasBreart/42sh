@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 11:01:08 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 02:38:21 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 15:54:29 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				exec_token(t_list *elem, char ***env, t_save_fd *save)
 	else if (elem->type == LEX_LL_R)
 		ret = exec_llc(elem, env, NULL, save);
 	else if (elem->type == LEX_SUBSH)
-		ret = exec_subshell(elem);
+		ret = exec_subshell(elem, save);
 	else if (elem->type == LEX_WORD)
 		ret = exec_simple(elem, env, save);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/30 19:44:56 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 19:35:12 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	cmd_simple_prog_child(t_historic *termcaps, t_list *elem,
 												char **env, t_save_fd *save)
 {
-	signals_reset();
+	//signals_reset();
 	if (termcaps->istty == 1 && set_termios(&termcaps->save, save) == -1)
 		internal_error("cmd_simple_prog_child", "set_termcaps", 1);
 	execve(elem->content, elem->argv, env);
@@ -31,8 +31,9 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 
 	termcaps = get_termcaps();
 	ret = 42;
-	termcaps->child_end_sig = 0;
 	termcaps->in_child = 1;
+	if (termcaps->wordnofork == 0)
+	{
 	father = fork();
 	if (father == -1)
 		return (internal_error("cmd_simple_prog", "fork", 0));
@@ -40,6 +41,7 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 		cmd_simple_prog_child(termcaps, elem, env, save);
 	save_pid(father);
 	waitpid(father, &ret, 0);
+fprintf(stderr, "plop123\n");
 	if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
 		return (internal_error("cmd_simple_prog", "set_termcaps", 1));
 	termcaps->in_child = 0;
@@ -47,6 +49,10 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 		return (-1);
 	if (WIFSIGNALED(ret))
 		return (sig_child_func(ret));
+	}
+	else
+		cmd_simple_prog_child(termcaps, elem, env, save);
+
 	return (1);
 }
 

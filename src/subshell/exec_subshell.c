@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 09:06:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/28 17:34:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/01 19:54:16 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,23 @@ char	*del_parenthesis(char *str)
 	return (new_str);
 }
 
-int		exec_subshell(t_list *elem)
+int		exec_subshell(t_list *elem, t_save_fd *save)
 {
 	char	*new_entry;
 	int		ret;
 	int		child_pid;
 	t_list	*root;
+	t_historic	*termcaps;
 
+	termcaps = get_termcaps();
 	new_entry = del_parenthesis(elem->content);
 	child_pid = fork();
 	if (child_pid == -1)
 		return (internal_error("exec_subshell", "fork", 0));
-	else if (child_pid == 0)
+	termcaps->wordnofork = 1;
+	if (child_pid == 0)
 	{
+		signals_reset();
 		root = cmd_analysis(&new_entry);
 		ret = exec_cmd(root->left, get_env());
 		exit(ret);
@@ -43,6 +47,9 @@ int		exec_subshell(t_list *elem)
 	{
 		ft_strdel(&new_entry);
 		waitpid(child_pid, &ret, 0);
+		termcaps->wordnofork = 0;
+		if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
+			return (internal_error("exec_subshell", "set_termcaps", 1));
 		if (WEXITSTATUS(ret) == 1)
 			return (1);
 		else
