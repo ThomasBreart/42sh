@@ -154,6 +154,11 @@ char				*goto_next_word(char *str, char c);
 char				*goto_next_char(char *str, char c);
 
 /*
+**	goto_close_quote.c
+*/
+int					goto_close_bracket(const char *str);
+
+/*
 **	handler_sigwinch.c
 */
 void				handler_sigwinch(int numsig);

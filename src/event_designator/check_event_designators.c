@@ -17,9 +17,9 @@ static int		error_event_not_found(char *str, int error)
 	ft_putstr_fd("42sh: ", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	if (error == E_NOT_FOUND)
-		ft_putendl_fd("event not found", STDERR_FILENO);
+		ft_putendl_fd(" event not found", STDERR_FILENO);
 	else if (error == E_NO_PREVSUB)
-		ft_putendl_fd("no previous substitution", STDERR_FILENO);
+		ft_putendl_fd(" no previous substitution", STDERR_FILENO);
 	ft_strdel(&str);
 	return (-1);
 }

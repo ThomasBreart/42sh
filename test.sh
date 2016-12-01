@@ -914,7 +914,8 @@ COMMAND="echo {/*,./*}"
 check_diff ${SHBASH}
 
 COMMAND="echo \* \[ \\"
-check_diff ${SHBASH}
+BEHAVIOR="\* \[ \\"
+check_good_behavior
 
 COMMAND="{} []"
 BEHAVIOR="{}: Command not found."
@@ -950,6 +951,8 @@ check_diff ${SHBASH}
 COMMAND='touch ab Ab aB AB ; echo [[:lower:]][[:upper:]] ; rm ab Ab aB AB'
 check_diff ${SHBASH}
 
+COMMAND='touch ab Ab aB AB ; echo [[:lower:]]* ; rm ab Ab aB AB'
+check_diff ${SHBASH}
 
 printf "\n"
 

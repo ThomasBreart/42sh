@@ -93,7 +93,9 @@ int			extract_event(char **str, int start_analysis, int *start_subcmd,
 	{
 		if ((*str)[i] == '\\')
 			++i;
-		else if ((*str)[i] == '\'')
+		else if ((*str)[i] == '[')
+			i += goto_close_bracket(&(*str)[i + 1]);
+		else if ((*str)[i] == '\'' || (*str)[i] == '\"')
 		{
 			tmp = goto_next_quote(*str + i);
 			i = tmp - *str;
