@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 09:08:28 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 02:13:06 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 07:41:26 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,9 @@ static char		*copy_in_quote(char *str, char *newstr, int *k)
 	++str;
 	while (str < tmp)
 	{
-		if (quote == '"' && *str == '\\')
-			++str;
-		if (str < tmp)
-		{
-			newstr[*k] = *str;
-			(*k)++;
-			++str;
-		}
+		newstr[*k] = *str;
+		(*k)++;
+		++str;
 	}
 	return (str);
 }
