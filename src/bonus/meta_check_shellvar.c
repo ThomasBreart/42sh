@@ -69,6 +69,5 @@ void	check_shell_variable(char **entry, char *tmp, char **env)
 		}
 		else if (tmp[i] != '\0')
 			++i;
-		printf("wtf=%s\n", &tmp[i]);
 	}
 }
