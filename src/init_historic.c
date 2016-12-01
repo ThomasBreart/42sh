@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
+#include "ft_42sh.h"
 
 static void	recover_historic_file_error(char ***taab)
 {
@@ -99,7 +99,7 @@ void		set_path_historic_file(t_historic *termcaps, char **env)
 		termcaps->path_historic_file = NULL;
 		return ;
 	}
-	file_name = s_strdup("/.21sh_historic", __FILE__);
+	file_name = s_strdup("/.42sh_historic", __FILE__);
 	path = s_strnew(ft_strlen(home) + ft_strlen(file_name), __FILE__);
 	path = ft_strcat(path, home);
 	path = ft_strcat(path, file_name);

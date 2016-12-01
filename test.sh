@@ -645,6 +645,9 @@ COMMAND="history -an"
 BEHAVIOR="42sh: history: cannot use more than one of -anrw"
 check_good_behavior
 
+COMMAND="ls > /dev/null\necho toto > /dev/null\nhistory"
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS GESTION PATH===#
@@ -703,16 +706,31 @@ COMMAND="  ls > file -l ; cat file"
 BEHAVIOR="file bad formatted"
 check_good_behavior
 
+COMMAND=" echo \"Hello!\" | tr \"[:lower:]\" \"[:upper:]\""
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS BONUS METACHARACTERS===#
 printf "bonus_metacharacters: "
 if [ $V == 1 ]
 then
-	printf "\n"
+		printf "\n"
 fi
 
 COMMAND="echo $"
+check_diff ${SHBASH}
+
+COMMAND="echo \"\SALUT\""
+check_diff ${SHBASH}
+
+COMMAND="echo \"SAL\UT\""
+check_diff ${SHBASH}
+
+COMMAND="echo '\SALUT'"
+check_diff ${SHBASH}
+
+COMMAND="echo 'SAL\UT'"
 check_diff ${SHBASH}
 
 COMMAND="echo \$P"
@@ -742,7 +760,25 @@ check_diff ${SHBASH}
 COMMAND="echo \$__\$"
 check_diff ${SHBASH}
 
-COMMAND="echo \$PWDaa"
+COMMAND="echo \$PWDaaa"
+check_diff ${SHBASH}
+
+COMMAND="echo \$PWD\"aaa\""
+check_diff ${SHBASH}
+
+COMMAND="echo \$PWD'aaa'"
+check_diff ${SHBASH}
+
+COMMAND="echo \$PWD\"$PWD\""
+check_diff ${SHBASH}
+
+COMMAND="echo \$PWD'$PWD'"
+check_diff ${SHBASH}
+
+COMMAND="echo \$PWD/aaa"
+check_diff ${SHBASH}
+
+COMMAND="echo \$PWD\aaa"
 check_diff ${SHBASH}
 
 COMMAND="\$A"
@@ -764,6 +800,7 @@ check_diff ${SHBASH} "export A=\"\";\$A"
 
 
 printf "\n"
+
 #===TESTS metacharacters===#
 printf "bonus_metacharacters_~: "
 if [ $V == 1 ]
@@ -839,6 +876,31 @@ then
 	printf "\n"
 fi
 
+COMMAND="\"\""
+BEHAVIOR=": Command not found."
+check_good_behavior
+
+COMMAND="''"
+BEHAVIOR=": Command not found."
+check_good_behavior
+
+COMMAND="``"
+check_diff ${SBASH}
+
+COMMAND="()"
+check_diff ${SBASH}
+
+COMMAND="{}"
+BEHAVIOR="{}: Command not found."
+check_good_behavior
+
+COMMAND="[]"
+BEHAVIOR="[]: Command not found."
+check_good_behavior
+
+COMMAND="echo \"\SALUT\""
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS GLOBING===#
@@ -855,7 +917,8 @@ COMMAND="echo \* \[ \\"
 check_diff ${SHBASH}
 
 COMMAND="{} []"
-check_diff ${SHBASH}
+BEHAVIOR="{}: Command not found."
+check_good_behavior
 
 COMMAND='setenv E ./\*; echo $E'
 check_diff ${SHCSH}
@@ -885,6 +948,9 @@ COMMAND="ls `ls`"
 check_diff ${SHBASH}
 
 COMMAND="ls `cd $HOME ; pwd`"
+check_diff ${SHBASH}
+
+COMMAND="setenv PWD `pwd` ; echo $PWD"
 check_diff ${SHBASH}
 
 printf "\n"
@@ -992,11 +1058,21 @@ check_diff ${SHBASH}
 COMMAND="cut -d , -f 1 notes.csv | sort > noms_tries.txt;cat noms_tries.txt "
 check_diff ${SHBASH}
 
-COMMAND="du | sort -nr"
-check_diff ${SHBASH}
+COMMAND="< t t"
+BEHAVIOR="Invalid command."
+check_good_behavior
 
-COMMAND="du | sort -nr | head"
-check_diff ${SHBASH}
+COMMAND=">"
+BEHAVIOR="Invalid command."
+check_good_behavior
+
+COMMAND="<< t t"
+BEHAVIOR="Invalid command."
+check_good_behavior
+
+COMMAND="<"
+BEHAVIOR="Invalid command."
+check_good_behavior
 
 printf "\n\n"
 

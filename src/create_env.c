@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
+#include "ft_42sh.h"
 
 static void	create_ret_val(char ***newenv)
 {
@@ -37,7 +37,7 @@ static void	edit_env(char ***newenv)
 	tmptab = fake_argv("PWD", tmp1);
 	builtin_setenv(tmptab, newenv, 0);
 	free_double_tab(tmptab);
-	tmp2 = s_strdup("/minishell", __FILE__);
+	tmp2 = s_strdup("/42sh", __FILE__);
 	tmp3 = s_strjoin(tmp1, tmp2, __FILE__);
 	tmptab = fake_argv("SHELL", tmp3);
 	builtin_setenv(tmptab, newenv, 0);

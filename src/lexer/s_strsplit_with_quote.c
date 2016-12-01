@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
+#include "ft_42sh.h"
 
 static	void	copy_word(char **s, char c, char **new_tab, int *index_tab)
 {

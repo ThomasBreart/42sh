@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_21sh.h                                          :+:      :+:    :+:   */
+/*   ft_42sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/30 19:45:25 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 11:35:09 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_21SH_H
-# define FT_21SH_H
+#ifndef FT_42SH_H
+# define FT_42SH_H
 
 # include "../lib/libft/includes/libft.h"
 # include <sys/wait.h>
@@ -25,7 +25,7 @@
 # include <sys/ioctl.h>
 # include <fcntl.h>
 
-#include <stdio.h>
+# include <stdio.h> // A SUPPRIMER AVANT LE PUSH
 
 # define SUBCMD_BACKQUOTE	1
 # define SUBCMD_DOLLAR		2
@@ -65,36 +65,113 @@
 # include "termcaps.h"
 # include "redirs.h"
 
-char				*goto_next_char(char *str, char c);
-char				*add_str_in_str(char *dest, char *src, int position);
-int					check_event_designators(char **entryr);
-int					cmd_is_open(char *str, int *end_backslash);
-int					open_chars_error(t_historic *tcaps, char error);
+void				show_list(t_list *first); // debug.c A SUPPR ?!
+
+/*
+**	check_word_and_subsh.c
+*/
+int					check_word_and_subsh(t_list *first);
+
+/*
+**	get_set_save_fd.c
+*/
+t_save_fd			*get_set_save_fd(t_save_fd *save);
+
+/*
+**	exec_backquotes.c
+*/
+int					exec_backquotes(char **str);
+
+/*
+**	remove_onelvl_escape_backslash.c
+*/
+void				remove_onelvl_escape_backslash(char **str);
+
+/*
+**	extract_subcmd.c
+*/
+int					extract_subcmd(char **str, int start_analysis,
+					int *start_subcmd, char **sub_cmd);
+
+/*
+**	extract_event.c
+*/
+int					extract_event(char **str, int start_analysis,
+					int *start_subcmd, char **sub_cmd);
+
+/*
+**	exec_subshell.c
+*/
+int					exec_subshell(t_list *elem);
+
+/*
+**	update_elem.c
+*/
+void				update_elem(t_list *elem, int change_argv);
+
+/*
+**	remove_quoting_chars.c
+*/
+void				remove_quoting_chars(t_list *elem);
+
+/*
+**	realloc_tab.c
+*/
+char				**realloc_tab(char **oldtab, int *maxlen,
+					const char *filename);
+
+/*
+**	find_full_cmd.c
+*/
 char				*find_full_cmd(char *s, t_historic *termcaps);
+
+/*
+**	cmd_is_open.c
+*/
+int					cmd_is_open(char *str, int *end_backslash);
+
+/*
+**	check_event_designators.c
+*/
+int					check_event_designators(char **entryr);
+
+/*
+**	add_str_in_str.c
+*/
+char				*add_str_in_str(char *dest, char *src, int position);
+
+/*
+**	goto_next_funcs.c
+*/
 char				*goto_next_quote(char *str);
 char				*goto_next_backquote(char *str);
 char				*goto_next_parenthesis(char *str);
 char				*goto_next_word(char *str, char c);
-char				**realloc_tab(char **oldtab, int *maxlen,
-					const char *filename);
-void				remove_quoting_chars(t_list *elem);
-void				update_elem(t_list *elem, int change_argv);
-int					exec_subshell(t_list *elem);
-int					extract_event(char **str, int start_analysis,
-					int *start_subcmd, char **sub_cmd);
-int					extract_subcmd(char **str, int start_analysis,
-					int *start_subcmd, char **sub_cmd);
-void				remove_onelvl_escape_backslash(char **str);
-int					exec_backquotes(char **str);
-t_save_fd			*get_set_save_fd(t_save_fd *save);
-void				show_list(t_list *first);
-void				handler_sigint(int numsig);
-void				handler_sigcont(int numsig);
-void				handler_sigtstp(int numsig);
+
+/*
+**	goto_next_char.c
+*/
+char				*goto_next_char(char *str, char c);
+
+/*
+**	handler_sigwinch.c
+*/
 void				handler_sigwinch(int numsig);
-int					exec_token(t_list *elem, char ***env, t_save_fd *save);
-int					check_word_and_subsh(t_list *first);
-void				stock_ret_val_in_env(int ret, char ***env);
+
+/*
+**	handler_sigint.c
+*/
+void				handler_sigint(int numsig);
+
+/*
+**	handler_sigcont.c
+*/
+void				handler_sigcont(int numsig);
+
+/*
+**	handler_sigtstp.c
+*/
+void				handler_sigtstp(int numsig);
 
 /*
 **	check_backquotes.c
@@ -116,6 +193,7 @@ t_list				*cmd_analysis(/*t_list **root, */char **entry);
 */
 int					exec_simple(t_list *elem, char ***env, t_save_fd *save);
 int					cmd_simple_prog(t_list *elem, char **env, t_save_fd *save);
+void				stock_ret_val_in_env(int ret, char ***env);
 
 /*
 **	create_env.c
@@ -130,7 +208,7 @@ int					del_elem_list(t_list *first);
 /*
 **	del_tlist.c
 */
-void	del_tlist(t_list *elem);
+void				del_tlist(t_list *elem);
 
 int					del_elem_list(t_list *first);
 /*
@@ -187,6 +265,7 @@ int					event_string_substitution(char *sub_cmd, char **new_str);
 **	exec_cmd.c
 */
 int					exec_cmd(t_list *first, char ***env);
+int					exec_token(t_list *elem, char ***env, t_save_fd *save);
 
 /*
 **	exec_cmd_tools.c
@@ -284,7 +363,7 @@ int					set_termios(struct termios *term, t_save_fd *save);
 /*
 **	show_elem.c
 */
-void	show_elem(t_list *elem);
+void				show_elem(t_list *elem);
 
 /*
 **	signals.c

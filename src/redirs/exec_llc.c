@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
+#include "ft_42sh.h"
 
 static int	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
 {
@@ -19,7 +19,7 @@ static int	termcaps_redir_llc(t_historic *termcaps, t_list *elem)
 	int		fd_tmp;
 
 	ret = -1;
-	if ((fd = open("/tmp/.buf_21sh", O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
+	if ((fd = open("/tmp/.buf_42sh", O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 	{
 		ft_putendl_fd("can't open buffer file for the heredoc", STDERR_FILENO);
 		return (-1);
@@ -39,9 +39,9 @@ static int	redir_buffer_llc(t_save_fd *save)
 	int		fd;
 	int		fd_tmp;
 
-	fd = open("/tmp/.buf_21sh", O_RDONLY);
+	fd = open("/tmp/.buf_42sh", O_RDONLY);
 	if (fd == -1)
-		return (error_name(".buf_21sh", ".buf_21sh"));
+		return (error_name(".buf_42sh", ".buf_42sh"));
 	fd_tmp = fcntl(fd, F_DUPFD, 10);
 	close(fd);
 	save->index_file++;

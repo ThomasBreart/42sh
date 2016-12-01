@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
+#include "ft_42sh.h"
 
 int		error_fd_aggr(int fd_aggr)
 {
-	ft_putstr_fd("21sh: ", STDERR_FILENO);
+	ft_putstr_fd("42sh: ", STDERR_FILENO);
 	ft_putnbr_fd(fd_aggr, STDERR_FILENO);
 	ft_putendl_fd(": Bad file descriptor", STDERR_FILENO);
 	return (-1);
@@ -40,7 +40,7 @@ int		error_name(char *fullpath, char *content)
 
 int		internal_error(char *name_function, char *error, int dead)
 {
-	ft_putstr_fd("21sh[internal_error]: ", STDERR_FILENO);
+	ft_putstr_fd("42sh[internal_error]: ", STDERR_FILENO);
 	ft_putstr_fd(name_function, STDERR_FILENO);
 	ft_putstr_fd(" : fail ", STDERR_FILENO);
 	ft_putendl_fd(error, STDERR_FILENO);
@@ -52,8 +52,8 @@ int		internal_error(char *name_function, char *error, int dead)
 void	errors(int a)
 {
 	if (a == ERR_ARGV)
-		ft_putendl_fd("usage: ./minishell", STDERR_FILENO);
+		ft_putendl_fd("usage: ./42sh", STDERR_FILENO);
 	else if (a == ERR_SETTERM)
-		ft_putendl_fd("minishell cannot set termcaps", STDERR_FILENO);
+		ft_putendl_fd("42sh cannot set termcaps", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
