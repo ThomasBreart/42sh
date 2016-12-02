@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/01 19:35:12 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 15:01:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	cmd_simple_prog_child(t_historic *termcaps, t_list *elem,
 												char **env, t_save_fd *save)
 {
-	//signals_reset();
+	signals_reset();
 	if (termcaps->istty == 1 && set_termios(&termcaps->save, save) == -1)
 		internal_error("cmd_simple_prog_child", "set_termcaps", 1);
 	execve(elem->content, elem->argv, env);
@@ -41,7 +41,6 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 		cmd_simple_prog_child(termcaps, elem, env, save);
 	save_pid(father);
 	waitpid(father, &ret, 0);
-fprintf(stderr, "plop123\n");
 	if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
 		return (internal_error("cmd_simple_prog", "set_termcaps", 1));
 	termcaps->in_child = 0;
@@ -52,7 +51,6 @@ fprintf(stderr, "plop123\n");
 	}
 	else
 		cmd_simple_prog_child(termcaps, elem, env, save);
-
 	return (1);
 }
 

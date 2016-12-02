@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 07:36:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/01 20:00:00 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 14:26:09 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,7 @@ int			exec_backquotes(char **str)
 		else
 			*str = new_entry;
 	}
+	restore_fd(&save);
+	close_fd(&save);
 	return (1);
 }
