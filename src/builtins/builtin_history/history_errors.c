@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:43:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/20 11:24:35 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/02 17:55:40 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** On récupère l'argument qui à causé l'erreur pour pouvoir l'afficher
 */
 
-static char	*get_tokenn(char *argv)
+char		*get_tokenn(char *argv)
 {
 	char	*cpy;
 	char	*ret;

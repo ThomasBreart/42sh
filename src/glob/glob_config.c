@@ -6,7 +6,7 @@
 /*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/14 10:53:55 by fjacquem          #+#    #+#             */
-/*   Updated: 2016/11/14 10:53:57 by fjacquem         ###   ########.fr       */
+/*   Updated: 2016/12/02 18:24:45 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int			builtin_glob(char **argv)
 {
 	static int	flag = 0;
 	int			i;
-	int			j;
 
 	i = 1;
 	if (!argv)

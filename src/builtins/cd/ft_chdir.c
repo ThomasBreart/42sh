@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 13:28:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/02 14:55:50 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/02 17:26:34 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static void		update_pwd_and_oldpwd(char ***env, char *pwd)
 	ft_strdel(&pwd);
 }
 
-static char		*get_path(char ***env, char *oldpath, char *option)
+static char		*get_path(char ***env, char *oldpath, int flag)
 {
 	char	*path;
 
 	path = NULL;
-	if (!option || !ft_strcmp(option, "-L"))
+	if (!flag)
 		path = get_symbolink_path(env, oldpath);
 	return (path);
 }
@@ -68,15 +68,11 @@ static int		do_chdir(char *path, char *target)
 	return (0);
 }
 
-int				ft_chdir(char **argv, char ***env)
+int				ft_chdir(char *target, char ***env, int flag)
 {
 	char	*path;
-	char	*option;
-	char	*target;
 
-	target = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[2] : argv[1];
-	option = (argv[2] && argv[1] && argv[1][0] == '-') ? argv[1] : NULL;
-	path = get_path(env, target, option);
+	path = get_path(env, target, flag);
 	if (do_chdir(path, target) == -1)
 		return (-1);
 	update_pwd_and_oldpwd(env, path);

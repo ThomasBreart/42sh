@@ -370,7 +370,7 @@ check_diff ${SHCSH}
 
 COMMAND="cd ../../;echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
-# exit
+
 COMMAND="unsetenv PWD;echo \$PWD;cd ..;echo \$PWD"
 check_diff ${SHBASH} "unset PWD;echo \$PWD;cd ..;echo \$PWD"
 
@@ -406,6 +406,32 @@ check_diff ${SHBASH}
 
 COMMAND="cd ../../../../../../../../../ ; echo \$PWD; echo \$OLDPWD"
 check_diff ${SHBASH}
+
+COMMAND="cd ; cd -P -P -PPPPP -P - ; echo \$PWD; echo \$OLDPWD"
+check_diff ${SHBASH}
+
+COMMAND="cd ; cd -L -L -LLLL -L -LLLL -LL - ; echo \$PWD; echo \$OLDPWD"
+check_diff ${SHBASH}
+
+COMMAND="cd -P -PPPP -PPPP -- ; echo \$PWD; echo \$OLDPWD"
+check_diff ${SHBASH}
+
+COMMAND="cd -LLL -LLLLLL -- ; echo \$PWD; echo \$OLDPWD"
+check_diff ${SHBASH}
+
+COMMAND="cd - YO ; "
+BEHAVIOR="cd: Too many arguments."
+check_good_behavior
+
+COMMAND="cd -PPPPP -P -- /tmp/ ; echo \$PWD; echo \$OLDPWD"
+check_diff ${SHBASH}
+
+COMMAND="cd -LLLL -L -- /tmp/ ; echo \$PWD; echo \$OLDPWD"
+check_diff ${SHBASH}
+
+COMMAND="cd -LLL -PPPP -Z -- /tmp/ "
+BEHAVIOR="cd: Z: invalid option\ncd: usage: cd [-L|-P] [dir]"
+check_good_behavior
 
 printf "\n"
 
@@ -931,7 +957,7 @@ COMMAND="echo {/*,./*}"
 check_diff ${SHBASH}
 
 COMMAND="echo \* \[ \\"
-check_diff ${SHCSH}
+check_diff ${SHBASH}
 
 COMMAND="{} []"
 BEHAVIOR="{}: Command not found."
@@ -950,12 +976,6 @@ COMMAND='/bin/*ash'
 check_diff ${SHBASH}
 
 COMMAND='/bin/ech* this is an echo and * test'
-check_diff ${SHBASH}
-
-COMMAND='/bin/ls*'
-check_diff ${SHBASH}
-
-COMMAND='/bin/ls*'
 check_diff ${SHBASH}
 
 printf "\n"

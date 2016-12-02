@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/01 17:42:48 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/02 18:26:22 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	check_what_element_to_delete(t_historic
 int		get_len_of_int(int nb);
 int		append_flag(char **args, t_flags *flags);
 char	*reverse_split(char **argv, int i);
+char	*get_tokenn(char *argv);
 
 /*
 **	builtin_echo.c
@@ -60,12 +61,14 @@ void	make_copies(char *argv, char ***env, int flag);
 int		builtin_cd(char **argv, char ***env);
 int		go_home(char ***env);
 int		go_oldpwd(char ***env);
-int		ft_chdir(char **av, char ***env);
+int		ft_chdir(char *target, char ***env, int flag);
 int		print_error_cd(char *str);
 void	update_oldpwd(char ***env);
 void	update_pwd(char ***env);
-char 	*get_symbolink_path(char ***env, char *path);
-
+char	*get_symbolink_path(char ***env, char *path);
+int		check_arg(char *target);
+int		cd_parse_flag(char **args, int *flag);
+int		cd_usage(char *args);
 /*
 **	builtin_env.c
 */
