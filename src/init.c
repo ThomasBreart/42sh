@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 20:00:21 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 02:12:10 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 17:57:35 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	set_vars(t_historic *termcaps)
 {
 	int		i;
 
-	termcaps->child_end_sig = 0;
+	termcaps->wordnofork = 0;
 	termcaps->stdout_modified = 0;
 	termcaps->end_select = -1;
 	termcaps->start_select = -1;

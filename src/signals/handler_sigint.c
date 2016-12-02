@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 01:55:53 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 01:37:26 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 17:10:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			handler_sigint(int numsig)
 		sigint_getcmd(termcaps);
 	ft_putchar('\n');
 	if (termcaps->in_child == 0 && termcaps->in_llr == 0 &&
-													termcaps->in_builtin == 0)
+						termcaps->in_builtin == 0 && termcaps->wordnofork == 0)
 	{
 		ft_putstr(termcaps->prompt);
 		termcaps->prompt_current = termcaps->prompt;

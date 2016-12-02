@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/30 19:44:56 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 15:01:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 
 	termcaps = get_termcaps();
 	ret = 42;
-	termcaps->child_end_sig = 0;
 	termcaps->in_child = 1;
+	if (termcaps->wordnofork == 0)
+	{
 	father = fork();
 	if (father == -1)
 		return (internal_error("cmd_simple_prog", "fork", 0));
@@ -47,6 +48,9 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 		return (-1);
 	if (WIFSIGNALED(ret))
 		return (sig_child_func(ret));
+	}
+	else
+		cmd_simple_prog_child(termcaps, elem, env, save);
 	return (1);
 }
 

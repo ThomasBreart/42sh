@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 11:53:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/17 05:45:40 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/01 15:58:20 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	cmd_pipe_redirs(t_list *elem, char ***env, t_save_fd *save)
 	if (elem->right->type == LEX_WORD)
 		ret = exec_simple(elem->right, env, save);
 	else if (elem->right->type == LEX_SUBSH)
-		ret = exec_subshell(elem->right);
+		ret = exec_subshell(elem->right, save);
 	else if (elem->right->type == LEX_R_R)
 		ret = exec_rc(elem->right, env, elem->right->left, save);
 	else if (elem->right->type == LEX_RR_R)
@@ -57,7 +57,7 @@ static void	cmd_pipe_child(int pdes[2], t_list *prog, char ***env,
 	if (prog->type == LEX_WORD)
 		exec_simple(prog, env, save);
 	else if (prog->type == LEX_SUBSH)
-		exec_subshell(prog);
+		exec_subshell(prog, save);
 	close(pdes[PIPE_ENTRY]);
 	exit(42);
 }
