@@ -89,7 +89,7 @@ int						ft_glob(const char *pattern, t_glob *gl)
 	if (ret != -1)
 	{
 		tmp = ft_lstcpt(gl->results);
-		ret  = (cmpt != tmp);
+		ret = (cmpt != tmp);
 		cmpt = tmp;
 	}
 	return (ret);

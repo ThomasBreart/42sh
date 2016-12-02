@@ -70,7 +70,7 @@ static void			glob__correct_pattern(char **name)
 	}
 }
 
-static void			glob__process(char *name, t_list **matches, t_globinfo g, 
+static void			glob__process(char *name, t_list **matches, t_globinfo g,
 									char *pattern)
 {
 	g.name = ft_strjoin(g.path, name);

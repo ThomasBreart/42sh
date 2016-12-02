@@ -79,7 +79,7 @@ static void			navigation(t_historic *t, t_args *arg, t_file *root)
 	del(&root);
 }
 
-int				ls(t_historic *t, t_args *arg)
+int					ls(t_historic *t, t_args *arg)
 {
 	t_file	*root;
 	int		input;
@@ -97,7 +97,7 @@ int				ls(t_historic *t, t_args *arg)
 			return (0);
 		}
 		input = 0;
-	}	
+	}
 	set_args(root, arg, t);
 	write(1, "\033c", 2);
 	write(1, "\033[s", 3);

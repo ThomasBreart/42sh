@@ -12,10 +12,10 @@
 
 #include <ft_glob.h>
 
-int        goto_close_bracket(const char *s)
+int			goto_close_bracket(const char *s)
 {
-	int    i;
-	int    open;
+	int		i;
+	int		open;
 
 	i = 0;
 	open = 1;

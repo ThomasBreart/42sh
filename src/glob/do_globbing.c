@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_globbing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/12/02 17:30:34 by fjacquem          #+#    #+#             */
+/*   Updated: 2016/12/02 17:30:36 by fjacquem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_glob.h>
 
 static int				need_globbing(char *arg)
@@ -11,7 +23,7 @@ static int				need_globbing(char *arg)
 			arg++;
 		else if (*arg == '*' || *arg == '{' || *arg == '[' ||
 				*arg == '?')
-			return (1);	
+			return (1);
 		else if (*arg == '\'' || *arg == '"')
 		{
 			quote = *arg;

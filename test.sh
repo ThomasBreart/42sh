@@ -931,7 +931,7 @@ COMMAND="echo {/*,./*}"
 check_diff ${SHBASH}
 
 COMMAND="echo \* \[ \\"
-check_diff ${SHBASH}
+check_diff ${SHCSH}
 
 COMMAND="{} []"
 BEHAVIOR="{}: Command not found."
@@ -950,6 +950,12 @@ COMMAND='/bin/*ash'
 check_diff ${SHBASH}
 
 COMMAND='/bin/ech* this is an echo and * test'
+check_diff ${SHBASH}
+
+COMMAND='/bin/ls*'
+check_diff ${SHBASH}
+
+COMMAND='/bin/ls*'
 check_diff ${SHBASH}
 
 printf "\n"
