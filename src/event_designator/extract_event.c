@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 05:10:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/16 22:24:50 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 16:24:01 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	event_find(char **str, int i, char **sub_cmd, int *start_subcmd)
 	}
 	else
 		tmp = goto_next_char((*str + i), ' ');
-	printf("tmp: %s\n", tmp);
 	len_subcmd = tmp - (*str + i);
 	*sub_cmd = s_strsub(*str, i, len_subcmd, __FILE__);
 	new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
@@ -91,7 +90,7 @@ int			extract_event(char **str, int start_analysis, int *start_subcmd,
 		++i;
 	while ((*str)[i] != '\0')
 	{
-		if ((*str)[i] == '\\')
+		if ((*str)[i] == '\\' && (*str)[i + 1] != '\0')
 			++i;
 		else if ((*str)[i] == '[')
 			i += goto_close_bracket(&(*str)[i + 1]);
@@ -104,8 +103,8 @@ int			extract_event(char **str, int start_analysis, int *start_subcmd,
 			return (event_find(str, i, sub_cmd, start_subcmd));
 		else if ((*str)[i] == '^')
 			return (quick_sub_find(str, i, sub_cmd, start_subcmd));
-		if ((*str)[i] != '\0')
-			++i;
+//		if ((*str)[i] != '\0')
+		++i;
 	}
 	return (0);
 }

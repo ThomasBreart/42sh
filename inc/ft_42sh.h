@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/01 11:35:09 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/02 15:21:10 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int					extract_event(char **str, int start_analysis,
 /*
 **	exec_subshell.c
 */
-int					exec_subshell(t_list *elem);
+int					exec_subshell(t_list *elem, t_save_fd *save);
 
 /*
 **	update_elem.c

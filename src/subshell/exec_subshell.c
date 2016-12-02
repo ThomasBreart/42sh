@@ -6,13 +6,13 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 09:06:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/01 19:54:16 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 16:08:13 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-char	*del_parenthesis(char *str)
+static char		*del_parenthesis(char *str)
 {
 	char	*new_str;
 	int		len;
@@ -22,12 +22,22 @@ char	*del_parenthesis(char *str)
 	return (new_str);
 }
 
-int		exec_subshell(t_list *elem, t_save_fd *save)
+static int		subshell_child(char *new_entry)
 {
-	char	*new_entry;
 	int		ret;
-	int		child_pid;
 	t_list	*root;
+
+	signals_reset();
+	root = cmd_analysis(&new_entry);
+	ret = exec_cmd(root->left, get_env());
+	exit(ret);
+}
+
+int				exec_subshell(t_list *elem, t_save_fd *save)
+{
+	char		*new_entry;
+	int			ret;
+	int			child_pid;
 	t_historic	*termcaps;
 
 	termcaps = get_termcaps();
@@ -37,12 +47,7 @@ int		exec_subshell(t_list *elem, t_save_fd *save)
 		return (internal_error("exec_subshell", "fork", 0));
 	termcaps->wordnofork = 1;
 	if (child_pid == 0)
-	{
-		signals_reset();
-		root = cmd_analysis(&new_entry);
-		ret = exec_cmd(root->left, get_env());
-		exit(ret);
-	}
+		subshell_child(new_entry);
 	else
 	{
 		ft_strdel(&new_entry);
@@ -52,8 +57,6 @@ int		exec_subshell(t_list *elem, t_save_fd *save)
 			return (internal_error("exec_subshell", "set_termcaps", 1));
 		if (WEXITSTATUS(ret) == 1)
 			return (1);
-		else
-			return (-1);
 	}
 	return (-1);
 }

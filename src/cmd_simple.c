@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/02 15:01:57 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 15:36:51 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,25 @@ int			cmd_simple_prog(t_list *elem, char **env, t_save_fd *save)
 	termcaps->in_child = 1;
 	if (termcaps->wordnofork == 0)
 	{
-	father = fork();
-	if (father == -1)
-		return (internal_error("cmd_simple_prog", "fork", 0));
-	else if (father == 0)
-		cmd_simple_prog_child(termcaps, elem, env, save);
-	save_pid(father);
-	waitpid(father, &ret, 0);
-	if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
-		return (internal_error("cmd_simple_prog", "set_termcaps", 1));
-	termcaps->in_child = 0;
-	if (WEXITSTATUS(ret) == EXIT_FAILURE)
-		return (-1);
-	if (WIFSIGNALED(ret))
-		return (sig_child_func(ret));
+		father = fork();
+		if (father == -1)
+			return (internal_error("cmd_simple_prog", "fork", 0));
+		else if (father == 0)
+			cmd_simple_prog_child(termcaps, elem, env, save);
+		save_pid(father);
+		waitpid(father, &ret, 0);
+		if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
+			return (internal_error("cmd_simple_prog", "set_termcaps", 1));
+		termcaps->in_child = 0;
+		if (WEXITSTATUS(ret) == EXIT_FAILURE || WIFSIGNALED(ret))
+			return (sig_child_func(ret));
 	}
 	else
 		cmd_simple_prog_child(termcaps, elem, env, save);
 	return (1);
 }
 
-void		stock_ret_val_in_env(int ret, char ***env)//bouger la func
+void		stock_ret_val_in_env(int ret, char ***env)
 {
 	char		**varenv;
 	char		*tmp;

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 07:36:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/02 14:26:09 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 16:09:20 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*format_cmd(int fd_buf)
 	return (new_entry);
 }
 
-static void		backquotes_child(int pdes[2], char *str)
+static void	backquotes_child(int pdes[2], char *str)
 {
 	char	*save_str;
 	t_list	*root;
@@ -62,14 +62,34 @@ static void		backquotes_child(int pdes[2], char *str)
 	exit(1);
 }
 
+static int	backquotes_father(t_save_fd *save, int pdes[2], int ret, char **str)
+{
+	char		*new_entry;
+	t_historic	*termcaps;
+
+	termcaps = get_termcaps();
+	termcaps->wordnofork = 0;
+	close(pdes[PIPE_ENTRY]);
+	if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
+		return (internal_error("exec_backquotes", "set_termcaps", 1));
+	new_entry = NULL;
+	if (!WIFSIGNALED(ret))
+		new_entry = format_cmd(pdes[PIPE_EXIT]);
+	close(pdes[PIPE_EXIT]);
+	ft_strdel(str);
+	if (new_entry == NULL)
+		*str = s_strdup("", __FILE__);
+	else
+		*str = new_entry;
+	return (1);
+}
+
 /*
-**	execute la sous-commande, son resultat est stockay dans le fichier
-**	buf_backquotes
+**	execute la sous-commande, son resultat est stockay dans une pipe
 */
 
 int			exec_backquotes(char **str)
 {
-	char		*new_entry;
 	t_historic	*termcaps;
 	int			pdes[2];
 	int			child_pid;
@@ -77,6 +97,7 @@ int			exec_backquotes(char **str)
 	int			ret;
 
 	save_fd(&save);
+	ret = -1;
 	termcaps = get_termcaps();
 	if (pipe(pdes) == -1)
 		return (internal_error("exec_backquotes", "create pipe", 0));
@@ -89,21 +110,9 @@ int			exec_backquotes(char **str)
 	else
 	{
 		waitpid(child_pid, &ret, 0);
-		termcaps->wordnofork = 0;
-		close(pdes[PIPE_ENTRY]);
-		if (termcaps->istty == 1 && set_termios(&termcaps->term, &save) == -1)
-			return (internal_error("exec_backquotes", "set_termcaps", 1));
-		new_entry = NULL;
-		if (!WIFSIGNALED(ret))
-			new_entry = format_cmd(pdes[PIPE_EXIT]);
-		close(pdes[PIPE_EXIT]);
-		ft_strdel(str);
-		if (new_entry == NULL)
-			*str = s_strdup("", __FILE__);
-		else
-			*str = new_entry;
+		ret = backquotes_father(&save, pdes, ret, str);
 	}
 	restore_fd(&save);
 	close_fd(&save);
-	return (1);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 10:23:19 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/30 19:51:57 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 16:14:16 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int		exec_lc(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 		if ((vars.fd_file = redir_file_lc(elem->right, save, *env)) != -1)
 			vars.ret = exec_simple(prog, env, save);
 	}
-	else if ((vars.fd_file = redir_file_lc(elem->right->left, save, *env)) != -1)
+	else if ((vars.fd_file = redir_file_lc(elem->right->left, save, *env))
+																		!= -1)
 	{
 		if (is_a_redir(elem->right->type))
 		{

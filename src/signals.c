@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/22 02:40:41 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/01 19:06:36 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 16:12:21 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int			sig_child_func(int status)
 {
 	t_historic	*termcaps;
 
+	if (WEXITSTATUS(status) == EXIT_FAILURE)
+		return (-1);
 	termcaps = get_termcaps();
 	if (WTERMSIG(status) == SIGCHLD)
 		return (1);
@@ -41,15 +43,7 @@ void		signals_management(void)
 	signal(SIGCONT, handler_sigcont);
 	signal(SIGWINCH, handler_sigwinch);
 }
-/*
-void		handler_sigint2(int numsig)
-{
-	signal(SIGINT, SIG_DFL);
-	kill(0, SIGINT);
-	close(STDOUT_FILENO);
-	(void)numsig;
-}
-*/
+
 void		signals_reset(void)
 {
 	int		i;

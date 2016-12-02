@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 09:08:28 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/01 07:41:26 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 16:10:06 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ static int		count_char_to_del(char *str)
 static char		*copy_in_quote(char *str, char *newstr, int *k)
 {
 	char	*tmp;
-//	char	quote;
 
-//	quote = *str;
 	tmp = goto_next_quote(str);
 	++str;
 	while (str < tmp)
