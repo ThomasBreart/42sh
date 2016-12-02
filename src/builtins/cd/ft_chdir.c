@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 13:28:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/01 17:17:35 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/02 14:55:50 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ static int		do_chdir(char *path, char *target)
 {
 	int		ret;
 
+	ret = 1;
 	if (path)
 		ret = chdir(path);
-	else
+	else if (target)
 		ret = chdir(target);
 	if (ret != 0)
 	{
