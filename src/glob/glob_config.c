@@ -6,36 +6,17 @@
 /*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/14 10:53:55 by fjacquem          #+#    #+#             */
-/*   Updated: 2016/12/02 18:24:45 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/11/14 10:53:57 by fjacquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_glob.h>
 
-static int	builtin_glob2(char *argv, int *flag)
-{
-	int	j;
-
-	j = 1;
-	while (argv[j])
-	{
-		if (argv[j] == 'c')
-			*flag |= GLOB_CASE;
-		else if (argv[j] == 'h')
-			*flag |= GLOB_HIDE;
-		else if (argv[j] == 'r')
-			*flag = 0;
-		else
-			return (0);
-		j++;
-	}
-	return (1);
-}
-
 int			builtin_glob(char **argv)
 {
 	static int	flag = 0;
 	int			i;
+	int			j;
 
 	i = 1;
 	if (!argv)
@@ -43,8 +24,21 @@ int			builtin_glob(char **argv)
 	while (argv[i])
 	{
 		if (argv[i][0] == '-')
-			if (!builtin_glob2(argv[i], &flag))
-				return (0);
+		{
+			j = 1;
+			while (argv[i][j])
+			{
+				if (argv[i][j] == 'c')
+					flag |= GLOB_CASE;
+				else if (argv[i][j] == 'h')
+					flag |= GLOB_HIDE;
+				else if (argv[i][j] == 'r')
+					flag = 0;
+				else
+					return (0);
+				j++;
+			}
+		}
 		i++;
 	}
 	return (flag);
@@ -60,13 +54,14 @@ static void	correct_string(char *s, char *pattern)
 {
 	char	*tmp;
 
-	if (*pattern == '*' || *pattern == '?' || *pattern == '[')
+	if ((*pattern == '*' || *pattern == '?' || *pattern == '[')
+		&& !ft_strcmp("./", s))
 	{
 		tmp = s + 2;
 		while (*tmp)
 		{
 			*s = *tmp;
-			s++;
+			s++; 
 			tmp++;
 		}
 		*s = 0;
@@ -102,3 +97,4 @@ void		glob__list_adding(t_list **lst, char *s, int (*cmp)(),
 	else
 		*lst = ft_lstnew_noalloc(s, ft_strlen(s) + 1);
 }
+
