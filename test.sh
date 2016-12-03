@@ -725,14 +725,14 @@ check_diff ${SHCSH}
 COMMAND="base64 /dev/urandom | head -c 1000 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/No/g'"
 check_diff ${SHBASH}
 
-COMMAND=" echo \"Testing redirections\" > /tmp/test.txt ; cat /tmp/test.txt"
+COMMAND=" echo \"Testing redirections\" > /tmp/test20.txt ; cat /tmp/test20.txt"
 check_diff ${SHBASH}
 
-COMMAND=" echo \"with multiple lines\" >> /tmp/test.txt  ; cat /tmp/test.txt"
+COMMAND=" echo \"with multiple lines\" >> /tmp/test20.txt  ; cat /tmp/test20.txt"
 BEHAVIOR="Testing redirections\nwith multiple lines"
 check_good_behavior
 
-COMMAND=" echo \"Testing redirections\" > /tmp/test.txt ;echo \"with multiple lines\" >> /tmp/test.txt ; wc -c < /tmp/test.txt ;"
+COMMAND=" echo \"Testing redirections\" > /tmp/test20.txt ;echo \"with multiple lines\" >> /tmp/test20.txt ; wc -c < /tmp/test20.txt ;"
 check_diff ${SHBASH}
 
 COMMAND=" read < auteur auteur"

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:52:08 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/30 20:30:10 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/03 18:33:24 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int		exec_rc(t_list *elem, char ***env, t_list *prog, t_save_fd *save);
 */
 int		redir_file_rrc(t_list *elem, t_save_fd *save, char **env);
 int		exec_rrc(t_list *elem, char ***env, t_list *prog, t_save_fd *save);
+
+/*
+**exec_subsh_or_word.c
+*/
+int		exec_subsh_or_word(t_list *prog, char ***env, t_save_fd *save);
 
 /*
 **	redir_sub.c
