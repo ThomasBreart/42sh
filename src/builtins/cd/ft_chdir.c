@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 13:28:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/03 17:30:06 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/03 17:56:36 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char		*get_pwd(void)
 	return (ret);
 }
 
-static void		update_pwd_and_oldpwd(char ***env, char *pwd)
+void			update_pwd_and_oldpwd(char ***env, char *pwd)
 {
 	char	**tmp;
 	char	*oldpwd;

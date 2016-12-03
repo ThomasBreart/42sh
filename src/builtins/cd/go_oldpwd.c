@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 13:28:46 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/03 17:30:18 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/03 17:48:01 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int			go_oldpwd(char ***env)
 		ft_strdel(&var);
 		return (-1);
 	}
-	update_oldpwd(env);
-	update_pwd(env);
+	update_pwd_and_oldpwd(env, var);
 	ft_putendl(ft_strchr(*ft_getenvadress("PWD", *env), '=') + 1);
-	ft_strdel(&var);
 	return (0);
 }
