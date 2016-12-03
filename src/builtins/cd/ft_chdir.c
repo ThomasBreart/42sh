@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 13:28:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/02 17:26:34 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/03 17:56:36 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char		*get_pwd(void)
 	return (ret);
 }
 
-static void		update_pwd_and_oldpwd(char ***env, char *pwd)
+void			update_pwd_and_oldpwd(char ***env, char *pwd)
 {
 	char	**tmp;
 	char	*oldpwd;
@@ -76,5 +76,5 @@ int				ft_chdir(char *target, char ***env, int flag)
 	if (do_chdir(path, target) == -1)
 		return (-1);
 	update_pwd_and_oldpwd(env, path);
-	return (1);
+	return (0);
 }

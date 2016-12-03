@@ -667,9 +667,6 @@ check_good_behavior
 COMMAND="history -c ; history ; history -s YOYO ; history -d 1"
 check_diff ${SHBASH}
 
-COMMAND="history -s -s -s -s -s -- --\"dsfdsf sdf sdf sdf dsfdsf\"      sdfdsf       sdf ; history > file ; cat file"
-check_diff ${SHBASH}
-
 COMMAND="history -an"
 BEHAVIOR="42sh: history: cannot use more than one of -anrw"
 check_good_behavior
@@ -823,7 +820,7 @@ check_diff ${SHBASH}
 
 COMMAND="echo \$PWD\aaa"
 check_diff ${SHBASH}
-
+# exit
 COMMAND="\$A"
 check_diff ${SHBASH}
 
@@ -858,7 +855,7 @@ COMMAND="echo ~P"
 check_diff ${SHBASH}
 
 COMMAND="echo ~\$PWD"
-check_diff ${SHBASH}
+check_diff ${SHCSH}
 
 COMMAND="echo ~~"
 check_diff ${SHBASH}
@@ -910,6 +907,19 @@ check_diff ${SHBASH}
 COMMAND=" setenv -z COCO && pwd"
 check_diff ${SHCSH}
 
+COMMAND=" cd -z COCO > /dev/null 2>&1 && pwd"
+check_diff ${SHBASH}
+
+COMMAND=" cd > /dev/null 2>&1 && pwd"
+check_diff ${SHBASH}
+# exit
+COMMAND=" read < auteur && pwd"
+check_diff ${SHCSH}
+
+COMMAND=" read -P < auteur && pwd"
+BEHAVIOR="read: usage: read [-r] [name ...]"
+check_good_behavior
+
 printf "\n"
 
 #===TESTS INHIBITEURS===#
@@ -956,9 +966,6 @@ fi
 COMMAND="echo {/*,./*}"
 check_diff ${SHBASH}
 
-COMMAND="echo \* \[ \\"
-check_diff ${SHBASH}
-
 COMMAND="{} []"
 BEHAVIOR="{}: Command not found."
 check_good_behavior
@@ -996,6 +1003,9 @@ check_diff ${SHBASH}
 COMMAND="setenv PWD `pwd` ; echo $PWD"
 check_diff ${SHBASH}
 
+COMMAND="(ls) > test"
+check_diff ${SHBASH}
+# exit
 printf "\n"
 
 #===TESTS SOUS SHELL===#

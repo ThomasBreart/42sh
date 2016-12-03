@@ -6,47 +6,11 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 16:35:00 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/02 17:58:38 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/03 17:56:03 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
-
-void		update_oldpwd(char ***env)
-{
-	char	**tmp;
-	char	*s;
-
-	if ((s = ft_getenv("PWD", *env)) == NULL)
-	{
-		tmp = fake_argv("OLDPWD", NULL);
-		builtin_unsetenv(tmp, env);
-	}
-	else
-	{
-		tmp = fake_argv("OLDPWD", s);
-		builtin_setenv(tmp, env, 0);
-		free(s);
-	}
-	free_double_tab(tmp);
-}
-
-/*
-**	Modidife la variable PWD de l'environnement
-*/
-
-void		update_pwd(char ***env)
-{
-	char	**tmp;
-	char	*s;
-
-	if ((s = getcwd(NULL, 0)) == NULL)
-		s = s_strdup(".", __FILE__);
-	tmp = fake_argv("PWD", s);
-	builtin_setenv(tmp, env, 0);
-	free(s);
-	free_double_tab(tmp);
-}
 
 int			builtin_cd(char **argv, char ***env)
 {
