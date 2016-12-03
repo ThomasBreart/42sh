@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/14 09:06:09 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/02 16:08:13 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/03 18:26:48 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,23 @@ static char		*del_parenthesis(char *str)
 	return (new_str);
 }
 
-static int		subshell_child(char *new_entry)
+int				exec_cmd_subsh(t_list *first, char ***env, t_save_fd *save)
+{
+	int			ret;
+
+	get_set_save_fd(save);
+	ret = exec_token(first, env, save);
+	return (ret);
+}
+
+static int		subshell_child(char *new_entry, t_save_fd *save)
 {
 	int		ret;
 	t_list	*root;
 
 	signals_reset();
 	root = cmd_analysis(&new_entry);
-	ret = exec_cmd(root->left, get_env());
+	ret = exec_cmd_subsh(root->left, get_env(), save);
 	exit(ret);
 }
 
@@ -47,7 +56,7 @@ int				exec_subshell(t_list *elem, t_save_fd *save)
 		return (internal_error("exec_subshell", "fork", 0));
 	termcaps->wordnofork = 1;
 	if (child_pid == 0)
-		subshell_child(new_entry);
+		subshell_child(new_entry, save);
 	else
 	{
 		ft_strdel(&new_entry);

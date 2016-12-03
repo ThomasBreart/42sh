@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 05:10:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/02 16:24:01 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/02 16:29:22 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int			extract_event(char **str, int start_analysis, int *start_subcmd,
 			return (event_find(str, i, sub_cmd, start_subcmd));
 		else if ((*str)[i] == '^')
 			return (quick_sub_find(str, i, sub_cmd, start_subcmd));
-//		if ((*str)[i] != '\0')
 		++i;
 	}
 	return (0);
