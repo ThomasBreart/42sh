@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 10:23:19 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/03 18:34:14 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/03 20:13:02 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		exec_lc(t_list *elem, char ***env, t_list *prog, t_save_fd *save)
 	if (elem->right->type == LEX_WORD)
 	{
 		if ((vars.fd_file = redir_file_lc(elem->right, save, *env)) != -1)
-			exec_subsh_or_word(prog, env, save);
+			vars.ret = exec_subsh_or_word(prog, env, save);
 	}
 	else if ((vars.fd_file = redir_file_lc(elem->right->left, save, *env))
 																		!= -1)
