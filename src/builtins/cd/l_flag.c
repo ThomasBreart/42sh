@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 14:58:02 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/02 14:58:06 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/04 22:52:25 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static char		*ft_processpath(char *path)
 		}
 		path += !!*path;
 	}
-	if (i > 0)
+	if (i >= 0)
 		str[i] = '\0';
 	if (!*str)
 		str = ft_strcpy(str, "/");
