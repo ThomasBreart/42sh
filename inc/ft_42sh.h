@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/03 18:17:32 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/04 16:48:04 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void				free_tree(t_list *root);
 /*
 **	cmd_analysis.c
 */
-t_list				*cmd_analysis(/*t_list **root, */char **entry);
+t_list				*cmd_analysis(char **entry);
 
 /*
 **	cmd_simple.c

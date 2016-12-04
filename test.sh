@@ -1005,6 +1005,7 @@ check_diff ${SHBASH}
 
 COMMAND="(ls) > test"
 check_diff ${SHBASH}
+
 # exit
 printf "\n"
 

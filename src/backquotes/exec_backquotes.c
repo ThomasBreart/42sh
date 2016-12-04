@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 07:36:17 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/02 16:09:20 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/04 18:57:55 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ static int	backquotes_father(t_save_fd *save, int pdes[2], int ret, char **str)
 	termcaps = get_termcaps();
 	termcaps->wordnofork = 0;
 	close(pdes[PIPE_ENTRY]);
-	if (termcaps->istty == 1 && set_termios(&termcaps->term, save) == -1)
-		return (internal_error("exec_backquotes", "set_termcaps", 1));
+	if (termcaps->istty == 1)
+		set_termios(&termcaps->term, save);
+	if (termcaps->istty == 1)
+		set_termios(&termcaps->term, save);
 	new_entry = NULL;
 	if (!WIFSIGNALED(ret))
 		new_entry = format_cmd(pdes[PIPE_EXIT]);
