@@ -40,6 +40,18 @@ int		only_chars_in_cmd(char *s)
 	return (1);
 }
 
+int get_entry(t_historic *termcaps, char **entry)
+{
+	int ret;
+
+	if (termcaps->istty)
+		ret = get_command(termcaps, entry);
+	else
+		ret = get_next_line(STDIN_FILENO, entry);
+	termcaps->in_getcmd = 0;
+	return (ret);
+}
+
 int		main(int ac, char **av_entry, char **env)
 {
 	char		*entry;
@@ -52,16 +64,15 @@ int		main(int ac, char **av_entry, char **env)
 	init(&termcaps, &env, &entry);
 	while (1)
 	{
-		if (termcaps->istty == 1)
-			ret = get_command(termcaps, &entry);
-		else
-			ret = get_next_line(0, &entry);
-		termcaps->in_getcmd = 0;
-		if (only_chars_in_cmd(entry) == -1)
-			break ;
-		if ((root = cmd_analysis(&entry)) != NULL)
-			exec_cmd(root->left, get_env());
-		free_memory(&entry, termcaps, &root, 1);
+		ret = get_entry(termcaps, &entry);
+		if (entry)
+		{
+			if (only_chars_in_cmd(entry) == -1)
+				break ;
+			if ((root = cmd_analysis(&entry)) != NULL)
+				exec_cmd(root->left, get_env());
+			free_memory(&entry, termcaps, &root, 1);
+		}
 		if (ret == 0)
 			break ;
 	}
