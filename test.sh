@@ -719,9 +719,6 @@ check_diff ${SHCSH}
 COMMAND="ls -r | cat -e | cat -e | cat -e | cat -e | sort"
 check_diff ${SHCSH}
 
-COMMAND="base64 /dev/urandom | head -c 1000 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/No/g'"
-check_diff ${SHBASH}
-
 COMMAND=" echo \"Testing redirections\" > /tmp/test20.txt ; cat /tmp/test20.txt"
 check_diff ${SHBASH}
 
@@ -818,9 +815,9 @@ check_diff ${SHBASH}
 COMMAND="echo \$PWD/aaa"
 check_diff ${SHBASH}
 
-COMMAND="echo \$PWD\aaa"
+COMMAND="echo \$PWD\\\aaa"
 check_diff ${SHBASH}
-# exit
+
 COMMAND="\$A"
 check_diff ${SHBASH}
 
@@ -1001,7 +998,7 @@ COMMAND="ls `cd $HOME ; pwd`"
 check_diff ${SHBASH}
 
 COMMAND="setenv PWD `pwd` ; echo $PWD"
-check_diff ${SHBASH}
+check_diff ${SHCSH}
 
 COMMAND="(ls) > test"
 check_diff ${SHBASH}

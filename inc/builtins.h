@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:44:38 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/03 17:55:12 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/05 15:47:12 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	make_copies(char *argv, char ***env, int flag);
 **	builtin_cd.c
 */
 int		builtin_cd(char **argv, char ***env);
-int		go_home(char ***env);
-int		go_oldpwd(char ***env);
+int		go_home(char ***env, int flag);
+int		go_oldpwd(char ***env, int flag);
 int		ft_chdir(char *target, char ***env, int flag);
 int		print_error_cd(char *str);
 char	*get_symbolink_path(char ***env, char *path);
@@ -68,6 +68,8 @@ int		check_arg(char *target);
 int		cd_parse_flag(char **args, int *flag);
 int		cd_usage(char *args);
 void	update_pwd_and_oldpwd(char ***env, char *pwd);
+void	update_pwd(char ***env);
+void	update_oldpwd(char ***env);
 
 /*
 **	builtin_env.c
