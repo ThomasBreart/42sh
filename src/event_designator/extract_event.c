@@ -6,11 +6,37 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 05:10:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/05 21:00:16 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/05 22:30:00 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
+
+static int	event_size(char *str)
+{
+	char *tmp;
+
+	tmp = str;
+	if (is_event_previous_command(str))
+		return (2);
+	else if (is_event_positif_number(str))
+	{
+		++str;
+		while (ft_isdigit(*str))
+			++str;
+		return (str - tmp);
+	}
+	else if (is_event_negatif_number(str))
+	{
+		str = str + 2;
+		while (ft_isdigit(*str))
+			++str;
+		return (str - tmp);
+	}
+	else if (is_event_sharp(str))
+		return (2);
+	return (-1);
+}
 
 static int	event_find(char **str, int i, char **sub_cmd, int *start_subcmd)
 {
@@ -29,7 +55,8 @@ static int	event_find(char **str, int i, char **sub_cmd, int *start_subcmd)
 	}
 	else
 		tmp = goto_next_char((*str + i), ' ');
-	len_subcmd = tmp - (*str + i);
+	if ((len_subcmd = event_size(*str + i)) == -1)
+		len_subcmd = tmp - (*str + i);
 	*sub_cmd = s_strsub(*str, i, len_subcmd, __FILE__);
 	new_str = s_strnew(ft_strlen(*str) - len_subcmd, __FILE__);
 	ft_strncat(new_str, *str, *start_subcmd);
