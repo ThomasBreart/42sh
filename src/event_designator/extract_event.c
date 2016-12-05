@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 05:10:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/02 16:29:22 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/05 21:00:16 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static int	quick_sub_find(char **str, int i, char **sub_cmd, int *start_subcmd)
 	if (*tmp == '^')
 	{
 		tmp = goto_next_char(tmp + 1, '^');
-		len_subcmd = tmp + 1 - (*str + i);
+		if (*tmp == '^')
+			len_subcmd = tmp + 1 - (*str + i);
+		else
+			len_subcmd = tmp - (*str + i);
 	}
 	else
 		len_subcmd = tmp - (*str + i);
