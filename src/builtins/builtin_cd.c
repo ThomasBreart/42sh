@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 16:35:00 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/04 22:51:36 by Marco            ###   ########.fr       */
+/*   Updated: 2016/12/05 15:46:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		update_oldpwd(char ***env)
 {
 	char	**tmp;
 	char	*s;
+
 	if ((s = ft_getenv("PWD", *env)) == NULL)
 	{
 		tmp = fake_argv("OLDPWD", NULL);
@@ -25,7 +26,6 @@ void		update_oldpwd(char ***env)
 	{
 		tmp = fake_argv("OLDPWD", s);
 		builtin_setenv(tmp, env, 0);
-		// free(s);
 	}
 	free(s);
 	free_double_tab(tmp);
@@ -34,6 +34,7 @@ void		update_oldpwd(char ***env)
 /*
 **	Modidife la variable PWD de l'environnement
 */
+
 void		update_pwd(char ***env)
 {
 	char	**tmp;
@@ -63,7 +64,7 @@ int			builtin_cd(char **argv, char ***env)
 	else if (check_arg(target))
 		ret = -1;
 	else if (!ft_strlen(target))
-		ret = go_home(env,flag);
+		ret = go_home(env, flag);
 	else if (!ft_strcmp(target, "-"))
 		ret = go_oldpwd(env, flag);
 	else
