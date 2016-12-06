@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 10:59:15 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/03 20:53:27 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 10:37:39 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char		**empty_tab(void)
 **	modifie le maillon en fonction de son argv
 */
 
-void	update_elem(t_list *elem, int change_argv)
+void			update_elem(t_list *elem, int change_argv)
 {
 	ft_strdel(&elem->content);
 	ft_strdel(&elem->fullcontent);

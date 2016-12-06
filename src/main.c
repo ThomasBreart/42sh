@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/17 01:38:32 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/05 13:20:25 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 10:37:21 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		only_chars_in_cmd(char *s)
 	return (1);
 }
 
-int get_entry(t_historic *termcaps, char **entry)
+int		get_entry(t_historic *termcaps, char **entry)
 {
 	int ret;
 

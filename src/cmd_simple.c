@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 04:30:42 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/04 18:51:06 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 10:36:50 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	cmd_simple_prog_child(t_historic *termcaps, t_list *elem,
 												char **env, t_save_fd *save)
 {
 	signals_reset();
-
 	if (termcaps->istty == 1)
 		set_termios(&termcaps->save, save);
 	execve(elem->content, elem->argv, env);

@@ -6,20 +6,20 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/14 21:43:10 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/05 19:57:22 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 10:33:47 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-int			convert_shell_var(char *linecur, int i, char **entry, char **env)
+int			convert_shell_var(char **linecur, int i, char **entry, char **env)
 {
 	int		j;
 	char	*key;
 	char	*value;
 	char	*tmp;
 
-	tmp = linecur;
+	tmp = *linecur;
 	j = i + 1;
 	while (tmp[j] != '\0' && tmp[j] != ' ' && tmp[j] != '$' && tmp[j] != '"'
 						&& tmp[j] != '\'' && tmp[j] != '\\' && tmp[j] != '/')
@@ -35,6 +35,7 @@ int			convert_shell_var(char *linecur, int i, char **entry, char **env)
 	else
 		j = 0;
 	free(key);
+	*linecur = *entry;
 	return (i + j);
 }
 
@@ -75,10 +76,7 @@ void		check_shell_variable(char **entry, char *tmp, char **env)
 		}
 		else if (tmp[i] == '$' && tmp[i + 1] != '\0' && tmp[i + 1] != ' ' &&
 															tmp[i + 1] != '$')
-		{
-			i = convert_shell_var(tmp, i, entry, env);
-			tmp = *entry;
-		}
+			i = convert_shell_var(&tmp, i, entry, env);
 		else
 			i += !!tmp[i];
 	}
