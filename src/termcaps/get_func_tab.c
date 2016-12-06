@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 23:03:31 by tbreart           #+#    #+#             */
-/*   Updated: 2016/07/27 19:26:30 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 12:43:27 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static void	normilol2(t_func_tab **funcs)
 	tmp[18].f = &ft_key_eof;
 	tmp[19].k = KEY_TAB;
 	tmp[19].f = &ft_key_tab;
-	tmp[20].k = KEY_CTRL_R;
-	tmp[20].f = &ft_key_search_hist;
-	tmp[21].k = KEY_CTRL_E;
-	tmp[21].f = &ft_key_selection_mode;
-	tmp[22].k = KEY_NOPE;
-	tmp[22].f = NULL;
+//	tmp[20].k = KEY_CTRL_R;
+//	tmp[20].f = &ft_key_search_hist;
+	tmp[20].k = KEY_CTRL_E;
+	tmp[20].f = &ft_key_selection_mode;
+	tmp[21].k = KEY_NOPE;
+	tmp[21].f = NULL;
 }
 
 static void	normilol(t_func_tab **funcs)
@@ -63,7 +63,7 @@ t_func_tab	*get_func_tab(void)
 
 	if (funcs == NULL)
 	{
-		funcs = (t_func_tab*)s_memalloc(sizeof(t_func_tab) * 23, __FILE__);
+		funcs = (t_func_tab*)s_memalloc(sizeof(t_func_tab) * 22, __FILE__);
 		normilol(&funcs);
 		funcs[0].k = KEY_LEFT;
 		funcs[0].f = &ft_key_left;

@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:48:06 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/15 15:28:03 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 12:49:05 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,10 @@ int		is_a_word(char *s);
 **lexical_analysis_ope_debug.c
 */
 void	show_analyse_lex(t_list *first);
+
+/*
+**	s_strsplit_with_quote.c
+*/
+char	**s_strsplit_with_quote(char *s, char c);
 
 #endif

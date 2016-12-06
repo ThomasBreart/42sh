@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/06 12:23:00 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 12:49:58 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@
 # include "structs.h"
 # include "lexer.h"
 # include "parser.h"
-# include "bonus.h"
 # include "builtins.h"
 # include "termcaps.h"
 # include "redirs.h"
@@ -418,5 +417,37 @@ void				show_binary_tree_lr(t_list *root);
 **	glob/glob.c
 */
 void				do_globbing(char ***elem);
+
+/*
+**	add_hash.c
+*/
+int		add_bin_to_hashtable(char *bin, char *fullpath_bin);
+
+/*
+**	find_shell_lvl.c
+*/
+char	*find_shlvl(char **taab);
+
+/*
+**	hash.c
+*/
+char	*check_hashtable(char *bin, char **env);
+int		hash_content(char *str);
+
+/*
+**	meta_check_shellvar.c
+*/
+void	check_shell_variable(char **entry, char *tmp, char **env);
+
+/*
+**	meta_check_tild.c
+*/
+void	check_tild(char **entry);
+
+/*
+**	metacharacters.c
+*/
+int		convert_metacharacters(t_list *elem, char **env);
+void	edit_line_meta(char **entry, char *value, int pos_key, int len_key);
 
 #endif
