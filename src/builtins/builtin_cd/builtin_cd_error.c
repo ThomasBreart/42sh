@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:42:57 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/02 18:29:01 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:19:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			check_arg(char *target)
 {
 	char	**ar;
 
-	ar = ft_strsplit(target, ' ');
+	ar = s_strsplit(target, ' ', __FILE__);
 	if (ft_tablen(ar) > 1)
 	{
 		ft_putendl_fd("cd: Too many arguments.", STDERR_FILENO);

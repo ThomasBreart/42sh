@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:43:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/02 17:55:40 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:15:19 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char		*get_tokenn(char *argv)
 		index++;
 		argv++;
 	}
-	ret = ft_strnew(index + 1);
+	ret = s_strnew((index + 1), __FILE__);
 	if (index)
 		ret = ft_strncpy(ret, cpy, index);
 	return (ret);

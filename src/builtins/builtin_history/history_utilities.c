@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 12:36:18 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/06 14:49:06 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:15:01 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			get_value(char *cpy, int index)
 {
 	char	*value;
 
-	value = ft_strnew(index + 1);
+	value = s_strnew((index + 1), __FILE__);
 	if (index)
 		ft_strncpy(value, cpy, index);
 	index = ft_atoi(value);

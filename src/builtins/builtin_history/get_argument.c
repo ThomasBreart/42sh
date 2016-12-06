@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 16:16:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/20 11:02:56 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:15:38 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char			*get_argument(char *argv, int end)
 		index = parse_line_until_end(argv);
 	else
 		index = parse_line_until_space(argv);
-	ret = ft_strnew(index + 1);
+	ret = s_strnew((index + 1), __FILE__);
 	if (index)
 		ret = ft_strncpy(ret, cpy, index);
 	return (ret);

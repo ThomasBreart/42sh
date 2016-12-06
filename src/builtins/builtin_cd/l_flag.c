@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 14:58:02 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/06 14:51:18 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:19:04 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ static char		*ft_create_path(char **paths)
 	{
 		if (ft_strlen(paths[0]) &&
 				paths[0][ft_strlen(paths[0]) - 1] != '/')
-			tmp = ft_strjoin(paths[0], "/");
+			tmp = s_strjoin(paths[0], "/", __FILE__);
 		else
-			tmp = ft_strdup(paths[0]);
-		tmp2 = ft_strjoin(tmp, paths[1]);
+			tmp = s_strdup(paths[0], __FILE__);
+		tmp2 = s_strjoin(tmp, paths[1], __FILE__);
 		ft_strdel(&tmp);
 	}
 	else
-		tmp2 = ft_strdup(paths[1]);
+		tmp2 = s_strdup(paths[1], __FILE__);
 	ft_remove_usless_slash(tmp2);
 	tmp = ft_processpath(tmp2);
 	ft_strdel(&tmp2);

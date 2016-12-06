@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 18:09:46 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/10/20 12:05:38 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:12:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void		flag_a_or_w(t_flags *flags)
 		return ;
 	if (flags->argument)
 	{
-		tmp = ft_strdup(termcaps->path_historic_file);
+		tmp = s_strdup(termcaps->path_historic_file, __FILE__);
 		ft_strdel(&termcaps->path_historic_file);
-		termcaps->path_historic_file = ft_strdup(flags->argument);
+		termcaps->path_historic_file = s_strdup(flags->argument, __FILE__);
 		save(flags, termcaps);
 		ft_strdel(&termcaps->path_historic_file);
-		termcaps->path_historic_file = ft_strdup(tmp);
+		termcaps->path_historic_file = s_strdup(tmp, __FILE__);
 		ft_strdel(&tmp);
 	}
 	else if (flags->flag_a)
