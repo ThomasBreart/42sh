@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_glob.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjacquem <fjacquem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/06 10:23:35 by fjacquem          #+#    #+#             */
-/*   Updated: 2016/12/06 10:23:40 by fjacquem         ###   ########.fr       */
+/*   Updated: 2016/12/06 14:54:13 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_GLOB_H
 # define FT_GLOB_H
-# include "../lib/libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 # include <ft_42sh.h>
 # include <stdio.h>
 # include <stdlib.h>

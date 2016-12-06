@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 12:36:18 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/11/07 18:31:01 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 14:49:06 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char		*reverse_split(char **argv, int i)
 	int		len;
 
 	len = get_size(argv, i);
-	ret = (char*)ft_memalloc(sizeof(char) * (len + 1));
+	ret = (char*)s_memalloc(sizeof(char) * (len + 1), __FILE__);
 	while (argv[i])
 	{
 		ft_strcat(ret, argv[i]);

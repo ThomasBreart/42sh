@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 14:58:02 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/12/04 22:52:25 by Marco            ###   ########.fr       */
+/*   Updated: 2016/12/06 14:51:18 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char		*ft_processpath(char *path)
 	char	*str;
 	int		i;
 
-	str = (char *)malloc(ft_strlen(path) + 1);
+	str = (char *)s_memalloc(ft_strlen(path) + 1, __FILE__);
 	i = 0;
 	while (*path)
 	{

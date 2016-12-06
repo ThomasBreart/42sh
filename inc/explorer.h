@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   explorer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fjacquem <fjacquem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 03:23:22 by fjacquem          #+#    #+#             */
-/*   Updated: 2016/12/06 13:10:30 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 14:53:58 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXPLORER_H
 # include <map.h>
 # include <sys/ioctl.h>
-# include "../lib/libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 # include <unistd.h>
 # include <termios.h>
 # include <term.h>

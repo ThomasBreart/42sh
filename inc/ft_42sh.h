@@ -6,14 +6,14 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/06 13:07:57 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 14:53:41 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_42SH_H
 # define FT_42SH_H
 
-# include "../lib/libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <dirent.h>

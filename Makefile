@@ -1,7 +1,7 @@
 NAME = 42sh
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
-LIBFT = lib/libft/
+LIBFT = ./libft/
 
 SRC := $(filter %.c, $(shell find src -type f))
 
