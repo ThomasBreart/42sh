@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/22 10:56:40 by tbreart           #+#    #+#             */
-/*   Updated: 2016/11/18 15:25:33 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:31:31 by jmaccion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 # define KEY_CTRL_U 21
 # define KEY_DEL 127
 # define KEY_SUPP 2117294875
+
+#define malloc(x) NULL
 
 typedef struct	s_func_tab
 {
