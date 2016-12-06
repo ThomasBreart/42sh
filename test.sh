@@ -982,6 +982,15 @@ check_diff ${SHBASH}
 COMMAND='/bin/ech* this is an echo and * test'
 check_diff ${SHBASH}
 
+COMMAND='echo [{[:upper:],[:lower:]}]*'
+check_diff ${SHBASH}
+
+COMMAND='echo [![:upper:]]*'
+check_diff ${SHBASH}
+
+COMMAND='echo [![:upper:]]{*,*}'
+check_diff ${SHBASH}
+
 printf "\n"
 
 #===TESTS BACK QUOTES===#

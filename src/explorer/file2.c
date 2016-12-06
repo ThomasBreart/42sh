@@ -39,7 +39,6 @@ t_file			*go_page(t_file *root, int n_page, int row)
 			cur = 0;
 			page++;
 		}
-		printf("%s\n", root->p.name);
 		root = root->next;
 		cur++;
 	}
