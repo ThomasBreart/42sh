@@ -6,7 +6,7 @@
 /*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 03:23:22 by fjacquem          #+#    #+#             */
-/*   Updated: 2016/03/23 03:23:24 by fjacquem         ###   ########.fr       */
+/*   Updated: 2016/12/06 13:10:30 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define MONTH_I "Jan\0" "Feb\0" "Mar\0" "Apr\0" "May\0" "Jun\0"
 # define MONTH_II "Jul\0" "Aug\0" "Sep\0" "Oct\0" "Nov\0" "Dec\0"
 # define MONTH MONTH_I MONTH_II
-# include <stdio.h>
+# include <stdio.h> // a supp
 # include <fcntl.h>
 # include <unistd.h>
 # include <dirent.h>

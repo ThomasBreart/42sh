@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/06 12:49:58 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 13:07:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
-
-# include <stdio.h> // A SUPPRIMER AVANT LE PUSH
 
 # define SUBCMD_BACKQUOTE	1
 # define SUBCMD_DOLLAR		2
@@ -63,8 +61,6 @@
 # include "builtins.h"
 # include "termcaps.h"
 # include "redirs.h"
-
-void				show_list(t_list *first); // debug.c A SUPPR ?!
 
 /*
 **	check_word_and_subsh.c
