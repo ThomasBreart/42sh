@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 23:03:31 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/06 12:43:27 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 15:48:12 by jmaccion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static void	normilol2(t_func_tab **funcs)
 	tmp[18].f = &ft_key_eof;
 	tmp[19].k = KEY_TAB;
 	tmp[19].f = &ft_key_tab;
-//	tmp[20].k = KEY_CTRL_R;
-//	tmp[20].f = &ft_key_search_hist;
 	tmp[20].k = KEY_CTRL_E;
 	tmp[20].f = &ft_key_selection_mode;
 	tmp[21].k = KEY_NOPE;
