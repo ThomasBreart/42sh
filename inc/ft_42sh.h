@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/06 14:53:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/12/06 15:46:58 by jmaccion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,33 +417,34 @@ void				do_globbing(char ***elem);
 /*
 **	add_hash.c
 */
-int		add_bin_to_hashtable(char *bin, char *fullpath_bin);
+int					add_bin_to_hashtable(char *bin, char *fullpath_bin);
 
 /*
 **	find_shell_lvl.c
 */
-char	*find_shlvl(char **taab);
+char				*find_shlvl(char **taab);
 
 /*
 **	hash.c
 */
-char	*check_hashtable(char *bin, char **env);
-int		hash_content(char *str);
+char				*check_hashtable(char *bin, char **env);
+int					hash_content(char *str);
 
 /*
 **	meta_check_shellvar.c
 */
-void	check_shell_variable(char **entry, char *tmp, char **env);
+void				check_shell_variable(char **entry, char *tmp, char **env);
 
 /*
 **	meta_check_tild.c
 */
-void	check_tild(char **entry);
+void				check_tild(char **entry);
 
 /*
 **	metacharacters.c
 */
-int		convert_metacharacters(t_list *elem, char **env);
-void	edit_line_meta(char **entry, char *value, int pos_key, int len_key);
+int					convert_metacharacters(t_list *elem, char **env);
+void				edit_line_meta(char **entry, char *value, int pos_key,\
+int len_key);
 
 #endif
