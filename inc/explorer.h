@@ -60,11 +60,11 @@
 # include <errno.h>
 # include <sys/acl.h>
 # include <structs.h>
+# include <termcaps.h>
 
 typedef struct stat		t_stat;
 typedef struct dirent	t_dir;
 
-# include <termcaps.h>
 enum
 {
 	NUM_ID = 1,
@@ -128,92 +128,94 @@ typedef struct			s_args
 }						t_args;
 
 /*
-**			ft_outc
+**						ft_outc
 */
-int			ft_outc(int c);
+int						ft_outc(int c);
 
 /*
-**			addfile.c
+**						addfile.c
 */
-void		addfile(t_file **f, t_file *add, int rev);
+void					addfile(t_file **f, t_file *add, int rev);
 
 /*
-**			explorer.c
+**						explorer.c
 */
-int			builtin_explorer(t_historic *t, char ***env);
-void		set_args(t_file *root, t_args *arg, t_historic *t);
-
+int						builtin_explorer(t_historic *t, char ***env);
+void					set_args(t_file *root, t_args *arg, t_historic *t);
 
 /*
-**			file.c
+**						file.c
 */
-t_file		*new_file(t_args *a, char *name);
-t_file		*ft_open(t_args *a, char *dn);
-void		del(t_file **f);
+t_file					*new_file(t_args *a, char *name);
+t_file					*ft_open(t_args *a, char *dn);
+void					del(t_file **f);
 
 /*
-**			file2.c
+**						file2.c
 */
-int			get_nbfile(t_file *root);
-void		print_at(int fd, int n);
-t_file		*get_file(t_file *root, t_args *a, t_historic *t);
+int						get_nbfile(t_file *root);
+void					print_at(int fd, int n);
+t_file					*get_file(t_file *root, t_args *a, t_historic *t);
 
 /*
-**			initialize.c
+**						initialize.c
 */
-void		delete_print(t_print *p);
-void		init_print(char *name, t_stat *s, int sort, t_print *p);
+void					delete_print(t_print *p);
+void					init_print(char *name, t_stat *s, int sort, t_print *p);
 
 /*
-**			ls.c			
+**						ls.c
 */
-int			ls(t_historic *t, t_args *arg);
+int						ls(t_historic *t, t_args *arg);
 
 /*
-**			opts.c
+**						opts.c
 */
-int			skip_pages(struct winsize *ws, int *cur, t_file **ptr, t_args *a);
+int						skip_pages(struct winsize *ws, int *cur, t_file **ptr,
+						t_args *a);
 
 /*
-**			print.c
+**						print.c
 */
-void		print_stat(t_args *a, t_print *f, int fd);
+void					print_stat(t_args *a, t_print *f, int fd);
 
 /*
-**			print2.c
+**						print2.c
 */
-void		print_type(mode_t mode, int fd);
-void		print_spec(mode_t mode, int fd);
-void		print_header(int blks, int page, t_args *a, int fd);
+void					print_type(mode_t mode, int fd);
+void					print_spec(mode_t mode, int fd);
+void					print_header(int blks, int page, t_args *a, int fd);
 
 /*
-**			print_files.c
-*/	
-void		print_files(int fd, struct winsize *ws, t_args *a, t_file *f);
-void		print_offset(int offset, int c, int fd);
-char		*set_filename(char *s1, char *s2, int add_sep);
-int			prepare(t_args *a, t_file *root);
+**						print_files.c
+*/
+void					print_files(int fd, struct winsize *ws, t_args *a,
+						t_file *f);
+void					print_offset(int offset, int c, int fd);
+char					*set_filename(char *s1, char *s2, int add_sep);
+int						prepare(t_args *a, t_file *root);
 
 /*
-**			extern
+**						extern
 */
-int			builtin_cd(char **args, char ***env);
-int			recalc_need_size(void *na, void *nf);
-int			can_drawing(struct winsize *ws);
+int						builtin_cd(char **args, char ***env);
+int						recalc_need_size(void *na, void *nf);
+int						can_drawing(struct winsize *ws);
 
 /*
-**			inputs.c
+**						inputs.c
 */
-void		mykey_up(t_historic *t, t_args *arg);
-void		mykey_down(t_historic *t, t_args *arg);
-void		mykey_left(t_args *arg);
-void		mykey_right(t_args *arg);
-void		mykey_cd(int in, t_historic *t, t_args *arg, t_file **root);
+void					mykey_up(t_historic *t, t_args *arg);
+void					mykey_down(t_historic *t, t_args *arg);
+void					mykey_left(t_args *arg);
+void					mykey_right(t_args *arg);
+void					mykey_cd(int in, t_historic *t, t_args *arg,
+						t_file **root);
 
 /*
-**			Change directory
+**						Change directory
 */
-void		call_cd(char *path, char ***env);
-int			open_folder(t_historic *t, t_file **root, t_args *arg);
-void		open_parent_folder(t_file **root, t_args *arg);
+void					call_cd(char *path, char ***env);
+int						open_folder(t_historic *t, t_file **root, t_args *arg);
+void					open_parent_folder(t_file **root, t_args *arg);
 #endif

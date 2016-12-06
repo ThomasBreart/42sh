@@ -12,11 +12,30 @@
 
 #include <ft_glob.h>
 
+static int	builtin_glob2(char *argv, int *flag)
+{
+	int	j;
+
+	j = 1;
+	while (argv[j])
+	{
+		if (argv[j] == 'c')
+			*flag |= GLOB_CASE;
+		else if (argv[j] == 'h')
+			*flag |= GLOB_HIDE;
+		else if (argv[j] == 'r')
+			*flag = 0;
+		else
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
 int			builtin_glob(char **argv)
 {
 	static int	flag = 0;
 	int			i;
-	int			j;
 
 	i = 1;
 	if (!argv)
@@ -25,19 +44,8 @@ int			builtin_glob(char **argv)
 	{
 		if (argv[i][0] == '-')
 		{
-			j = 1;
-			while (argv[i][j])
-			{
-				if (argv[i][j] == 'c')
-					flag |= GLOB_CASE;
-				else if (argv[i][j] == 'h')
-					flag |= GLOB_HIDE;
-				else if (argv[i][j] == 'r')
-					flag = 0;
-				else
-					return (0);
-				j++;
-			}
+			if (builtin_glob2(argv[i], &flag))
+				return (0);
 		}
 		i++;
 	}
@@ -61,7 +69,7 @@ static void	correct_string(char *s, char *pattern)
 		while (*tmp)
 		{
 			*s = *tmp;
-			s++; 
+			s++;
 			tmp++;
 		}
 		*s = 0;
@@ -97,4 +105,3 @@ void		glob__list_adding(t_list **lst, char *s, int (*cmp)(),
 	else
 		*lst = ft_lstnew_noalloc(s, ft_strlen(s) + 1);
 }
-

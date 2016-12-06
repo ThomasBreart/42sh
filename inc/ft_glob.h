@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_glob.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/12/06 10:23:35 by fjacquem          #+#    #+#             */
+/*   Updated: 2016/12/06 10:23:40 by fjacquem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_GLOB_H
 # define FT_GLOB_H
 # include "../lib/libft/includes/libft.h"
@@ -49,10 +61,12 @@ int					ft_iscntrl(int c);
 **	Process
 */
 int					can_continue(int flags, char *name, char *pattern);
-int					glob__open_directory(t_globinfo g, char *pattern, t_list **results);
+int					glob__open_directory(t_globinfo g, char *pattern,
+					t_list **results);
 int					match_bracket(t_globinfo *g, char *s, char *pattern,
 					t_list **results);
-int					glob__match(t_globinfo *g, char *filename, char *pattern, t_list **results);
+int					glob__match(t_globinfo *g, char *filename, char *pattern,
+					t_list **results);
 int					get_patterns(t_list **patterns, char *pattern);
 void				glob__list_adding(t_list **lst, char *s, int (*cmp)(),
 										char *pattern);
