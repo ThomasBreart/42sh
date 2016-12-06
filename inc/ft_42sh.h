@@ -6,7 +6,7 @@
 /*   By: tbreart <tbreart@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 22:31:35 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/04 16:48:04 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 12:23:00 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,11 @@ int					internal_error(char *s, char *error, int dead);
 int					error_fd_aggr(int fd_aggr);
 
 /*
+**	error_event_not_found.c
+*/
+int					error_event_not_found(char *str, int error);
+
+/*
 **	event_negatif_number.c
 */
 int					is_event_negatif_number(char *str);
@@ -265,7 +270,8 @@ int					event_string_anywhere(char *sub_cmd, char **new_str);
 **	event_string_substitution.c
 */
 int					is_event_string_substitution(char *str);
-int					event_string_substitution(char *sub_cmd, char **new_str);
+int					event_string_substitution(char *sub_cmd, char **new_str,
+														int *is_substitution);
 
 /*
 **	exec_cmd.c

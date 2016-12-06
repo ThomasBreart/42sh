@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 17:26:56 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/05 22:29:08 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 12:24:57 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ int		is_event_negatif_number(char *str)
 		++str;
 	else
 		return (0);
-//	if (is_event_positif_number(str) == 1)
-//		return (1);
-//	return (0);
 	return (ft_isdigit(*str));
 }
 

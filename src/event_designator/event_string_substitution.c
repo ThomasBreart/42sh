@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 17:31:44 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/05 21:07:19 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 12:19:52 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static char		*str_substitution(char *content, char *pos, char *new_subcmd,
 	return (new_str);
 }
 
-int				event_string_substitution(char *sub_cmd, char **new_str)
+int				event_string_substitution(char *sub_cmd, char **new_str,
+														int *is_substitution)
 {
 	t_historic	*termcaps;
 	t_list		*tmplist;
@@ -78,5 +79,6 @@ int				event_string_substitution(char *sub_cmd, char **new_str)
 	free(replace);
 	if (pos == NULL)
 		return (E_NOT_FOUND);
+	*is_substitution = 1;
 	return (1);
 }

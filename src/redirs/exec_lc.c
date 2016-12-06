@@ -6,7 +6,7 @@
 /*   By: tbreart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/12 10:23:19 by tbreart           #+#    #+#             */
-/*   Updated: 2016/12/03 20:13:02 by tbreart          ###   ########.fr       */
+/*   Updated: 2016/12/06 12:28:22 by tbreart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		redir_file_lc(t_list *elem, t_save_fd *save, char **env)
 			ft_putendl_fd("42sh: ambiguous redirect", STDERR_FILENO);
 			return (-1);
 		}
-		remove_quoting_chars(elem);// peut fail ?
+		remove_quoting_chars(elem);
 		fd = lc_file(elem, save);
 	}
 	return (fd);
