@@ -1,0 +1,504 @@
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+28d14
+< DEBUG
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+28d14
+< DEBUG
+30d15
+< binairy
+32d16
+< binairy
+34d17
+< DEBUG
+36d18
+< DEBUG
+38d19
+< DEBUG
+40d20
+< DEBUG
+42d21
+< binairy
+44d22
+< DEBUG
+46d23
+< DEBUG
+48d24
+< DEBUG
+50d25
+< DEBUG
+52c27,29
+< DEBUG
+---
+> <cnt> binairy
+> <begin> binairy
+> = binairy =
+54d30
+< DEBUG
+56d31
+< deps.c
+58d32
+< DEBUG
+60d33
+< DEBUG
+62d34
+< DEBUG
+64d35
+< DEBUG
+66d36
+< binairy
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+28d14
+< DEBUG
+30d15
+< binairy
+32d16
+< binairy
+34d17
+< DEBUG
+36d18
+< DEBUG
+38d19
+< DEBUG
+40d20
+< DEBUG
+42d21
+< binairy
+44d22
+< DEBUG
+46d23
+< DEBUG
+48d24
+< DEBUG
+50d25
+< DEBUG
+52c27,29
+< DEBUG
+---
+> <cnt> binairy
+> <begin> binairy
+> = binairy =
+54d30
+< DEBUG
+56d31
+< deps.c
+58d32
+< DEBUG
+60d33
+< DEBUG
+62d34
+< DEBUG
+64d35
+< DEBUG
+66d36
+< binairy
+68d37
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+28d14
+< DEBUG
+30d15
+< binairy
+32d16
+< binairy
+34d17
+< DEBUG
+36d18
+< DEBUG
+38d19
+< DEBUG
+40d20
+< DEBUG
+42d21
+< binairy
+44d22
+< DEBUG
+46d23
+< DEBUG
+48d24
+< DEBUG
+50d25
+< DEBUG
+52c27,29
+< DEBUG
+---
+> <cnt> binairy
+> <begin> binairy
+> = binairy =
+54d30
+< DEBUG
+56d31
+< deps.c
+58d32
+< DEBUG
+60d33
+< DEBUG
+62d34
+< DEBUG
+64d35
+< DEBUG
+66d36
+< binairy
+68d37
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+70d38
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+28d14
+< DEBUG
+30d15
+< binairy
+32d16
+< binairy
+34d17
+< DEBUG
+36d18
+< DEBUG
+38d19
+< DEBUG
+40d20
+< DEBUG
+42d21
+< binairy
+44d22
+< DEBUG
+46d23
+< DEBUG
+48d24
+< DEBUG
+50d25
+< DEBUG
+52c27,29
+< DEBUG
+---
+> <cnt> binairy
+> <begin> binairy
+> = binairy =
+54d30
+< DEBUG
+56d31
+< deps.c
+58d32
+< DEBUG
+60d33
+< DEBUG
+62d34
+< DEBUG
+64d35
+< DEBUG
+66d36
+< binairy
+68d37
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+70d38
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+72d39
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+28d14
+< DEBUG
+30d15
+< binairy
+32d16
+< binairy
+34d17
+< DEBUG
+36d18
+< DEBUG
+38d19
+< DEBUG
+40d20
+< DEBUG
+42d21
+< binairy
+44d22
+< DEBUG
+46d23
+< DEBUG
+48d24
+< DEBUG
+50d25
+< DEBUG
+52c27,29
+< DEBUG
+---
+> <cnt> binairy
+> <begin> binairy
+> = binairy =
+54d30
+< DEBUG
+56d31
+< deps.c
+58d32
+< DEBUG
+60d33
+< DEBUG
+62d34
+< DEBUG
+64d35
+< DEBUG
+66d36
+< binairy
+68d37
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+70d38
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+72d39
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+74d40
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+2d1
+< DEBUG
+4d2
+< DEBUG
+6d3
+< DEBUG
+8d4
+< DEBUG
+10d5
+< DEBUG
+12d6
+< DEBUG
+14d7
+< DEBUG
+16d8
+< DEBUG
+18d9
+< DEBUG
+20d10
+< DEBUG
+22d11
+< DEBUG
+24d12
+< DEBUG
+26d13
+< DEBUG
+28d14
+< DEBUG
+30d15
+< binairy
+32d16
+< binairy
+34d17
+< DEBUG
+36d18
+< DEBUG
+38d19
+< DEBUG
+40d20
+< DEBUG
+42d21
+< binairy
+44d22
+< DEBUG
+46d23
+< DEBUG
+48d24
+< DEBUG
+50d25
+< DEBUG
+52c27,29
+< DEBUG
+---
+> <cnt> binairy
+> <begin> binairy
+> = binairy =
+54d30
+< DEBUG
+56d31
+< deps.c
+58d32
+< DEBUG
+60d33
+< DEBUG
+62d34
+< DEBUG
+64d35
+< DEBUG
+66d36
+< binairy
+68d37
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+70d38
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+72d39
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+74d40
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
+76d41
+< binairy DEBUG deps.c ft_glob.h glob_brace2.c glob_braces.c glob.c glob_listing.c glob_match.c libft main_glob.c main_match.c o1 o2 out test_glob.sh test_match.sh
