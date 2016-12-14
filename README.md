@@ -1,30 +1,56 @@
-Pro:
+#42SH - 42School's project - 88/100
+###Creating a bash-like shell
 
-- historique enregistre dans un fichier
-- gestion au niveau des termcaps des quotes : '' ; "" ; () ; [] ; {} et du backslash : \
-- gestion des quotes au niveau des arguments ('salut a toi' == 1 argv)
-- gestion cd - ; env -i -u
-- Lexer / parser en arbre binaire qui tient la route
-- Pas de 'cas particuliers' pour l'execution de la commande -> on en revient toujours  a la fonction cmd\_simple
-- shell s'adapte au resize de la fenetre du terminal
+- Compulsory part
+	- Builtins
+		- `cd` `echo` `exit` `env` `setenv` `unsetenv`
+	- Command line
+		- Prompt
+		- Line editing (stdin)
+	- Executing simple commands
+		- Binaries
+		- Builtins
+		- PATH management
+	- Redirections
+		- `>` `>>` `<` `|`
+	- Logical Operators
+		- `&&` `||` `;`
+	- Error handling
+		- Commands status
+		- Segfault-proof
+		- NO LEAKS
 
-Cons:
-
-- Encore quelques bugs (segv sur /dev/null ; < file bin ; echo plop >&2 | qwerty ; edition de ligne + ctrl C)
-- Pas de builtin echo
-- l'historique remet les commandes multilignes sur une seule ligne
-- quelques limites arbitraires (maxi 100 bins et 100 aggregateurs fd a lancer en une commande)
-- simple quotes a gerer (echo '$PATH' != echo "$PATH")
-- Code assez peu lisible au niveau des redirections / pipe
-- Un peu de redondances parfois
-
-Bonus:
-
-- Operateurs logiques (&& ; ||)
-- touche delete
-- gestion metacharactere '~' et '$'
-- possibilitay de changer le prompt via builtin 'change\_prompt'
-- SHLVL lol
-- table de hash
-- recherche histo simple via Ctrl R + 'goto n'
-- autocompletion
+- Bonus
+	- Termcaps management
+	- Signals and EOF
+		- `ctrl+C` `ctrl+D`
+	- Edit the line where the cursor is located
+	- Moving the cursor in the terminal
+		- `←` `→`
+		- `shift+←` `shift+→`
+		- `home` `end`
+	- Multiline edition
+		- `shift+↑` `shift+↓`
+	- Resize the terminal
+	- Browse the history and edit the selected line
+		- `↑` `↓`
+	- Copy / Cut / Paste
+		- `ctrl+E` + `ctrl+K` / `ctrl+H` / `ctrl+T` / `ctrl+U` / `ctrl+P`
+	- Autocompletion
+		- `tab`
+	- File descriptor
+      - `n>&n`
+      - `n>&-` *(close the file descriptor 'n')*
+	- Inhibitors
+		- `"` `'` `\`
+	- Builtins
+	  - `history`, `read`
+  - events designators
+    - `!!` `!n` `!-n` `!string` `!?string[?]` `!#` `^string1^string2^`
+  - Subommands
+	  - <code>ls \`echo $HOME\`</code>
+  - Subshells
+		- <code>env | grep toto && (setenv toto 123 && env | grep toto) && env | grep toto</code>
+  - Globbing
+		- <code>ls \*/\*.[ch]</code>
+  - Hash table
